@@ -1,1 +1,11 @@
-<p>sidebar works!</p>
+<div class="h-screen bg-gray-800 text-gray-100 w-64 p-4 flex flex-col">
+  <div class="mb-8 font-bold text-xl">Meu App</div>
+  <nav class="flex flex-col space-y-2">
+    <a *ngFor="let item of menu"
+       [routerLink]="item.path"
+       routerLinkActive="bg-gray-700"
+       class="block px-4 py-2 rounded hover:bg-gray-700">
+      {{ item.label }}
+    </a>
+  </nav>
+</div>

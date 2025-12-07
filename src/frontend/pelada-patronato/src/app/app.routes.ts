@@ -1,22 +1,28 @@
-// src/app/app.routes.ts
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'participantes', pathMatch: 'full' },
-
   {
-    path: 'participantes',
+    path: '',
     loadComponent: () =>
-      import('./features/participantes/participante-list/participante-list')  // sem .component.ts
-        .then(m => m.ParticipanteList),             // nome da classe
+      import('./layout/layout').then(m => m.Layout),
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard',
+        loadComponent: () =>
+          import('./pages/dashboard/dashboard').then(m => m.Dashboard)
+      },
+      { path: 'participantes',
+        loadComponent: () =>
+          import('./pages/participantes/participante-list/participante-list')
+          .then(m => m.ParticipanteList)  // ajuste conforme sua convenção
+      },
+      { path: 'participantes/novo',
+        loadComponent: () =>
+          import('./pages/participantes/participante-form/participante-form')
+          .then(m => m.ParticipanteForm)
+      }      
+      // outras rotas...
+    ]
   },
-
-  {
-    path: 'participantes/novo',
-    loadComponent: () =>
-      import('./features/participantes/participante-form/participante-form')  // sem .component
-        .then(m => m.ParticipanteForm),
-  },
-
-  { path: '**', redirectTo: 'participantes' }
+  { path: '**', redirectTo: '' }
 ];
