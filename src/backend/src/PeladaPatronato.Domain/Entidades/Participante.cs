@@ -1,23 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PeladaPatronato.Domain.Entidades
+﻿namespace PeladaPatronato.Domain.Entidades
 {
-  public class Participante
+  public class Participante : IAggregateRoot
   {
-    public Guid Id { get; set; }
-    public string Nome { get; set; }
-    public string Apelido { get; set; }
-    public ePosicao PosicaoPreferida { get; set; }
-    public bool Ativo { get; set; }
+    public Guid Id { get; private set; }
+    public string Nome { get; private set; }
+    public string Apelido { get; private set; }
+    public string Telefone { get; private set; }
+    public ePosicao PosicaoPreferida { get; private set; }
+    public bool Ativo { get; private set; }
+    public DateTime DataCadastro { get; private set; }
 
-    public Participante()
+    public Participante(string id, string nome, string apelido, string telefone, ePosicao posicaoPreferida, bool ativo)
     {
-      
+      this.Id = Guid.Parse(id);
+      this.Nome = nome;
+      this.Apelido = apelido;
+      this.Telefone = telefone;
+      this.PosicaoPreferida = posicaoPreferida;
+      this.Ativo = ativo;
+      this.DataCadastro = DateTime.Now;
     }
+
+    public void Inativar(Guid Id) => this.Ativo = false;
 
     public enum ePosicao
     {

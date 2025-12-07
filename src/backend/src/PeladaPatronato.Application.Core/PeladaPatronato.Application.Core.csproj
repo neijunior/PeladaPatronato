@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PeladaPatronato.Application.Response\PeladaPatronato.Application.Response.csproj" />
+    <ProjectReference Include="..\PeladaPatronato.Application\PeladaPatronato.Application.csproj" />
     <ProjectReference Include="..\PeladaPatronato.Domain\PeladaPatronato.Domain.csproj" />
   </ItemGroup>
 
