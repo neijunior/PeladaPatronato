@@ -3,6 +3,7 @@ import { ParticipanteService } from '../../participantes/participante.service';
 import { Router } from '@angular/router';
 
 interface Rodada {
+  id?: string;
   data: Date;
   jogos: number;
   presentes: number;
@@ -18,10 +19,13 @@ interface Rodada {
    './rodadas-list.css',
 })
 export class RodadasList implements OnInit {
+novaRodada() {
+throw new Error('Method not implemented.');
+}
   rodadas: Rodada[] = [
-    { data: new Date(2025, 11, 1), jogos: 2, presentes: 18, gols: 10, assistencias: 7 },
-    { data: new Date(2025, 11, 8), jogos: 3, presentes: 20, gols: 15, assistencias: 10 },
-    { data: new Date(2025, 11, 15), jogos: 2, presentes: 16, gols: 8, assistencias: 5 },
+    { id: "1",  data: new Date(2025, 11, 1), jogos: 2, presentes: 18, gols: 10, assistencias: 7 },
+    { id: "2", data: new Date(2025, 11, 8), jogos: 3, presentes: 20, gols: 15, assistencias: 10 },
+    { id: "3", data: new Date(2025, 11, 15), jogos: 2, presentes: 16, gols: 8, assistencias: 5 },
   ];
 
   constructor(
@@ -30,7 +34,7 @@ export class RodadasList implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadAll();
+    //this.loadAll();
   }
 
   loadAll(): void {
@@ -39,27 +43,27 @@ export class RodadasList implements OnInit {
         this.rodadas = this.rodadas;
       },
       error: err => {
-        console.error('Erro ao carregar participantes', err);
+        console.error('Erro ao carregar rodadas', err);
       }
     });
   }
 
-  novoParticipante(): void {
-    this.router.navigate(['participantes/novo']);
+   novoParticipante(): void {
+    this.router.navigate(['rodadas/novo']);
   }
 
   editar(id: number | undefined): void {
     if (id != null) {
-      this.router.navigate(['participantes/novo'], { queryParams: { id } });
+      this.router.navigate(['rodadas/novo'], { queryParams: { id } });
       // ou para outra rota de edição, dependendo do seu roteamento
     }
   }
 
-  // remover(id: number | undefined): void {
+  // remover(id: string | undefined): void {
   //   if (id == null) return;
   //   this.svc.delete(id).subscribe({
   //     next: () => {
-  //       this.participantes = this.participantes.filter(p => p.id !== id);
+  //       this.rodadas = this.rodadas.filter(p => p.id !== id);
   //     },
   //     error: err => {
   //       console.error('Erro ao excluir participante', err);
