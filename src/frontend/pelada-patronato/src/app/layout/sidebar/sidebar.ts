@@ -12,8 +12,8 @@ export class Sidebar {
   menu = [
     { label: 'Dashboard', path: '/dashboard' },
     { label: 'Participantes', path: '/participantes' },
-    { label: 'Rodadas', path: '/rodada' },
-    { label: 'Estatatísticas', path: '/estatatisticas' },
+    { label: 'Rodadas', path: '/rodadas' },
+    { label: 'Estatísticas', path: '/estatisticas' },
     // futuramente: outras opções vindas de backend/permissões
   ];
 }

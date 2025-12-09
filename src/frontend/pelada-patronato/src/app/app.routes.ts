@@ -14,13 +14,24 @@ export const routes: Routes = [
       { path: 'participantes',
         loadComponent: () =>
           import('./pages/participantes/participante-list/participante-list')
-          .then(m => m.ParticipanteList)  // ajuste conforme sua convenção
+          .then(m => m.ParticipanteList)  
       },
       { path: 'participantes/novo',
         loadComponent: () =>
           import('./pages/participantes/participante-form/participante-form')
           .then(m => m.ParticipanteForm)
-      }      
+      },
+      { path: 'rodadas',
+        loadComponent: () =>
+          import('./pages/rodadas/rodadas-list/rodadas-list')
+          .then(m => m.RodadasList)  
+      },
+      { path: 'estatisticas',
+        loadComponent: () =>
+          import('./pages/estatisticas/estatisticas-list/estatisticas-list')
+          .then(m => m.EstatisticasList)  
+      },
+      
       // outras rotas...
     ]
   },
