@@ -5,8 +5,28 @@ import { CommonModule } from '@angular/common';
   selector: 'app-dashboard',
   standalone: true,
   imports: [CommonModule],
-  template: `<div class="p-6"><h1 class="text-2xl font-bold">Dashboard</h1>
-    <p>Bem‑vindo ao painel inicial.</p>
-  </div>`
+  template: `
+    <div class="dashboard-container">
+      <img
+        src="/img/logo-dashboard.svg"
+        alt="Logo"
+        class="dashboard-logo"
+      />
+    </div>
+  `,
+  styles: [`
+    .dashboard-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .dashboard-logo {
+      max-width: 300px;
+      width: 100%;
+      opacity: 0.9;
+    }
+  `]
 })
 export class Dashboard {}

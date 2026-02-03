@@ -1,10 +1,27 @@
-<div class="h-screen bg-gray-800 text-gray-100 w-64 p-4 flex flex-col">
-  <div class="mb-8 font-bold text-xl">Pelada Patronato</div>
-  <nav class="flex flex-col space-y-2">
+<div
+  class="
+    fixed md:static
+    top-0 left-0
+    h-screen w-64
+    bg-gray-800 text-gray-100
+    p-4 flex flex-col
+    z-40
+    transform transition-transform duration-300
+    md:translate-x-0
+  "
+  [class.-translate-x-full]="!sidebar.isOpen"
+>
+  <div class="mb-8 font-bold text-xl flex justify-between items-center">
+    Pelada Patronato
+    <button class="md:hidden" (click)="sidebar.close()">✕</button>
+  </div>
+
+  <nav class="flex-1 flex flex-col space-y-2 overflow-y-auto">
     <a *ngFor="let item of menu"
        [routerLink]="item.path"
        routerLinkActive="bg-gray-700"
-       class="block px-4 py-2 rounded hover:bg-gray-700">
+       class="block px-4 py-2 rounded hover:bg-gray-700"
+       (click)="sidebar.close()">
       {{ item.label }}
     </a>
   </nav>

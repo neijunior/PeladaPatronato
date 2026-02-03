@@ -31,7 +31,12 @@ export const routes: Routes = [
           import('./pages/estatisticas/estatisticas-list/estatisticas-list')
           .then(m => m.EstatisticasList)  
       },
-      
+      {
+        path: 'documentos/:tipo/:arquivo',
+        loadComponent: () =>
+          import('./pages/documentos/viewer/documento-viewer')
+            .then(m => m.DocumentoViewer)
+      }
       // outras rotas...
     ]
   },
