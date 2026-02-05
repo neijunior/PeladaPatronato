@@ -1,4 +1,5 @@
-﻿using PeladaPatronato.Application.Response.Participante;
+﻿using PeladaPatronato.Application.Request.Participante;
+using PeladaPatronato.Application.Response.Participante;
 
 namespace PeladaPatronato.Application.Participante
 {
@@ -23,6 +24,20 @@ namespace PeladaPatronato.Application.Participante
     public static IEnumerable<ParticipanteResponse> ToResponse(this IEnumerable<Domain.Entidades.Participante> participantes)
     {
       return participantes.Select(p => p.ToResponse());
+    }
+
+    public static Domain.Entidades.Participante ToEntity(this ParticipanteRequest participante)
+    {
+      if (participante == null)
+        return null;
+
+      return new Domain.Entidades.Participante(      
+        participante.Id,
+        participante.Nome,
+        participante.Apelido,
+        participante.Telefone,
+        Domain.Entidades.Participante.ePosicao.Goleiro,
+        participante.Ativo);
     }
   }
 }

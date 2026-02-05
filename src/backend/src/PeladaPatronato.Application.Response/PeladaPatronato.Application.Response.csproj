@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PeladaPatronato.Domain\PeladaPatronato.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

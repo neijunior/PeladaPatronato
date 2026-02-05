@@ -1,4 +1,5 @@
 ﻿using PeladaPatronato.Application.Participante;
+using PeladaPatronato.Application.Request.Participante;
 using PeladaPatronato.Application.Response.Participante;
 using PeladaPatronato.Domain.Interfaces;
 
@@ -26,9 +27,9 @@ namespace PeladaPatronato.Application.Core.Participante
       return (await _participanteRepository.Listar()).ToResponse();   
     }
 
-    public async Task<ParticipanteResponse> Salvar()
-    {
-      return (await _participanteRepository.Salvar()).ToResponse(); 
+    public async Task<ParticipanteResponse> Salvar(ParticipanteRequest participante)
+    { 
+      return (await _participanteRepository.Salvar(participante.ToEntity())).ToResponse(); 
     }
   }
 }
