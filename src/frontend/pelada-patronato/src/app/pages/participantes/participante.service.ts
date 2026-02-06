@@ -1,32 +1,58 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Participante } from '../../core/models/participante';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { Posicao } from '../../core/models/posicao';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParticipanteService {
   private http = inject(HttpClient);
-  private baseUrl = 'https://api.seu-backend.com/participantes';
+  private baseUrl = `${environment.apiUrl}/participante`;
 
-  list(): Observable<Participante[]> {
-    return this.http.get<Participante[]>(this.baseUrl);
+  listar(filtro: { ativo?: boolean; nome?: string; exibePosicao?: boolean }): Observable<Participante[]> {
+    return this.http.post<Participante[]>(`${this.baseUrl}/listar`, filtro);
   }
 
-  get(id: number): Observable<Participante> {
-    return this.http.get<Participante>(`${this.baseUrl}/${id}`);
+  listarPosicoes(): Observable<Posicao[]> {
+    return this.http.post<Posicao[]>(`${environment.apiUrl}/lookup/posicao`, null);
   }
 
-  create(p: Participante): Observable<Participante> {
-    return this.http.post<Participante>(this.baseUrl, p);
+  get(id: string): Observable<Participante> {
+    const filtro = {
+      id: id
+    };
+    
+    return this.http.post<Participante[]>(`${this.baseUrl}/listar`, filtro).pipe(
+      map(res => {
+        if (res.length > 0) {
+          return res[0]; // pega apenas o primeiro participante
+        }
+        throw new Error('Participante não encontrado'); // ou retorna null se preferir
+      })
+    );;
+  }
+
+  salvar(p: Participante): Observable<Participante> {
+    const payload = {
+    id: p.id,
+    nome: p.nome,
+    apelido: p.apelido,
+    telefone: p.telefone,
+    ativo: p.ativo,    
+    posicaoPreferida: p.posicaoPreferida ? Number(p.posicaoPreferida) : null
+  };
+
+  return this.http.post<Participante>(`${this.baseUrl}/salvar`, payload);
   }
 
   update(id: number, p: Participante): Observable<Participante> {
     return this.http.put<Participante>(`${this.baseUrl}/${id}`, p);
   }
 
-  delete(id: number): Observable<void> {
+  delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

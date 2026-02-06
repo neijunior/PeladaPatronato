@@ -15,7 +15,7 @@ export class Sidebar {
 
   menu = [
     { label: 'Dashboard', path: '/dashboard' },
-    // { label: 'Participantes', path: '/participantes' },
+    { label: 'Participantes', path: '/participantes' },
     // { label: 'Rodadas', path: '/rodadas' },
     // { label: 'Estatísticas', path: '/estatisticas' },
     { label: 'Estatuto', path: '/documentos/estatuto/estatuto-financeiro' }

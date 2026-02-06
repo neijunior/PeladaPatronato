@@ -3,16 +3,19 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Participante } from '../../../core/models/participante';
 import { ParticipanteService } from '../participante.service';
+import { TelefonePipe } from "../../../pipes/telefone-pipe";
 
 @Component({
   selector: 'app-participante-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TelefonePipe],
   templateUrl: './participante-list.html',
   styleUrls: ['./participante-list.css']
 })
 export class ParticipanteList implements OnInit {
   participantes: Participante[] = [];
+  carregando = true;
+  erro: string | null = null;
 
   constructor(
     private svc: ParticipanteService,
@@ -24,7 +27,7 @@ export class ParticipanteList implements OnInit {
   }
 
   loadAll(): void {
-    this.svc.list().subscribe({
+    this.svc.listar({ ativo: true, exibePosicao:true  }).subscribe({
       next: data => {
         this.participantes = data;
       },
@@ -38,14 +41,15 @@ export class ParticipanteList implements OnInit {
     this.router.navigate(['participantes/novo']);
   }
 
-  editar(id: number | undefined): void {
+  editar(id: string): void {
+    console.log(id);
     if (id != null) {
       this.router.navigate(['participantes/novo'], { queryParams: { id } });
       // ou para outra rota de edição, dependendo do seu roteamento
     }
   }
 
-  remover(id: number | undefined): void {
+  inativar(id: string): void {
     if (id == null) return;
     this.svc.delete(id).subscribe({
       next: () => {

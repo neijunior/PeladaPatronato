@@ -37,16 +37,16 @@ throw new Error('Method not implemented.');
     //this.loadAll();
   }
 
-  loadAll(): void {
-    this.svc.list().subscribe({
-      next: data => {
-        this.rodadas = this.rodadas;
-      },
-      error: err => {
-        console.error('Erro ao carregar rodadas', err);
-      }
-    });
-  }
+  // loadAll(): void {
+  //   this.svc.listar().subscribe({
+  //     next: data => {
+  //       this.rodadas = this.rodadas;
+  //     },
+  //     error: err => {
+  //       console.error('Erro ao carregar rodadas', err);
+  //     }
+  //   });
+  // }
 
    novoParticipante(): void {
     this.router.navigate(['rodadas/novo']);

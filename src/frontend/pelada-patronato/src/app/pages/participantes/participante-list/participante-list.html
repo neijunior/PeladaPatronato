@@ -11,33 +11,30 @@
 
     <table class="w-full table-auto border-collapse bg-gray-700">
       <thead class="bg-gray-600">
-        <tr>
-          <th class="px-4 py-2 text-left">ID</th>
+        <tr>          
           <th class="px-4 py-2 text-left">Nome</th>
-          <th class="px-4 py-2 text-left">Data Nasc.</th>
+          <th class="px-4 py-2 text-left">Apelido</th>
+          <!-- <th class="px-4 py-2 text-left">Data Cadastro</th> -->
           <th class="px-4 py-2 text-left">Telefone</th>
+          <th class="px-4 py-2 text-left">Posição Preferida</th>
           <th class="px-4 py-2 text-left">Ações</th>
         </tr>
       </thead>
       <tbody *ngIf="participantes.length > 0; else semParticipantes">
-        <tr *ngFor="let p of participantes" class="border-b border-gray-600 hover:bg-gray-700">
-          <td class="px-4 py-2">{{ p.id }}</td>
+        <tr *ngFor="let p of participantes" class="border-b border-gray-600 hover:bg-gray-700">          
           <td class="px-4 py-2">{{ p.nome }}</td>
-          <td class="px-4 py-2">{{ p.dataNascimento }}</td>
-          <td class="px-4 py-2">{{ p.telefone }}</td>
+          <td class="px-4 py-2">{{ p.apelido }}</td>
+          <!-- <td class="px-4 py-2">{{ p.dataCadastro }}</td> -->
+          <td class="px-4 py-2">{{ p.telefone | telefone }}</td>
+          <td class="px-4 py-2">{{ p.posicaoPreferida?.nome}}</td>
           <td class="px-4 py-2 space-x-2">
-            <button
-              class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded"
-              (click)="editar(p.id)"
-            >
-              Editar
-            </button>
-            <button
-              class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-              (click)="remover(p.id)"
-            >
-              Excluir
-            </button>
+            <button (click)="editar(p.id)" class="p-1 rounded hover:bg-gray-600">
+    <i class="bx bx-edit text-gray-400 text-lg hover:text-gray-500"></i>
+  </button>
+
+  <button (click)="inativar(p.id)" class="p-1 rounded hover:bg-red-700">
+    <i class="bx bx-trash text-red-500 text-lg hover:text-red-600"></i>
+  </button>
           </td>
         </tr>
       </tbody>
