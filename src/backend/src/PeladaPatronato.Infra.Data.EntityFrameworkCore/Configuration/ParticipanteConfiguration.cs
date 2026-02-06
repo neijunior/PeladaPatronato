@@ -15,7 +15,9 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Configuration
       builder.Property(c => c.Telefone).HasColumnType("varchar").HasMaxLength(11);
       builder.Property(c => c.Ativo).IsRequired().HasDefaultValue(true);
       builder.Property(c => c.DataCadastro).HasColumnType("datetime").IsRequired();
+      builder.Property(c => c.IdPosicaoPreferida).HasColumnType("int");
 
+      builder.HasOne(c => c.Posicao).WithMany(c => c.Participantes).HasForeignKey(c => c.IdPosicaoPreferida);
     }
   }
 }

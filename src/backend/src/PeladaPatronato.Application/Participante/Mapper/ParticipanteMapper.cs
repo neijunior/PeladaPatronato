@@ -1,11 +1,12 @@
 ﻿using PeladaPatronato.Application.Request.Participante;
+using PeladaPatronato.Application.Response;
 using PeladaPatronato.Application.Response.Participante;
 
 namespace PeladaPatronato.Application.Participante
 {
   public static class ParticipanteMapper
   {
-    public static ParticipanteResponse ToResponse(this Domain.Entidades.Participante participante)
+    public static ParticipanteResponse? ToResponse(this Domain.Entidades.Participante participante)
     {
       if (participante == null)
         return null;
@@ -17,7 +18,14 @@ namespace PeladaPatronato.Application.Participante
         Apelido = participante.Apelido,
         Telefone = participante.Telefone,
         Ativo = participante.Ativo,
-        DataCadastro = participante.DataCadastro
+        DataCadastro = participante.DataCadastro,
+        PosicaoPreferida = participante.Posicao != null
+          ? new PosicaoResponse
+          {
+            Id = participante.Posicao.Id,
+            Nome = participante.Posicao.Nome
+          }
+          : null
       };
     }
 
@@ -29,15 +37,13 @@ namespace PeladaPatronato.Application.Participante
     public static Domain.Entidades.Participante ToEntity(this ParticipanteRequest participante)
     {
       if (participante == null)
-        return null;
+        throw new ArgumentNullException(nameof(participante));
 
-      return new Domain.Entidades.Participante(      
-        participante.Id,
-        participante.Nome,
-        participante.Apelido,
-        participante.Telefone,
-        Domain.Entidades.Participante.ePosicao.Goleiro,
-        participante.Ativo);
+      return new Domain.Entidades.Participante(
+          participante.Nome,
+          participante.Apelido,
+          participante.Telefone,
+          participante.PosicaoPreferida);
     }
   }
 }

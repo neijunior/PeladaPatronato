@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PeladaPatronato.Infra.Data.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PeladaPatronato.Infra.Data.EntityFrameworkCore.Contexts;
 
 namespace PeladaPatronato.Infra.CrossCutting.IoC
 {

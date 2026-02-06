@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PeladaPatronato.Application.Request\PeladaPatronato.Application.Request.csproj" />
     <ProjectReference Include="..\PeladaPatronato.Application\PeladaPatronato.Application.csproj" />
     <ProjectReference Include="..\PeladaPatronato.Domain\PeladaPatronato.Domain.csproj" />

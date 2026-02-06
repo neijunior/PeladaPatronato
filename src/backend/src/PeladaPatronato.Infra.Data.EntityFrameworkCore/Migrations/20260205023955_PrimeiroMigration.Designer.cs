@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PeladaPatronato.Infra.Data.EntityFrameworkCore;
+using PeladaPatronato.Infra.Data.EntityFrameworkCore.Contexts;
 
 #nullable disable
 

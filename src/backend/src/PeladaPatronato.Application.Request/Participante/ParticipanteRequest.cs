@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static PeladaPatronato.Domain.Entidades.Participante;
+﻿using static PeladaPatronato.Domain.Entidades.Participante;
+using static PeladaPatronato.Domain.Enums;
 
 namespace PeladaPatronato.Application.Request.Participante
 {
@@ -15,6 +11,5 @@ namespace PeladaPatronato.Application.Request.Participante
     public string? Telefone { get; set; }
     public ePosicao? PosicaoPreferida { get; set; }
     public bool Ativo { get; set; }
-    public DateTime DataCadastro { get; set; }
   }
 }

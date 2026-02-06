@@ -2,8 +2,7 @@
 
 namespace PeladaPatronato.Domain.Interfaces
 {
-  public interface IParticipanteRepository : IRepository<Participante>
+  public interface IPosicaoRepository : IRepository<Posicao>
   {
-  
   }
 }

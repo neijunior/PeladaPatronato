@@ -1,6 +1,4 @@
-﻿using static PeladaPatronato.Domain.Entidades.Participante;
-
-namespace PeladaPatronato.Application.Response.Participante
+﻿namespace PeladaPatronato.Application.Response.Participante
 {
   public class ParticipanteResponse
   {
@@ -8,7 +6,7 @@ namespace PeladaPatronato.Application.Response.Participante
     public string Nome { get; set; }
     public string? Apelido { get; set; }
     public string? Telefone { get; set; }
-    public ePosicao? PosicaoPreferida { get; set; }
+    public PosicaoResponse? PosicaoPreferida { get; set; }
     public bool Ativo { get; set; }
     public DateTime DataCadastro { get; set; }
   }

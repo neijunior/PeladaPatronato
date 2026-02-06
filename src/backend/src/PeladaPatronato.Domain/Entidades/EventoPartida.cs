@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using static PeladaPatronato.Domain.Enums;
 
 namespace PeladaPatronato.Domain.Entidades
 {
@@ -13,10 +9,6 @@ namespace PeladaPatronato.Domain.Entidades
     public Guid ParticipanteId { get; set; }
     public eTipoEvento TipoEvento { get; set; }
 
-    public enum eTipoEvento
-    {
-      Assistencia = 1,
-      Gol = 2
-    }
+    
   }
 }

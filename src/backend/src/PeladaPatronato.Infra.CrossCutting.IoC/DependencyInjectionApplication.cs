@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PeladaPatronato.Application.Core.Generico;
+using PeladaPatronato.Application.Core.Participante;
+using PeladaPatronato.Application.Generico;
+using PeladaPatronato.Application.Participante;
 
 namespace PeladaPatronato.Infra.CrossCutting.IoC
 {
@@ -11,6 +10,8 @@ namespace PeladaPatronato.Infra.CrossCutting.IoC
   {
     public static void RegisterApplication(this IServiceCollection svcCollection)
     {
+      svcCollection.AddScoped<IParticipanteApplication, ParticipanteApplication>();
+      svcCollection.AddScoped<IGenericoApplication, GenericoApplication>();
     }
   }
 }

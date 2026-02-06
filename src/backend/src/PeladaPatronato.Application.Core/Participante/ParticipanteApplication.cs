@@ -1,7 +1,9 @@
-﻿using PeladaPatronato.Application.Participante;
+﻿using Microsoft.EntityFrameworkCore;
+using PeladaPatronato.Application.Participante;
 using PeladaPatronato.Application.Request.Participante;
 using PeladaPatronato.Application.Response.Participante;
 using PeladaPatronato.Domain.Interfaces;
+using System.Linq.Expressions;
 
 namespace PeladaPatronato.Application.Core.Participante
 {
@@ -12,24 +14,78 @@ namespace PeladaPatronato.Application.Core.Participante
     {
       _participanteRepository = participanteRepository;
     }
-    public async Task<ParticipanteResponse> Consultar(Guid Id)
+    public async Task<ParticipanteResponse?> Consultar(Guid Id)
     {
-      return (await _participanteRepository.Consultar(Id)).ToResponse();
+      var participante = await _participanteRepository.ObterPorId(Id);
+      return participante.ToResponse();
     }
 
-    public async Task<ParticipanteResponse> Inativar()
+    public async Task<ParticipanteResponse> Inativar(Guid Id)
     {
-      return (await _participanteRepository.Inativar()).ToResponse();
+      var participante = await _participanteRepository.ObterPorId(Id);
+
+      if (participante is null)
+        throw new Exception("Participante não encontrado");
+
+      participante.Inativar();
+
+      await _participanteRepository.Atualizar(participante);
+
+      return participante.ToResponse();
     }
 
-    public async Task<IEnumerable<ParticipanteResponse>> Listar()
+    public async Task<IEnumerable<ParticipanteResponse>> Listar(ConsultaParticipanteRequest paramConsulta)
     {
-      return (await _participanteRepository.Listar()).ToResponse();   
+      Expression<Func<Domain.Entidades.Participante, bool>>? filtro = null;
+      Func<IQueryable<Domain.Entidades.Participante>, IQueryable<Domain.Entidades.Participante>>? include = null;
+
+      if (paramConsulta.ExibePosicao.HasValue && paramConsulta.ExibePosicao.Value)
+      {
+        include = q => q.Include(p => p.Posicao);
+      }        
+
+      if (paramConsulta.Ativo.HasValue)
+      {
+        filtro = filtro.And(p => p.Ativo == paramConsulta.Ativo.Value);
+      }
+
+      if (paramConsulta.Id.HasValue)
+      {
+        filtro = filtro.And(p => p.Id == paramConsulta.Id.Value);
+      }
+
+      if (!string.IsNullOrWhiteSpace(paramConsulta.Nome))
+      {
+        filtro = filtro.And(p => p.Nome.Contains(paramConsulta.Nome) || p.Apelido!.Contains(paramConsulta.Nome));
+      }
+
+      if (paramConsulta.IdPosicao > 0)
+      {
+        filtro = filtro.And(p => p.IdPosicaoPreferida == (int)paramConsulta.IdPosicao);
+      }
+
+      var participantes = await _participanteRepository.Listar(filtro, include);
+
+      return participantes.Select(p => p.ToResponse());
     }
 
-    public async Task<ParticipanteResponse> Salvar(ParticipanteRequest participante)
-    { 
-      return (await _participanteRepository.Salvar(participante.ToEntity())).ToResponse(); 
+    public async Task<ParticipanteResponse> Salvar(ParticipanteRequest request)
+    {
+      Domain.Entidades.Participante participante;
+      if (request.Id == Guid.Empty)
+      {
+        participante = request.ToEntity();
+        await _participanteRepository.Adicionar(participante);
+      }
+      else
+      {
+        participante = await _participanteRepository.ObterPorId(request.Id);
+        if (participante is null)
+          throw new Exception("Participante não encontrado");
+        participante.Atualizar(request.Nome, request.Apelido, request.Telefone, request.PosicaoPreferida, request.Ativo);
+      }
+      
+      return participante.ToResponse();
     }
   }
 }

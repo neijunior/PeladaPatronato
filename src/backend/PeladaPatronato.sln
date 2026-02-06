@@ -35,6 +35,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeladaPatronato.Infra.Cross
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeladaPatronato.Infra.CrossCutting.AppSettings", "src\PeladaPatronato.Infra.CrossCutting.AppSettings\PeladaPatronato.Infra.CrossCutting.AppSettings.csproj", "{B3F7EF04-E2F8-4544-A1FD-D649083C3514}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeladaPatronato.Application.DTO", "src\PeladaPatronato.Application.DTO\PeladaPatronato.Application.DTO.csproj", "{9B33E6D2-3172-4CAE-A540-551C12E5DBF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeladaPatronato.Infra.CrossCutting.Foundation", "src\PeladaPatronato.Infra.CrossCutting.Foundation\PeladaPatronato.Infra.CrossCutting.Foundation.csproj", "{76CAF9B8-AA9E-4355-8B25-8A38CB7FF22E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,14 @@ Global
 		{B3F7EF04-E2F8-4544-A1FD-D649083C3514}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3F7EF04-E2F8-4544-A1FD-D649083C3514}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3F7EF04-E2F8-4544-A1FD-D649083C3514}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B33E6D2-3172-4CAE-A540-551C12E5DBF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B33E6D2-3172-4CAE-A540-551C12E5DBF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B33E6D2-3172-4CAE-A540-551C12E5DBF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B33E6D2-3172-4CAE-A540-551C12E5DBF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76CAF9B8-AA9E-4355-8B25-8A38CB7FF22E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76CAF9B8-AA9E-4355-8B25-8A38CB7FF22E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76CAF9B8-AA9E-4355-8B25-8A38CB7FF22E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76CAF9B8-AA9E-4355-8B25-8A38CB7FF22E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +109,8 @@ Global
 		{FFED8EC3-8F4A-4F30-BD5E-11DECEDE6459} = {302A183C-A31E-4BF7-A77E-2B465130106B}
 		{19D6FA53-C2DC-407B-933F-58B03011E2DC} = {795A1CF1-DEB0-445D-BE58-91CC5655BBF7}
 		{B3F7EF04-E2F8-4544-A1FD-D649083C3514} = {795A1CF1-DEB0-445D-BE58-91CC5655BBF7}
+		{9B33E6D2-3172-4CAE-A540-551C12E5DBF6} = {0A944310-8F0E-4ED5-8A3B-0BC5460D630A}
+		{76CAF9B8-AA9E-4355-8B25-8A38CB7FF22E} = {795A1CF1-DEB0-445D-BE58-91CC5655BBF7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CCF5A1E9-CC32-40E4-BF78-DD51CF2AEEA9}
