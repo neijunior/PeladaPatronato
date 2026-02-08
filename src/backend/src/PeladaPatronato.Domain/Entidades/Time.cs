@@ -8,21 +8,12 @@ namespace PeladaPatronato.Domain.Entidades
 {
   public class Time
   {
-    public Guid Id { get; set; }
-    public Guid PartidaId { get; set; }
-    public eCorColete CorColete { get; set; }
+    public Guid Id { get; private set; }
+    public string Nome { get; private set; } = null!;
 
     public Time()
     {
       
-    }
-
-    public enum eCorColete
-    {
-      Amarelo = 1,
-      Azul = 2,
-      Preto = 3,
-      Verde = 3
     }
   }
 }
