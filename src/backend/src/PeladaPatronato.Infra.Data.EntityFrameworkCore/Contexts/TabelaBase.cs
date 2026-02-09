@@ -13,10 +13,10 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Contexts
     private static void PopularTabelaPosicao(this ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<Posicao>().HasData(
-        new Posicao(1, "Goleiro"),
-        new Posicao(2, "Fixo"),
-        new Posicao(3, "Ala"),
-        new Posicao(4, "Pivo")
+        new Posicao(1, "Goleiro", Domain.Enums.eCategoriaPosicao.Goleiro),
+        new Posicao(2, "Fixo", Domain.Enums.eCategoriaPosicao.Linha),
+        new Posicao(3, "Ala", Domain.Enums.eCategoriaPosicao.Linha),
+        new Posicao(4, "Pivo", Domain.Enums.eCategoriaPosicao.Linha)
       );
     }
 

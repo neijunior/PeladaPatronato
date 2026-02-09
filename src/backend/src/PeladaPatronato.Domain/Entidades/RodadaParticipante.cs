@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static PeladaPatronato.Domain.Enums;
+﻿using static PeladaPatronato.Domain.Enums;
 
 namespace PeladaPatronato.Domain.Entidades
 {
@@ -12,19 +7,19 @@ namespace PeladaPatronato.Domain.Entidades
     public Guid Id { get; private set; }
     public Guid RodadaTimeId { get; private set; }
     public Guid ParticipanteId { get; private set; }
-    public Posicao Posicao { get; private set; }
+    public eCategoriaPosicao CategoriaPosicao { get; private set; }
 
     private readonly List<RodadaEvento> _eventos = new();
     public IReadOnlyCollection<RodadaEvento> Eventos => _eventos;
 
     protected RodadaParticipante() { }
 
-    internal RodadaParticipante(Guid rodadaTimeId, Guid participanteId, Posicao posicao)
+    internal RodadaParticipante(Guid rodadaTimeId, Guid participanteId, eCategoriaPosicao categoriaPosicao)
     {
       Id = Guid.NewGuid();
       RodadaTimeId = rodadaTimeId;
       ParticipanteId = participanteId;
-      Posicao = posicao;
+      CategoriaPosicao = categoriaPosicao;
     }
 
     public void RegistrarEvento(eTipoEvento tipo, int? minuto = null)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PeladaPatronato.Domain.Enums;
 
 namespace PeladaPatronato.Domain.Entidades
 {
@@ -33,9 +34,9 @@ namespace PeladaPatronato.Domain.Entidades
       TimeId = timeId;
     }
 
-    public RodadaParticipante AdicionarParticipante(Guid participanteId)
+    public RodadaParticipante AdicionarParticipante(Guid participanteId, eCategoriaPosicao categoriaPosicao)
     {
-      var rp = new RodadaParticipante(Id, participanteId);
+      var rp = new RodadaParticipante(Id, participanteId, categoriaPosicao);
       _participantes.Add(rp);
       return rp;
     }

@@ -10,8 +10,9 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Configuration
     {
       builder.ToTable("Rodada", "PeladaPatronato");
       builder.HasKey(x => x.Id);
-      builder.Property(x => x.Data).IsRequired();
+      builder.Property(x => x.DataHora).IsRequired();
       builder.Property(x => x.ValorDiarista).HasPrecision(10, 2);
+      builder.Property(c => c.Observacao).HasColumnType("varchar").HasMaxLength(500);
       builder.HasMany(x => x.Times).WithOne().HasForeignKey(x => x.RodadaId).OnDelete(DeleteBehavior.Cascade);
     }
   }

@@ -8,6 +8,11 @@ namespace PeladaPatronato.Domain
 {
   public class Enums
   {
+    public enum eCategoriaPosicao
+    {
+      Goleiro = 1,
+      Linha = 2
+    }
     public enum ePosicao
     {
       Goleiro = 1,
