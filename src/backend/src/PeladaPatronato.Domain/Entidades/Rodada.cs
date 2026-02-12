@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PeladaPatronato.Infra.CrossCutting.Data;
 
 namespace PeladaPatronato.Domain.Entidades
 {
@@ -18,12 +14,12 @@ namespace PeladaPatronato.Domain.Entidades
 
     protected Rodada() { } // EF
 
-    public Rodada(DateTime dataHora, decimal valorDiarista, string? Observacao)
+    public Rodada(DateTime dataHora, decimal valorDiarista, string? observacao)
     {
       Id = Guid.NewGuid();
       DataHora = dataHora;
       ValorDiarista = valorDiarista;
-      Observacao = Observacao;
+      Observacao = observacao;
     }
 
     public RodadaTime AdicionarTime(Guid timeId)

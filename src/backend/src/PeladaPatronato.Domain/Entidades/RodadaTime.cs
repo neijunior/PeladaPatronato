@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static PeladaPatronato.Domain.Enums;
+﻿using PeladaPatronato.Infra.CrossCutting.Data;
 
 namespace PeladaPatronato.Domain.Entidades
 {
-  public class RodadaTime
+  public class RodadaTime : Entity
   {
-    public Guid Id { get; private set; }
     public Guid RodadaId { get; private set; }
     public Guid TimeId { get; private set; }
 
@@ -29,7 +23,6 @@ namespace PeladaPatronato.Domain.Entidades
 
     internal RodadaTime(Guid rodadaId, Guid timeId)
     {
-      Id = Guid.NewGuid();
       RodadaId = rodadaId;
       TimeId = timeId;
     }

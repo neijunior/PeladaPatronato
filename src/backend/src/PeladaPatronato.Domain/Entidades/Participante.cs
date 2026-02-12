@@ -1,13 +1,13 @@
-﻿using static PeladaPatronato.Domain.Enums;
+﻿using PeladaPatronato.Infra.CrossCutting.Data;
 
 namespace PeladaPatronato.Domain.Entidades
 {
-  public class Participante
+  public class Participante : Entity
   {
 
     protected Participante() { }
-    public Guid Id { get; private set; }
-    public string Nome { get; private set; }
+    
+    public string Nome { get; private set; } = string.Empty;
     public string? Apelido { get; private set; }
     public string? Telefone { get; private set; }
     public int? IdPosicaoPreferida { get; private set; }
@@ -16,7 +16,6 @@ namespace PeladaPatronato.Domain.Entidades
     public virtual Posicao? Posicao { get; private set; }
     public Participante(string nome, string? apelido, string? telefone, ePosicao? posicaoPreferida)
     {
-      this.Id = Guid.NewGuid();
       this.Nome = nome;
       this.Apelido = apelido;
       this.Telefone = telefone;

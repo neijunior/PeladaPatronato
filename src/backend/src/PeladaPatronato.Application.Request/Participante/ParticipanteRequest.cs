@@ -1,5 +1,5 @@
-﻿using static PeladaPatronato.Domain.Entidades.Participante;
-using static PeladaPatronato.Domain.Enums;
+﻿using PeladaPatronato.Domain.Entidades;
+
 
 namespace PeladaPatronato.Application.Request.Participante
 {

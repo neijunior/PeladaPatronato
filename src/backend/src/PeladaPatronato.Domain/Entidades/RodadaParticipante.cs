@@ -1,10 +1,9 @@
-﻿using static PeladaPatronato.Domain.Enums;
+﻿using PeladaPatronato.Infra.CrossCutting.Data;
 
 namespace PeladaPatronato.Domain.Entidades
 {
-  public class RodadaParticipante
+  public class RodadaParticipante : Entity
   {
-    public Guid Id { get; private set; }
     public Guid RodadaTimeId { get; private set; }
     public Guid ParticipanteId { get; private set; }
     public eCategoriaPosicao CategoriaPosicao { get; private set; }
@@ -16,7 +15,6 @@ namespace PeladaPatronato.Domain.Entidades
 
     internal RodadaParticipante(Guid rodadaTimeId, Guid participanteId, eCategoriaPosicao categoriaPosicao)
     {
-      Id = Guid.NewGuid();
       RodadaTimeId = rodadaTimeId;
       ParticipanteId = participanteId;
       CategoriaPosicao = categoriaPosicao;

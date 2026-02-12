@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\PeladaPatronato.Infra.CrossCutting.Data\PeladaPatronato.Infra.CrossCutting.Data.csproj" />
-  </ItemGroup>
-
 </Project>
