@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using PeladaPatronato.Application.Acesso;
+using PeladaPatronato.Application.Core.Acesso;
 using PeladaPatronato.Application.Core.Generico;
 using PeladaPatronato.Application.Core.Participante;
 using PeladaPatronato.Application.Generico;
@@ -10,6 +12,7 @@ namespace PeladaPatronato.Infra.CrossCutting.IoC
   {
     public static void RegisterApplication(this IServiceCollection svcCollection)
     {
+      svcCollection.AddScoped<IAutenticacaoApplication, AutenticacaoApplication>();
       svcCollection.AddScoped<IParticipanteApplication, ParticipanteApplication>();
       svcCollection.AddScoped<IGenericoApplication, GenericoApplication>();
     }

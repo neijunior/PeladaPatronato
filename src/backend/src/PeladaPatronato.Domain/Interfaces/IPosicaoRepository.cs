@@ -1,4 +1,5 @@
 ﻿using PeladaPatronato.Domain.Entidades;
+using PeladaPatronato.Infra.CrossCutting.Data;
 
 namespace PeladaPatronato.Domain.Interfaces
 {

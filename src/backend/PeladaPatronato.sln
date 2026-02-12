@@ -19,27 +19,29 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeladaPatronato.Application
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeladaPatronato.Domain", "src\PeladaPatronato.Domain\PeladaPatronato.Domain.csproj", "{61B874E4-B0B1-49FA-9B24-DFFC1BFA900D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeladaPatronato.Application.Request", "src\PeladaPatronato.Application.Request\PeladaPatronato.Application.Request.csproj", "{673A3545-A718-4C23-A860-20561D78705C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeladaPatronato.Application.Request", "src\PeladaPatronato.Application.Request\PeladaPatronato.Application.Request.csproj", "{673A3545-A718-4C23-A860-20561D78705C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeladaPatronato.Application.Response", "src\PeladaPatronato.Application.Response\PeladaPatronato.Application.Response.csproj", "{9CEF6FB2-A4A2-4985-B900-2E8465B0EDD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeladaPatronato.Application.Response", "src\PeladaPatronato.Application.Response\PeladaPatronato.Application.Response.csproj", "{9CEF6FB2-A4A2-4985-B900-2E8465B0EDD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeladaPatronato.Application.Core", "src\PeladaPatronato.Application.Core\PeladaPatronato.Application.Core.csproj", "{ABC564DA-C876-482B-9997-2B034D5E5FFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeladaPatronato.Application.Core", "src\PeladaPatronato.Application.Core\PeladaPatronato.Application.Core.csproj", "{ABC564DA-C876-482B-9997-2B034D5E5FFE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.1-CrossCutting", "4.1-CrossCutting", "{795A1CF1-DEB0-445D-BE58-91CC5655BBF7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.2-Data", "4.2-Data", "{302A183C-A31E-4BF7-A77E-2B465130106B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeladaPatronato.Infra.Data.EntityFrameworkCore", "src\PeladaPatronato.Infra.Data.EntityFrameworkCore\PeladaPatronato.Infra.Data.EntityFrameworkCore.csproj", "{FFED8EC3-8F4A-4F30-BD5E-11DECEDE6459}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeladaPatronato.Infra.Data.EntityFrameworkCore", "src\PeladaPatronato.Infra.Data.EntityFrameworkCore\PeladaPatronato.Infra.Data.EntityFrameworkCore.csproj", "{FFED8EC3-8F4A-4F30-BD5E-11DECEDE6459}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeladaPatronato.Infra.CrossCutting.IoC", "src\PeladaPatronato.Infra.CrossCutting.IoC\PeladaPatronato.Infra.CrossCutting.IoC.csproj", "{19D6FA53-C2DC-407B-933F-58B03011E2DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeladaPatronato.Infra.CrossCutting.IoC", "src\PeladaPatronato.Infra.CrossCutting.IoC\PeladaPatronato.Infra.CrossCutting.IoC.csproj", "{19D6FA53-C2DC-407B-933F-58B03011E2DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeladaPatronato.Infra.CrossCutting.AppSettings", "src\PeladaPatronato.Infra.CrossCutting.AppSettings\PeladaPatronato.Infra.CrossCutting.AppSettings.csproj", "{B3F7EF04-E2F8-4544-A1FD-D649083C3514}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeladaPatronato.Infra.CrossCutting.AppSettings", "src\PeladaPatronato.Infra.CrossCutting.AppSettings\PeladaPatronato.Infra.CrossCutting.AppSettings.csproj", "{B3F7EF04-E2F8-4544-A1FD-D649083C3514}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeladaPatronato.Application.DTO", "src\PeladaPatronato.Application.DTO\PeladaPatronato.Application.DTO.csproj", "{9B33E6D2-3172-4CAE-A540-551C12E5DBF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeladaPatronato.Application.DTO", "src\PeladaPatronato.Application.DTO\PeladaPatronato.Application.DTO.csproj", "{9B33E6D2-3172-4CAE-A540-551C12E5DBF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeladaPatronato.Infra.CrossCutting.Foundation", "src\PeladaPatronato.Infra.CrossCutting.Foundation\PeladaPatronato.Infra.CrossCutting.Foundation.csproj", "{76CAF9B8-AA9E-4355-8B25-8A38CB7FF22E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeladaPatronato.Infra.CrossCutting.Foundation", "src\PeladaPatronato.Infra.CrossCutting.Foundation\PeladaPatronato.Infra.CrossCutting.Foundation.csproj", "{76CAF9B8-AA9E-4355-8B25-8A38CB7FF22E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeladaPatronato.Infra.CrossCutting.Data", "src\PeladaPatronato.Infra.CrossCutting.Data\PeladaPatronato.Infra.CrossCutting.Data.csproj", "{B66FE7CC-B880-4FA7-9E02-A91F545091D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeladaPatronato.Infra.CrossCutting.Data", "src\PeladaPatronato.Infra.CrossCutting.Data\PeladaPatronato.Infra.CrossCutting.Data.csproj", "{B66FE7CC-B880-4FA7-9E02-A91F545091D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeladaPatronato.Infra.CrossCutting.Security", "src\PeladaPatronato.Infra.CrossCutting.Security\PeladaPatronato.Infra.CrossCutting.Security.csproj", "{F0138ABD-7C12-45C1-90C8-312BD9DB0758}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,10 @@ Global
 		{B66FE7CC-B880-4FA7-9E02-A91F545091D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B66FE7CC-B880-4FA7-9E02-A91F545091D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B66FE7CC-B880-4FA7-9E02-A91F545091D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0138ABD-7C12-45C1-90C8-312BD9DB0758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0138ABD-7C12-45C1-90C8-312BD9DB0758}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0138ABD-7C12-45C1-90C8-312BD9DB0758}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0138ABD-7C12-45C1-90C8-312BD9DB0758}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,6 +124,7 @@ Global
 		{9B33E6D2-3172-4CAE-A540-551C12E5DBF6} = {0A944310-8F0E-4ED5-8A3B-0BC5460D630A}
 		{76CAF9B8-AA9E-4355-8B25-8A38CB7FF22E} = {795A1CF1-DEB0-445D-BE58-91CC5655BBF7}
 		{B66FE7CC-B880-4FA7-9E02-A91F545091D6} = {795A1CF1-DEB0-445D-BE58-91CC5655BBF7}
+		{F0138ABD-7C12-45C1-90C8-312BD9DB0758} = {795A1CF1-DEB0-445D-BE58-91CC5655BBF7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CCF5A1E9-CC32-40E4-BF78-DD51CF2AEEA9}

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PeladaPatronato.Application.Acesso;
 using PeladaPatronato.Application.Participante;
+using PeladaPatronato.Application.Request.Acesso;
 using PeladaPatronato.Application.Request.Participante;
 using PeladaPatronato.Application.Response;
 using PeladaPatronato.Application.Response.Participante;
@@ -11,7 +13,11 @@ namespace PeladaPatronato.Presentation.API.Endpoints
     const string _nomeRota = "participante/";
     public static WebApplication MapParticipanteEndpoints(this WebApplication app)
     {
-      app.MapPost($"/{_nomeRota}salvar", async (IParticipanteApplication participanteApp, [FromBody] ParticipanteRequest participante) =>
+      var grupo = app.MapGroup("/participante")
+                       .WithTags("Participante")
+                       .RequireAuthorization(); // exige autenticação geral
+
+      grupo.MapPost($"/salvar", async (IParticipanteApplication participanteApp, Guid Responsavel, [FromBody] ParticipanteRequest participante) =>
       {
         try
         {
@@ -23,16 +29,16 @@ namespace PeladaPatronato.Presentation.API.Endpoints
           return Results.BadRequest(ApiResponse<object>.Fail(ex.Message));
         }
 
-      }).WithTags("Participante");
+      }).RequireAuthorization("Todos");
 
-      //app.MapDelete($"/{_nomeRota}/{{id}}/inativar", async (Guid id, IParticipanteApplication participanteApp) =>
-      //{
-      //  await participanteApp.Inativar(id);
-      //  return Results.NoContent();
-      //}).WithTags("Participante");
+      grupo.MapDelete($"/{{id}}/inativar", async (Guid id, IParticipanteApplication participanteApp) =>
+      {
+        await participanteApp.Inativar(id);
+        return Results.NoContent();
+      }).RequireAuthorization("SomenteAdministrador");
 
 
-      app.MapPost($"/{_nomeRota}listar", async (IParticipanteApplication participanteApp, [FromBody] ConsultaParticipanteRequest paramConsulta) =>
+      grupo.MapPost($"/listar", async (IParticipanteApplication participanteApp, [FromBody] ConsultaParticipanteRequest paramConsulta) =>
       {
         try
         {
@@ -43,7 +49,29 @@ namespace PeladaPatronato.Presentation.API.Endpoints
         {
           return Results.BadRequest(ex.Message);
         }
-      }).WithTags("Participante");
+      }).RequireAuthorization("Todos");
+
+      grupo.MapPost("/definir-acesso", async (IAutenticacaoApplication app, [FromBody] DefinirAcessoRequest request) =>
+      {
+        try
+        {
+          await app.DefinirAcesso(request);
+
+          return Results.Ok(new
+          {
+            sucesso = true,
+            mensagem = "Acesso definido com sucesso"
+          });
+        }
+        catch (Exception ex)
+        {
+          return Results.BadRequest(new
+          {
+            sucesso = false,
+            mensagem = ex.Message
+          });
+        }
+      }).RequireAuthorization("SomenteAdministrador");
 
       return app;
     }

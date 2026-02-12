@@ -14,6 +14,11 @@ namespace PeladaPatronato.Domain.Entidades
     public bool Ativo { get; private set; }
     public DateTime DataCadastro { get; private set; }
     public virtual Posicao? Posicao { get; private set; }
+    public bool PossuiAcesso { get; private set; }
+    public string? Email { get; private set; }
+    public string? SenhaHash { get; private set; }
+    public PerfilAcesso? Perfil { get; private set; }
+
     public Participante(string nome, string? apelido, string? telefone, ePosicao? posicaoPreferida)
     {
       this.Nome = nome;
@@ -23,14 +28,35 @@ namespace PeladaPatronato.Domain.Entidades
       this.Ativo = true;
       this.DataCadastro = DateTime.Now;
     }
-    public void Atualizar(string nome, string? apelido, string? telefone, ePosicao? posicaoPreferida, bool ativo)
+    public void Atualizar(string nome, string? apelido, string? telefone, ePosicao? posicaoPreferida, bool ativo, string? email)
     {
       Nome = nome;
       Apelido = apelido;
       Telefone = telefone;
       IdPosicaoPreferida = posicaoPreferida.HasValue ? (int)posicaoPreferida : null;
       Ativo = ativo;
+      Email = email;
     }
     public void Inativar() => this.Ativo = false;
+    public void DefinirAcesso(string senhaHash, PerfilAcesso perfil)
+    {
+      PossuiAcesso = true;
+      SenhaHash = senhaHash;
+      Perfil = perfil;
+      PossuiAcesso = true;
+    }
+
+    public void RemoverAcesso()
+    {
+      PossuiAcesso = false;
+      SenhaHash = null;
+      Perfil = null;
+    }
+  }
+  public enum PerfilAcesso
+  {
+    Administrador = 1,
+    Organizador = 2,
+    Jogador = 3
   }
 }

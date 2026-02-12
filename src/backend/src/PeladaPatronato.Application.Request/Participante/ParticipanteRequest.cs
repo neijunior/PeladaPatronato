@@ -11,5 +11,6 @@ namespace PeladaPatronato.Application.Request.Participante
     public string? Telefone { get; set; }
     public ePosicao? PosicaoPreferida { get; set; }
     public bool Ativo { get; set; }
+    public string? Email { get; set; }
   }
 }

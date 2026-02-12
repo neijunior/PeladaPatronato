@@ -8,6 +8,6 @@ namespace PeladaPatronato.Application.Participante
     Task<ParticipanteResponse?> Consultar(Guid Id);
     Task<ParticipanteResponse> Salvar(ParticipanteRequest participante);
     Task<IEnumerable<ParticipanteResponse>> Listar(ConsultaParticipanteRequest paramConsulta);
-    Task<ParticipanteResponse> Inativar(Guid id);
+    Task<ParticipanteResponse> Inativar(Guid id);  
   }
 }

@@ -1,4 +1,6 @@
-﻿using PeladaPatronato.Infra.CrossCutting.IoC;
+﻿using Microsoft.IdentityModel.Tokens;
+using PeladaPatronato.Infra.CrossCutting.IoC;
+using System.Text;
 
 namespace PeladaPatronato.Presentation.API.Extensions
 {
@@ -23,24 +25,50 @@ namespace PeladaPatronato.Presentation.API.Extensions
       });
 
       services.AddEndpointsApiExplorer();
-      services.AddSwaggerGen();      
+      services.AddSwaggerGen(options =>
+      {
+        options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+        {
+          Name = "Authorization",
+          Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+          Scheme = "bearer",
+          BearerFormat = "JWT",
+          In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+          Description = "Digite: Bearer {seu token}"
+        });
 
-      //var jwtSettings = configuration.GetSection("Jwt");
+        options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+        {
+            {
+                new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                {
+                    Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                    {
+                        Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                Array.Empty<string>()
+            }
+        });
+      });
 
-      //services.AddAuthentication("Bearer")
-      //  .AddJwtBearer("Bearer", options =>
-      //  {
-      //    options.TokenValidationParameters = new TokenValidationParameters
-      //    {
-      //      ValidateIssuer = true,
-      //      ValidateAudience = true,
-      //      ValidateLifetime = true,
-      //      ValidateIssuerSigningKey = true,
-      //      ValidIssuer = jwtSettings["Issuer"],
-      //      ValidAudience = jwtSettings["Audience"],
-      //      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
-      //    };
-      //  });
+      var jwtSettings = configuration.GetSection("Jwt");
+
+      services.AddAuthentication("Bearer")
+        .AddJwtBearer("Bearer", options =>
+        {
+          options.TokenValidationParameters = new TokenValidationParameters
+          {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Emissor"],
+            ValidAudience = jwtSettings["Audiencia"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Chave"]))
+          };
+        });
 
       //services.Configure<JwtSettings>(configuration.GetSection("Jwt"));
 

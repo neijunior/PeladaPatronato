@@ -17,6 +17,10 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Configuration
       builder.Property(c => c.DataCadastro).HasColumnType("datetime").IsRequired();
       builder.Property(c => c.IdPosicaoPreferida).HasColumnType("int");
 
+      builder.Property(c => c.PossuiAcesso).HasColumnType("bit").HasDefaultValue(false);
+      builder.Property(c => c.Email).HasColumnType("varchar").HasMaxLength(250);
+      builder.Property(c => c.SenhaHash).HasColumnType("varchar").HasMaxLength(60);
+
       builder.HasOne(c => c.Posicao).WithMany(c => c.Participantes).HasForeignKey(c => c.IdPosicaoPreferida);
     }
   }

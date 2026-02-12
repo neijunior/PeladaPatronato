@@ -2,7 +2,9 @@
 using PeladaPatronato.Application.Participante;
 using PeladaPatronato.Application.Request.Participante;
 using PeladaPatronato.Application.Response.Participante;
+using PeladaPatronato.Domain.Entidades;
 using PeladaPatronato.Domain.Interfaces;
+using PeladaPatronato.Infra.CrossCutting.Foundation;
 using System.Linq.Expressions;
 
 namespace PeladaPatronato.Application.Core.Participante
@@ -82,7 +84,7 @@ namespace PeladaPatronato.Application.Core.Participante
         participante = await _participanteRepository.ObterPorId(request.Id);
         if (participante is null)
           throw new Exception("Participante não encontrado");
-        participante.Atualizar(request.Nome, request.Apelido, request.Telefone, request.PosicaoPreferida, request.Ativo);
+        participante.Atualizar(request.Nome, request.Apelido, request.Telefone, request.PosicaoPreferida, request.Ativo, request.Email);
       }
       
       return participante.ToResponse();

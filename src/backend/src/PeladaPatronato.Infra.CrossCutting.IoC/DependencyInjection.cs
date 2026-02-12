@@ -18,6 +18,7 @@ namespace PeladaPatronato.Infra.CrossCutting.IoC
       svcCollection.RegisterRepositorio();
       //svcCollection.RegisterInfraGeneration();
       //svcCollection.RegisterInfraIntegration();
+      svcCollection.RegisterSecurity();
 
       svcCollection.AddSqlConfiguration(Configuration);
       svcCollection.RegisterOptions(Configuration);

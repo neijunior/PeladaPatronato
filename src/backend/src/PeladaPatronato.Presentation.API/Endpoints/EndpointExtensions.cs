@@ -4,7 +4,8 @@
   {
     public static void MapEndpoints(this WebApplication app)
     {
-      app.MapParticipanteEndpoints()
+      app.MapAuthEndpoints()
+         .MapParticipanteEndpoints()
          .MapLookupEndpoints();
     }
   }

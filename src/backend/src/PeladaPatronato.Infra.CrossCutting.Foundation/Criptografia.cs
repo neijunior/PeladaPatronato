@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PeladaPatronato.Infra.CrossCutting.Foundation
 {
-  public class Criptografia
+  public static class Criptografia
   {
     public static string GerarHashVotante(Guid jogadorVotanteId, Guid partidaId, string chaveSecreta)
     {
@@ -17,5 +17,8 @@ namespace PeladaPatronato.Infra.CrossCutting.Foundation
 
       return Convert.ToBase64String(hash);
     }
+
+    public static string GerarHash(string senha) => BCrypt.Net.BCrypt.HashPassword(senha);
+    public static bool Verificar(string senha, string hash) => BCrypt.Net.BCrypt.Verify(senha, hash);
   }
 }
