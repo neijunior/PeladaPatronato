@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { Participante } from '../../../core/models/participante';
+import { Participante } from '../../../../core/models/participante';
 import { ParticipanteService } from '../participante.service';
-import { TelefonePipe } from "../../../pipes/telefone-pipe";
+import { TelefonePipe } from "../../../../pipes/telefone-pipe";
 
 @Component({
   selector: 'app-participante-list',

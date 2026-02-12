@@ -6,13 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="dashboard-container">
-      <img
-        src="/img/logo-dashboard.svg"
-        alt="Logo"
-        class="dashboard-logo"
-      />
-    </div>
+    
   `,
   styles: [`
     .dashboard-container {

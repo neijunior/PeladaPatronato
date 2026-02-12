@@ -1,43 +1,48 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth-guard';
 
-export const routes: Routes = [
+export const routes: Routes = [  
   {
     path: '',
     loadComponent: () =>
       import('./layout/layout').then(m => m.Layout),
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard',
+      { path: 'login', loadComponent: () => import('./pages/auth/login/login').then(m => m.Login)},  
+      {
+        path: '',
         loadComponent: () =>
-          import('./pages/dashboard/dashboard').then(m => m.Dashboard)
+          import('./pages/publicas/home/home')
+            .then(m => m.Home)
       },
-      { path: 'participantes',
+      { path: 'sobre', loadComponent: () => import('./pages/publicas/sobre/sobre').then(m => m.Sobre)},      
+      { path: 'dashboard', canActivate: [authGuard], loadComponent: () => import('./pages/privadas/dashboard/dashboard').then(m => m.Dashboard)
+      },
+      { path: 'participantes', canActivate: [authGuard],
         loadComponent: () =>
-          import('./pages/participantes/participante-list/participante-list')
+          import('./pages/privadas/participantes/participante-list/participante-list')
           .then(m => m.ParticipanteList)  
       },
-      { path: 'participantes/novo',
+      { path: 'participantes/novo', canActivate: [authGuard],
         loadComponent: () =>
-          import('./pages/participantes/participante-form/participante-form')
+          import('./pages/privadas/participantes/participante-form/participante-form')
           .then(m => m.ParticipanteForm)
       },
-      { path: 'rodadas',
+      { path: 'rodadas', canActivate: [authGuard],
         loadComponent: () =>
-          import('./pages/rodadas/rodadas-list/rodadas-list')
+          import('./pages/privadas/rodadas/rodadas-list/rodadas-list')
           .then(m => m.RodadasList)  
       },
-      { path: 'estatisticas',
+      { path: 'estatisticas',canActivate: [authGuard],
         loadComponent: () =>
-          import('./pages/estatisticas/estatisticas-list/estatisticas-list')
+          import('./pages/privadas/estatisticas/estatisticas-list/estatisticas-list')
           .then(m => m.EstatisticasList)  
       },
       {
-        path: 'documentos/:tipo/:arquivo',
+        path: 'documentos/:tipo/:arquivo',canActivate: [authGuard],
         loadComponent: () =>
-          import('./pages/documentos/viewer/documento-viewer')
+          import('./pages/publicas/documentos/viewer/documento-viewer')
             .then(m => m.DocumentoViewer)
       }
-      // outras rotas...
     ]
   },
   { path: '**', redirectTo: '' }

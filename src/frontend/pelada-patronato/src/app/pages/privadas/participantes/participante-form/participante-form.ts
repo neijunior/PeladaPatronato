@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Participante } from '../../../core/models/participante';
+import { Participante } from '../../../../core/models/participante';
 import { ParticipanteService } from '../participante.service';
 
 @Component({

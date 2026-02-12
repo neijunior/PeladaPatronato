@@ -19,8 +19,8 @@
   <nav class="flex-1 flex flex-col space-y-2 overflow-y-auto">
     <a *ngFor="let item of menu"
        [routerLink]="item.path"
-       routerLinkActive="bg-gray-700"
-       class="block px-4 py-2 rounded hover:bg-gray-700"
+       routerLinkActive="bg-gray-700 text-white"
+       class="block px-4 py-2 rounded hover:bg-gray-700 transition-colors"
        (click)="sidebar.close()">
       {{ item.label }}
     </a>

@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Participante } from '../../core/models/participante';
+import { Participante } from '../../../core/models/participante';
 import { map, Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { Posicao } from '../../core/models/posicao';
+import { environment } from '../../../../environments/environment';
+import { Posicao } from '../../../core/models/posicao';
 
 @Injectable({
   providedIn: 'root'
