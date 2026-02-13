@@ -23,12 +23,12 @@ namespace PeladaPatronato.Infra.CrossCutting.Security.Acesso
             new Claim(ClaimTypes.Role, participante.Perfil!.ToString())
         };
 
-      var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Chave"]!));
+      var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
 
       var credenciais = new SigningCredentials(chave, SecurityAlgorithms.HmacSha256);
 
-      var token = new JwtSecurityToken(issuer: _configuration["Jwt:Emissor"],
-                                       audience: _configuration["Jwt:Audiencia"],
+      var token = new JwtSecurityToken(issuer: _configuration["Jwt:Issuer"],
+                                       audience: _configuration["Jwt:Audience"],
                                        claims: claims,
                                        expires: DateTime.UtcNow.AddHours(3),
                                        signingCredentials: credenciais);
