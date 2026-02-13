@@ -3,10 +3,23 @@
   <app-sidebar></app-sidebar>
 
   <main class="flex-1 flex flex-col">
-    <header class="md:hidden flex items-center justify-between p-4 bg-gray-800">
-      <button class="text-2xl" (click)="sidebar.toggle()">☰</button>
-      <span class="font-bold">Pelada Patronato</span>
-    </header>
+    <header class="flex items-center justify-between p-4 bg-gray-800">
+
+  <!-- Botão menu (mobile) -->
+  <button class="text-2xl md:hidden" (click)="sidebar.toggle()">☰</button>
+
+  <!-- Título -->
+  <span class="font-bold">Pelada Patronato</span>
+
+  <!-- Botão sair -->
+  @if (authService.isAuthenticated()) {
+  <button (click)="logout()"
+    class="bg-red-600 px-3 py-1 rounded text-sm hover:bg-red-700 transition">
+    Sair
+  </button>
+}
+
+</header>
 
     <section class="flex-1 p-4">
       <router-outlet></router-outlet>

@@ -2,6 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { tap } from "rxjs";
 import { environment } from "../../environments/environment";
+import { Router } from "@angular/router";
+import { IdleService } from "./idle.service";
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -9,7 +11,8 @@ export class AuthService {
   //private api = 'https://localhost:7164/auth/login';
   private baseUrl = `${environment.apiUrl}/auth/login`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router, 
+    private idleService: IdleService) {}
 
   login(email: string, senha: string) {
     return this.http.post<any>(this.baseUrl, { email, senha })
@@ -20,10 +23,16 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    this.idleService.stopWatching();
+    this.router.navigate(['/']);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
   }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('token');
+    return !!this.getToken();
   }
 
   getRole(): string | null {
