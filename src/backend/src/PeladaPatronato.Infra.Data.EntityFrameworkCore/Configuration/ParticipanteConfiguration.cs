@@ -16,6 +16,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Configuration
       builder.Property(c => c.Ativo).IsRequired().HasDefaultValue(true);
       builder.Property(c => c.DataCadastro).HasColumnType("datetime").IsRequired();
       builder.Property(c => c.IdPosicaoPreferida).HasColumnType("int");
+      builder.Property(c => c.NomeUsuario).HasColumnType("varchar").HasMaxLength(100);
 
       builder.Property(c => c.PossuiAcesso).HasColumnType("bit").HasDefaultValue(false);
       builder.Property(c => c.Email).HasColumnType("varchar").HasMaxLength(250);

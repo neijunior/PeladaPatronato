@@ -13,6 +13,7 @@ namespace PeladaPatronato.Domain.Entidades
     public int? IdPosicaoPreferida { get; private set; }
     public bool Ativo { get; private set; }
     public DateTime DataCadastro { get; private set; }
+    public string? NomeUsuario { get; private set; }
     public virtual Posicao? Posicao { get; private set; }
     public bool PossuiAcesso { get; private set; }
     public string? Email { get; private set; }
@@ -27,6 +28,7 @@ namespace PeladaPatronato.Domain.Entidades
       this.IdPosicaoPreferida = posicaoPreferida.HasValue ? (int)posicaoPreferida : null;
       this.Ativo = true;
       this.DataCadastro = DateTime.Now;
+      this.NomeUsuario = nomeUsuario;
     }
     public void Atualizar(string nome, string? apelido, string? telefone, ePosicao? posicaoPreferida, bool ativo, string? email)
     {
