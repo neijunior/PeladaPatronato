@@ -6,7 +6,7 @@ using PeladaPatronato.Infra.Data.EntityFrameworkCore.Contexts;
 
 namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
 {
-  public class LegadoTotalEstatisticaRepository : RepositoryBase<LegadoTotalEstatistica>, ILegadoEstatisticaRepository
+  public class LegadoTotalEstatisticaRepository : RepositoryBase<LegadoTotalEstatistica>, ILegadoTotalEstatisticaRepository
   {
     protected readonly PeladaPatronatoDbContext _context;
     public LegadoTotalEstatisticaRepository(PeladaPatronatoDbContext context) : base(context)

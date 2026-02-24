@@ -10,8 +10,8 @@ namespace PeladaPatronato.Domain.Entidades
     public int TotalPartidas { get; private set; }
     public int TotalGols { get; private set; }
     public int TotalAssistencias { get; private set; }
-    public decimal MediaGols { get; private set; }
-    public decimal MediaAssistencias { get; private set; }
+    //public decimal MediaGols { get; private set; }
+    //public decimal MediaAssistencias { get; private set; }
     public virtual Participante? Participante { get; private set; }
     public LegadoTotalEstatistica(string periodo, Guid participanteId, int totalPartidas, int totalGols, int totalAssistencias)
     {
@@ -20,8 +20,8 @@ namespace PeladaPatronato.Domain.Entidades
       TotalPartidas = totalPartidas;
       TotalGols = totalGols;
       TotalAssistencias = totalAssistencias;
-      MediaGols = totalPartidas > 0 ? (decimal)totalGols / totalPartidas : 0;
-      MediaAssistencias = totalPartidas > 0 ? (decimal)totalAssistencias / totalPartidas : 0;
+      //MediaGols = totalPartidas > 0 ? (decimal)totalGols / totalPartidas : 0;
+      //MediaAssistencias = totalPartidas > 0 ? (decimal)totalAssistencias / totalPartidas : 0;
     }    
   }
 }

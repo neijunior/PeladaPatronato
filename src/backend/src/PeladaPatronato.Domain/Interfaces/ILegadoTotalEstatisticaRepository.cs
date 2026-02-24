@@ -4,7 +4,7 @@ using PeladaPatronato.Infra.CrossCutting.Request.Estatistica;
 
 namespace PeladaPatronato.Domain.Interfaces
 {
-  public interface ILegadoEstatisticaRepository : IRepository<LegadoTotalEstatistica>
+  public interface ILegadoTotalEstatisticaRepository : IRepository<LegadoTotalEstatistica>
   {
     Task<IEnumerable<LegadoTotalEstatistica>> Listar(ConsultaEstatisticaRequest paramConsulta);
   }

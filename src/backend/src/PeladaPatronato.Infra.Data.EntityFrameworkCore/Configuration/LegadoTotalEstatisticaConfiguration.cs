@@ -15,8 +15,8 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Configuration
       builder.Property(c => c.TotalGols).HasColumnType("int").IsRequired();
       builder.Property(c => c.TotalAssistencias).HasColumnType("int").IsRequired();
 
-      builder.Property(p => p.MediaGols).HasColumnType("decimal(6,4)").IsRequired();
-      builder.Property(p => p.MediaAssistencias).HasColumnType("decimal(6,4)").IsRequired();
+      //builder.Property(p => p.MediaGols).HasColumnType("decimal(6,4)").IsRequired();
+      //builder.Property(p => p.MediaAssistencias).HasColumnType("decimal(6,4)").IsRequired();
 
       builder.HasOne(p => p.Participante)
              .WithMany() // ou .WithMany(x => x.LegadoEstatisticas) se existir a coleção na entidade Participante

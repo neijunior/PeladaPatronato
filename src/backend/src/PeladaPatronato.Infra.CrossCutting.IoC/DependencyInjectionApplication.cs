@@ -3,6 +3,8 @@ using PeladaPatronato.Application.Acesso;
 using PeladaPatronato.Application.Core.Acesso;
 using PeladaPatronato.Application.Core.Generico;
 using PeladaPatronato.Application.Core.Participante;
+using PeladaPatronato.Application.Core.Estatistica;
+using PeladaPatronato.Application.Estatistica;
 using PeladaPatronato.Application.Generico;
 using PeladaPatronato.Application.Participante;
 
@@ -15,6 +17,7 @@ namespace PeladaPatronato.Infra.CrossCutting.IoC
       svcCollection.AddScoped<IAutenticacaoApplication, AutenticacaoApplication>();
       svcCollection.AddScoped<IParticipanteApplication, ParticipanteApplication>();
       svcCollection.AddScoped<IGenericoApplication, GenericoApplication>();
+      svcCollection.AddScoped<IEstatisticaApplication, EstatisticaApplication>();
     }
   }
 }

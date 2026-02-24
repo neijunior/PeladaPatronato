@@ -1,20 +1,14 @@
 ﻿using PeladaPatronato.Application.Estatistica;
-using PeladaPatronato.Application.Participante;
+using PeladaPatronato.Domain.Interfaces;
 using PeladaPatronato.Infra.CrossCutting.Request.Estatistica;
 using PeladaPatronato.Infra.CrossCutting.Response.Estatistica;
-using PeladaPatronato.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PeladaPatronato.Application.Core.Estatistica
 {
-  internal class EstatisticaApplication : IEstatisticaApplication
+  public class EstatisticaApplication : IEstatisticaApplication
   {
-    private readonly ILegadoEstatisticaRepository _legadoEstatisticaRepository;
-    public EstatisticaApplication(ILegadoEstatisticaRepository legadoEstatisticaRepository)
+    private readonly ILegadoTotalEstatisticaRepository _legadoEstatisticaRepository;
+    public EstatisticaApplication(ILegadoTotalEstatisticaRepository legadoEstatisticaRepository)
     {
       _legadoEstatisticaRepository = legadoEstatisticaRepository;
     }
