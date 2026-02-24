@@ -43,7 +43,8 @@ namespace PeladaPatronato.Application.Participante
           participante.Nome,
           participante.Apelido,
           participante.Telefone,
-          participante.PosicaoPreferida);
+          participante.PosicaoPreferida,
+          participante.NomeUsuario);
     }
   }
 }

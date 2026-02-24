@@ -8,7 +8,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Configuration
   {
     public void Configure(EntityTypeBuilder<LegadoTotalEstatistica> builder)
     {
-      builder.ToTable("LegadoEstatistica", "Legado");
+      builder.ToTable("LegadoTotalEstatistica", "Legado");
       builder.HasKey(c => c.Id);
       builder.Property(c => c.Periodo).HasColumnType("varchar").IsRequired().HasMaxLength(15);
       builder.Property(c => c.TotalPartidas).HasColumnType("int").IsRequired();

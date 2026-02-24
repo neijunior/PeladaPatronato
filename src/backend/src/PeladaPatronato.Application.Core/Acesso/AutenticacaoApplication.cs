@@ -21,7 +21,7 @@ namespace PeladaPatronato.Application.Core.Acesso
 
     public async Task<LoginResponse> Login(LoginRequest request)
     {
-      var participante = await _participanteRepository.ObterPorEmail(request.Email);
+      var participante = await _participanteRepository.ObterPorNomeUsuario(request.NomeUsuario);
 
       if (participante == null)
         throw new Exception("Usuário não encontrado.");

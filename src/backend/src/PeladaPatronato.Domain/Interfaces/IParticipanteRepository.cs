@@ -6,7 +6,7 @@ namespace PeladaPatronato.Domain.Interfaces
 {
   public interface IParticipanteRepository : IRepository<Participante>
   {
-    Task<Participante?> ObterPorEmail(string email);
+    Task<Participante?> ObterPorNomeUsuario(string nomeUsuario);
     
   }
 }
