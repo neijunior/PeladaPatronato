@@ -20,7 +20,7 @@ namespace PeladaPatronato.Domain.Entidades
     public string? SenhaHash { get; private set; }
     public PerfilAcesso? Perfil { get; private set; }
 
-    public Participante(string nome, string? apelido, string? telefone, ePosicao? posicaoPreferida)
+    public Participante(string nome, string? apelido, string? telefone, ePosicao? posicaoPreferida, string? nomeUsuario)
     {
       this.Nome = nome;
       this.Apelido = apelido;
