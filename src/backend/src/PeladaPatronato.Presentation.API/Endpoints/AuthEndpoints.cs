@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PeladaPatronato.Application.Acesso;
-using PeladaPatronato.Application.Request.Acesso;
+using PeladaPatronato.Infra.CrossCutting.Request.Acesso;
 
 namespace PeladaPatronato.Presentation.API.Endpoints
 {

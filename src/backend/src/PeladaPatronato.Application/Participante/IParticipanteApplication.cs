@@ -1,5 +1,5 @@
-﻿using PeladaPatronato.Application.Request.Participante;
-using PeladaPatronato.Application.Response.Participante;
+﻿using PeladaPatronato.Infra.CrossCutting.Request.Participante;
+using PeladaPatronato.Infra.CrossCutting.Response.Participante;
 
 namespace PeladaPatronato.Application.Participante
 {

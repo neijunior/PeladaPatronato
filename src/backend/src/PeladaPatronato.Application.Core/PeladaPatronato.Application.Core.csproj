@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PeladaPatronato.Application.Request\PeladaPatronato.Application.Request.csproj" />
+    <ProjectReference Include="..\PeladaPatronato.Infra.CrossCutting.Request\PeladaPatronato.Infra.CrossCutting.Request.csproj" />
     <ProjectReference Include="..\PeladaPatronato.Application\PeladaPatronato.Application.csproj" />
     <ProjectReference Include="..\PeladaPatronato.Domain\PeladaPatronato.Domain.csproj" />
     <ProjectReference Include="..\PeladaPatronato.Infra.CrossCutting.Foundation\PeladaPatronato.Infra.CrossCutting.Foundation.csproj" />

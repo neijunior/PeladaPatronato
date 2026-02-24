@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PeladaPatronato.Application.Response.Acesso
+namespace PeladaPatronato.Infra.CrossCutting.Response.Acesso
 {
   public class LoginResponse
   {

@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PeladaPatronato.Application.Request\PeladaPatronato.Application.Request.csproj" />
-    <ProjectReference Include="..\PeladaPatronato.Application.Response\PeladaPatronato.Application.Response.csproj" />
+    <ProjectReference Include="..\PeladaPatronato.Infra.CrossCutting.Request\PeladaPatronato.Infra.CrossCutting.Request.csproj" />
+    <ProjectReference Include="..\PeladaPatronato.Infra.CrossCutting.Response\PeladaPatronato.Infra.CrossCutting.Response.csproj" />
     <ProjectReference Include="..\PeladaPatronato.Domain\PeladaPatronato.Domain.csproj" />
     <ProjectReference Include="..\PeladaPatronato.Infra.CrossCutting.Security\PeladaPatronato.Infra.CrossCutting.Security.csproj" />
   </ItemGroup>

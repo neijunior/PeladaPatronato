@@ -1,9 +1,9 @@
 ﻿using PeladaPatronato.Application.Acesso;
-using PeladaPatronato.Application.Request.Acesso;
-using PeladaPatronato.Application.Response.Acesso;
 using PeladaPatronato.Domain.Entidades;
 using PeladaPatronato.Domain.Interfaces;
 using PeladaPatronato.Infra.CrossCutting.Foundation;
+using PeladaPatronato.Infra.CrossCutting.Request.Acesso;
+using PeladaPatronato.Infra.CrossCutting.Response.Acesso;
 using PeladaPatronato.Infra.CrossCutting.Security.Acesso;
 
 namespace PeladaPatronato.Application.Core.Acesso
@@ -51,7 +51,7 @@ namespace PeladaPatronato.Application.Core.Acesso
 
       var hash = Criptografia.GerarHash(request.Senha);
 
-      participante.DefinirAcesso(hash, request.Perfil);
+      participante.DefinirAcesso(hash, (Domain.Entidades.PerfilAcesso)request.Perfil);
 
       await _participanteRepository.Atualizar(participante);
     }

@@ -1,4 +1,4 @@
-﻿namespace PeladaPatronato.Application.Response
+﻿namespace PeladaPatronato.Infra.CrossCutting.Response
 {
   public class ApiResponse<T>
   {

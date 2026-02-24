@@ -1,7 +1,4 @@
-﻿using PeladaPatronato.Domain.Entidades;
-
-
-namespace PeladaPatronato.Application.Request.Participante
+﻿namespace PeladaPatronato.Infra.CrossCutting.Request.Participante
 {
   public class ParticipanteRequest
   {
@@ -13,5 +10,19 @@ namespace PeladaPatronato.Application.Request.Participante
     public bool Ativo { get; set; }
     public string? Email { get; set; }
     public string? NomeUsuario { get; set; }
+  }
+
+  public enum ePosicao
+  {
+    Goleiro = 1,
+    Fixo = 2,
+    Ala = 3,
+    Pivo = 4
+  }
+
+  public enum eCategoriaPosicao
+  {
+    Goleiro = 1,
+    Linha = 2
   }
 }

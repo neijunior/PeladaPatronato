@@ -6,6 +6,7 @@
     {
       app.MapAuthEndpoints()
          .MapParticipanteEndpoints()
+         .MapEstatisticaEndpoints()
          .MapLookupEndpoints();
     }
   }

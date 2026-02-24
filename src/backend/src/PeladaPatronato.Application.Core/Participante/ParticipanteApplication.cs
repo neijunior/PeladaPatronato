@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PeladaPatronato.Application.Participante;
-using PeladaPatronato.Application.Request.Participante;
-using PeladaPatronato.Application.Response.Participante;
+using PeladaPatronato.Infra.CrossCutting.Request.Participante;
+using PeladaPatronato.Infra.CrossCutting.Response.Participante;
 using PeladaPatronato.Domain.Entidades;
 using PeladaPatronato.Domain.Interfaces;
 using PeladaPatronato.Infra.CrossCutting.Foundation;
 using System.Linq.Expressions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PeladaPatronato.Application.Core.Participante
 {
@@ -84,7 +85,7 @@ namespace PeladaPatronato.Application.Core.Participante
         participante = await _participanteRepository.ObterPorId(request.Id);
         if (participante is null)
           throw new Exception("Participante não encontrado");
-        participante.Atualizar(request.Nome, request.Apelido, request.Telefone, request.PosicaoPreferida, request.Ativo, request.Email);
+        participante.Atualizar(request.Nome, request.Apelido, request.Telefone, (request.PosicaoPreferida.HasValue ? (Domain.Entidades.ePosicao)request.PosicaoPreferida.Value : null), request.Ativo, request.Email);
       }
       
       return participante.ToResponse();

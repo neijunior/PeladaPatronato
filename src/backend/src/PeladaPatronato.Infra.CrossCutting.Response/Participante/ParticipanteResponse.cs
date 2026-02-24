@@ -1,4 +1,4 @@
-﻿namespace PeladaPatronato.Application.Response.Participante
+﻿namespace PeladaPatronato.Infra.CrossCutting.Response.Participante
 {
   public class ParticipanteResponse
   {

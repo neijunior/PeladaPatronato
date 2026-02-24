@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PeladaPatronato.Infra.CrossCutting.Data\PeladaPatronato.Infra.CrossCutting.Data.csproj" />
+		<ProjectReference Include="..\PeladaPatronato.Infra.CrossCutting.Request\PeladaPatronato.Infra.CrossCutting.Request.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
-﻿using PeladaPatronato.Application.Request.Participante;
-using PeladaPatronato.Application.Response;
-using PeladaPatronato.Application.Response.Participante;
+﻿using PeladaPatronato.Infra.CrossCutting.Request.Participante;
+using PeladaPatronato.Infra.CrossCutting.Response;
+using PeladaPatronato.Infra.CrossCutting.Response.Participante;
 
 namespace PeladaPatronato.Application.Participante
 {
@@ -43,7 +43,7 @@ namespace PeladaPatronato.Application.Participante
           participante.Nome,
           participante.Apelido,
           participante.Telefone,
-          participante.PosicaoPreferida,
+          participante.PosicaoPreferida.HasValue ? (Domain.Entidades.ePosicao)participante.PosicaoPreferida.Value : null,
           participante.NomeUsuario);
     }
   }

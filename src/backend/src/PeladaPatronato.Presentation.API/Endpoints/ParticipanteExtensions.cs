@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PeladaPatronato.Application.Acesso;
 using PeladaPatronato.Application.Participante;
-using PeladaPatronato.Application.Request.Acesso;
-using PeladaPatronato.Application.Request.Participante;
-using PeladaPatronato.Application.Response;
-using PeladaPatronato.Application.Response.Participante;
+using PeladaPatronato.Infra.CrossCutting.Request.Acesso;
+using PeladaPatronato.Infra.CrossCutting.Request.Participante;
+using PeladaPatronato.Infra.CrossCutting.Response;
+using PeladaPatronato.Infra.CrossCutting.Response.Participante;
 
 namespace PeladaPatronato.Presentation.API.Endpoints
 {

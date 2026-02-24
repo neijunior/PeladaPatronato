@@ -1,4 +1,4 @@
-﻿namespace PeladaPatronato.Application.Request.Acesso
+﻿namespace PeladaPatronato.Infra.CrossCutting.Request.Acesso
 {
   public class LoginRequest
   {

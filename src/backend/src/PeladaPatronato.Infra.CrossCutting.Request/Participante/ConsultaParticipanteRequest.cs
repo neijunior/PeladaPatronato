@@ -1,4 +1,4 @@
-﻿namespace PeladaPatronato.Application.Request.Participante
+﻿namespace PeladaPatronato.Infra.CrossCutting.Request.Participante
 {
   public class ConsultaParticipanteRequest
   {

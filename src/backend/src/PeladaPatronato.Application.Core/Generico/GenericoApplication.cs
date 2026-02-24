@@ -1,5 +1,5 @@
 ﻿using PeladaPatronato.Application.Generico;
-using PeladaPatronato.Application.Response;
+using PeladaPatronato.Infra.CrossCutting.Response;
 using PeladaPatronato.Domain.Interfaces;
 
 namespace PeladaPatronato.Application.Core.Generico

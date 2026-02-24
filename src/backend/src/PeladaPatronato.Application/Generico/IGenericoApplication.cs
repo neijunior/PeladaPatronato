@@ -1,6 +1,6 @@
-﻿using PeladaPatronato.Application.Request.Participante;
-using PeladaPatronato.Application.Response;
-using PeladaPatronato.Application.Response.Participante;
+﻿using PeladaPatronato.Infra.CrossCutting.Request.Participante;
+using PeladaPatronato.Infra.CrossCutting.Response;
+using PeladaPatronato.Infra.CrossCutting.Response.Participante;
 using System;
 using System.Collections.Generic;
 using System.Linq;

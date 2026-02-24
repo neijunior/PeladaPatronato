@@ -1,5 +1,5 @@
-﻿using PeladaPatronato.Application.Request.Acesso;
-using PeladaPatronato.Application.Response.Acesso;
+﻿using PeladaPatronato.Infra.CrossCutting.Request.Acesso;
+using PeladaPatronato.Infra.CrossCutting.Response.Acesso;
 
 namespace PeladaPatronato.Application.Acesso
 {
