@@ -16,7 +16,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
 
     public async Task<IEnumerable<LegadoTotalEstatistica>> Listar(ConsultaEstatisticaRequest paramConsulta)
     {
-      return await _context.LegadoTotalEstatistica.ToListAsync();
+      return await _context.LegadoTotalEstatistica.Include(i => i.Participante).ToListAsync();
     }
   }
 }
