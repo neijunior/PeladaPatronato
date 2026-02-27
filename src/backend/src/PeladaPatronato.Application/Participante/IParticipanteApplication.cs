@@ -1,4 +1,5 @@
 ﻿using PeladaPatronato.Infra.CrossCutting.Request.Participante;
+using PeladaPatronato.Infra.CrossCutting.Response;
 using PeladaPatronato.Infra.CrossCutting.Response.Participante;
 
 namespace PeladaPatronato.Application.Participante
@@ -7,7 +8,7 @@ namespace PeladaPatronato.Application.Participante
   {
     Task<ParticipanteResponse?> Consultar(Guid Id);
     Task<ParticipanteResponse> Salvar(ParticipanteRequest participante);
-    Task<IEnumerable<ParticipanteResponse>> Listar(ConsultaParticipanteRequest paramConsulta);
+    Task<PagedResponse<ParticipanteResponse>> Listar(ConsultaParticipanteRequest paramConsulta);
     Task<ParticipanteResponse> Inativar(Guid id);  
   }
 }

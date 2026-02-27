@@ -9,10 +9,10 @@ namespace PeladaPatronato.Presentation.API.Endpoints
     public static WebApplication MapEstatisticaEndpoints(this WebApplication app)
     {
       var grupo = app.MapGroup("/estatistica")
-                     .WithTags("Estatistica");
+                     .WithTags("Estatistica")
+                     .RequireAuthorization(); 
 
-      grupo.MapPost("/listar", async (IEstatisticaApplication estatistica,
-                 [FromBody] ConsultaEstatisticaRequest paramConsulta) =>
+      grupo.MapPost("/listar", async (IEstatisticaApplication estatistica, [FromBody] ConsultaEstatisticaRequest paramConsulta) =>
       {
         try
         {

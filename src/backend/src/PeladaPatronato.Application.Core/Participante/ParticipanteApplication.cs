@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PeladaPatronato.Application.Participante;
-using PeladaPatronato.Infra.CrossCutting.Request.Participante;
-using PeladaPatronato.Infra.CrossCutting.Response.Participante;
 using PeladaPatronato.Domain.Entidades;
 using PeladaPatronato.Domain.Interfaces;
 using PeladaPatronato.Infra.CrossCutting.Foundation;
-using System.Linq.Expressions;
+using PeladaPatronato.Infra.CrossCutting.Request.Participante;
+using PeladaPatronato.Infra.CrossCutting.Response;
+using PeladaPatronato.Infra.CrossCutting.Response.Participante;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace PeladaPatronato.Application.Core.Participante
 {
@@ -37,7 +39,7 @@ namespace PeladaPatronato.Application.Core.Participante
       return participante.ToResponse();
     }
 
-    public async Task<IEnumerable<ParticipanteResponse>> Listar(ConsultaParticipanteRequest paramConsulta)
+    public async Task<PagedResponse<ParticipanteResponse>> Listar(ConsultaParticipanteRequest paramConsulta)
     {
       Expression<Func<Domain.Entidades.Participante, bool>>? filtro = null;
       Func<IQueryable<Domain.Entidades.Participante>, IQueryable<Domain.Entidades.Participante>>? include = null;
@@ -69,7 +71,29 @@ namespace PeladaPatronato.Application.Core.Participante
 
       var participantes = await _participanteRepository.Listar(filtro, include);
 
-      return participantes.Select(p => p.ToResponse());
+      //if (!string.IsNullOrWhiteSpace(paramConsulta.OrderBy))
+      //{
+      //  participantes = paramConsulta.Direction.ToLower() == "desc"
+      //      ? participantes.OrderByDescending(e => EF.Property<object>(e, paramConsulta.OrderBy))
+      //      : participantes.OrderBy(e => EF.Property<object>(e, paramConsulta.OrderBy));
+      //}
+
+      var totalCount = participantes.Count();
+
+      var items = participantes
+          .Skip((paramConsulta.PageNumber - 1) * paramConsulta.PageSize)
+          .Take(paramConsulta.PageSize)
+          .ToList();
+
+      //return participantes.Select(p => p.ToResponse());
+
+      return new PagedResponse<ParticipanteResponse>
+      {
+        Items = participantes.Select(p => p.ToResponse()),
+        TotalCount = totalCount,
+        PageNumber = paramConsulta.PageNumber,
+        PageSize = paramConsulta.PageSize
+      };
     }
 
     public async Task<ParticipanteResponse> Salvar(ParticipanteRequest request)
