@@ -18,7 +18,7 @@ namespace PeladaPatronato.Application.Core.Estatistica
 
       try
       {
-        var lista = await _legadoEstatisticaRepository.Listar();
+        var lista = await _legadoEstatisticaRepository.Listar(paramConsulta);
         return lista.Select(s => new EstatisticaResponse()
         {
           ParticipanteId = s.Participante.Id,
