@@ -16,8 +16,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
       _dbSet = context.Set<TEntity>();
     }
 
-    public async Task<TEntity?> ObterPorId(Guid id)
-        => await _dbSet.FindAsync(id);
+    public async Task<TEntity?> ObterPorId(Guid id) => await _dbSet.FindAsync(id);
 
     public async Task<TEntity?> Consultar(Expression<Func<TEntity, bool>> where)
         => await _dbSet.FirstOrDefaultAsync(where);

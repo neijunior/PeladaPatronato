@@ -51,6 +51,19 @@ namespace PeladaPatronato.Presentation.API.Endpoints
         }
       }).RequireAuthorization("Todos");
 
+      grupo.MapGet($"/consultar", async (IParticipanteApplication participanteApp, Guid Id) =>
+      {
+        try
+        {
+          return Results.Ok(await participanteApp.Consultar(Id));
+
+        }
+        catch (Exception ex)
+        {
+          return Results.BadRequest(ex.Message);
+        }
+      }).RequireAuthorization("Todos");
+
       grupo.MapPost("/definir-acesso", async (IAutenticacaoApplication app, [FromBody] DefinirAcessoRequest request) =>
       {
         try
