@@ -12,8 +12,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(email: string, senha: string) {
-    return this.http.post<any>(this.baseUrl, { email, senha })
+  login(nomeUsuario: string, senha: string) {
+    return this.http.post<any>(this.baseUrl, { nomeUsuario, senha })
       .pipe(tap(response => {
         localStorage.setItem('token', response.token);
       }));

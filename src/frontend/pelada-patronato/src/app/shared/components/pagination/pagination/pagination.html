@@ -1,0 +1,28 @@
+<div
+  class="flex items-center justify-center mt-6 gap-4"
+  *ngIf="totalPages > 1"
+>
+  <!-- Botão Anterior -->
+  <button
+    class="px-4 py-2 rounded bg-gray-700 hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed"
+    (click)="change(currentPage - 1)"
+    [disabled]="currentPage === 1"
+  >
+    Anterior
+  </button>
+
+  <!-- Informação de página -->
+  <span class="text-gray-300 text-sm">
+    Página <strong>{{ currentPage }}</strong>
+    de <strong>{{ totalPages }}</strong>
+  </span>
+
+  <!-- Botão Próxima -->
+  <button
+    class="px-4 py-2 rounded bg-gray-700 hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed"
+    (click)="change(currentPage + 1)"
+    [disabled]="currentPage === totalPages"
+  >
+    Próxima
+  </button>
+</div>

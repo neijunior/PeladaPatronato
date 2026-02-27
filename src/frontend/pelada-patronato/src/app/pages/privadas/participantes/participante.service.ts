@@ -4,16 +4,21 @@ import { Participante } from '../../../core/models/participante';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Posicao } from '../../../core/models/posicao';
+import { ParticipanteFiltro } from '../../../core/models/filtros/participante-filtro';
+import { PagedResponse } from '../../../core/models/base/paged-response';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ParticipanteService {
   private http = inject(HttpClient);
   private baseUrl = `${environment.apiUrl}/participante`;
 
-  listar(filtro: { ativo?: boolean; nome?: string; exibePosicao?: boolean }): Observable<Participante[]> {
-    return this.http.post<Participante[]>(`${this.baseUrl}/listar`, filtro);
+  listar(filtro: ParticipanteFiltro): Observable<PagedResponse<Participante>> {
+    let lista = this.http.post<PagedResponse<Participante>>(`${this.baseUrl}/listar`, filtro);
+    debugger;
+    return lista;
   }
 
   listarPosicoes(): Observable<Posicao[]> {
@@ -21,31 +26,20 @@ export class ParticipanteService {
   }
 
   get(id: string): Observable<Participante> {
-    const filtro = {
-      id: id
-    };
-    
-    return this.http.post<Participante[]>(`${this.baseUrl}/listar`, filtro).pipe(
-      map(res => {
-        if (res.length > 0) {
-          return res[0]; // pega apenas o primeiro participante
-        }
-        throw new Error('Participante não encontrado'); // ou retorna null se preferir
-      })
-    );;
-  }
+  return this.http.get<Participante>(`${this.baseUrl}/${id}`);
+}
 
   salvar(p: Participante): Observable<Participante> {
     const payload = {
-    id: p.id,
-    nome: p.nome,
-    apelido: p.apelido,
-    telefone: p.telefone,
-    ativo: p.ativo,    
-    posicaoPreferida: p.posicaoPreferida ? Number(p.posicaoPreferida) : null
-  };
+      id: p.id,
+      nome: p.nome,
+      apelido: p.apelido,
+      telefone: p.telefone,
+      ativo: p.ativo,
+      posicaoPreferida: p.posicaoPreferida ? Number(p.posicaoPreferida) : null
+    };
 
-  return this.http.post<Participante>(`${this.baseUrl}/salvar`, payload);
+    return this.http.post<Participante>(`${this.baseUrl}/salvar`, payload);
   }
 
   update(id: number, p: Participante): Observable<Participante> {

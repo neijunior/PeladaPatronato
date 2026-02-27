@@ -25,7 +25,7 @@ export class Sidebar {
     { label: 'Dashboard', path: '/dashboard', requiresAuth: true },
     { label: 'Participantes', path: '/participantes', requiresAuth: true },
     // { label: 'Rodadas', path: '/rodadas' },
-    // { label: 'Estatísticas', path: '/estatisticas' },
+    { label: 'Estatísticas', path: '/estatisticas', requiresAuth: true },
     { label: 'Estatuto', path: '/documentos/estatuto/estatuto-financeiro' },
     { label: 'Sobre', path: '/sobre' },
   ];

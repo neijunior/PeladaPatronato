@@ -1,1 +1,133 @@
-<p>estatisticas-list works!</p>
+<div class="p-6 space-y-6">
+
+  <!-- TÍTULO -->
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-semibold text-white">
+      Estatísticas
+    </h1>
+  </div>
+
+  <!-- FILTRO -->
+  <div class="bg-gray-800 p-4 rounded-lg shadow">
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+
+      <!-- Nome -->
+      <div class="flex flex-col">
+        <label class="text-sm text-gray-400 mb-1">Nome</label>
+        <input type="text" class="px-3 py-2 rounded bg-gray-700 text-white outline-none" [(ngModel)]="filtro.nomeParticipante"
+          (keyup.enter)="aplicarFiltro()" />
+      </div>
+
+      <!-- Posição -->
+      <!-- <div class="flex flex-col">
+        <label class="text-sm text-gray-400 mb-1">Posição</label>
+        <select id="posicao" name="posicao" [(ngModel)]="filtro.idPosicao"
+          class="px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option [ngValue]="null" disabled>Selecione...</option>
+          <option *ngFor="let pos of posicoes" [ngValue]="pos.id">{{ pos.nome }}</option>
+        </select>
+      </div> -->
+
+      <!-- Ordenação -->
+      <div class="flex flex-col">
+        <label class="text-sm text-gray-400 mb-1">Ordenar por</label>
+        <select class="px-3 py-2 rounded bg-gray-700 text-white outline-none" [(ngModel)]="filtro.orderBy">
+          <option value="nome">Nome</option>
+          <option value="periodo">Período</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Botões -->
+    <div class="flex gap-3 mt-4">
+      <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white" (click)="aplicarFiltro()">
+        Buscar
+      </button>
+
+      <button class="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded text-white" (click)="limparFiltro()">
+        Limpar
+      </button>      
+    </div>
+  </div>
+
+  <!-- TABELA -->
+  <div class="bg-gray-800 rounded-lg shadow overflow-hidden">
+
+    @if (carregando) {
+    <div class="p-6 text-center text-gray-400">
+      Carregando...
+    </div>
+    }
+
+    @if (!carregando && estatisticas.length === 0) {
+    <div class="p-6 text-center text-gray-400">
+      Nenhum registro encontrado.
+    </div>
+    }
+
+    @if (!carregando && estatisticas.length > 0) {
+
+    <table class="w-full text-sm text-left text-gray-300">
+
+      <thead class="bg-gray-700 text-gray-200 uppercase text-xs">
+        <tr>
+          <th class="px-6 py-3">Período</th>
+          <th class="px-6 py-3">Nome</th>
+          <th class="px-6 py-3">Partidas</th>
+          <th class="px-6 py-3">Gols</th>
+          <th class="px-6 py-3">Média Gols</th>
+          <th class="px-6 py-3">Assistências</th>
+          <th class="px-6 py-3">Média Assistências</th>
+          <th class="px-6 py-3 text-right">Ações</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        @for (estatistica of estatisticas; track estatistica.periodo) {
+        <tr class="border-b border-gray-700 hover:bg-gray-750">
+
+          <td class="px-6 py-4"> {{ estatistica.periodo }} </td>
+          <td class="px-6 py-4"> {{ estatistica.participante?.nome }} </td>
+          <td class="px-6 py-4"> {{ estatistica.totalPartidas }} </td>
+          <td class="px-6 py-4"> {{ estatistica.totalGols }} </td>
+          <td class="px-6 py-4"> {{ estatistica.mediaGols }} </td>
+          <td class="px-6 py-4"> {{ estatistica.totalAssistencias }} </td>          
+          <td class="px-6 py-4"> {{ estatistica.mediaAssistencias }} </td>
+          <!-- Editar -->
+          <td class="px-6 py-4 text-right">
+            <div class="flex justify-end gap-4">
+            </div>
+          </td>
+
+        </tr>
+        }
+
+      </tbody>
+    </table>
+
+    }
+
+  </div>
+
+  <!-- RODAPÉ PAGINAÇÃO -->
+  <div class="flex items-center justify-between">
+
+    @if (totalRegistros > 0) {
+
+    <span class="text-sm text-gray-400">
+      Mostrando {{ registroInicial }} - {{ registroFinal }}
+      de {{ totalRegistros }}
+    </span>
+
+    @if (totalRegistros > filtro.pageSize) {
+    <app-pagination [totalItems]="totalRegistros" [pageSize]="filtro.pageSize" [currentPage]="filtro.pageNumber"
+      (pageChange)="mudarPagina($event)" />
+    }
+
+    }
+
+  </div>
+
+</div>

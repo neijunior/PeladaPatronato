@@ -12,7 +12,7 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class Login {
 
-  email = '';
+  nomeUsuario = '';
   senha = '';
   erro: string | null = null;
   carregando = false;
@@ -25,7 +25,7 @@ export class Login {
     this.erro = null;
     this.carregando = true;
 
-    this.authService.login(this.email, this.senha)
+    this.authService.login(this.nomeUsuario, this.senha)
       .subscribe({
         next: () => {
           this.carregando = false;

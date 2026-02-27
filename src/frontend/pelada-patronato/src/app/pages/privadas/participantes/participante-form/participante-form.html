@@ -1,59 +1,89 @@
 <div class="min-h-screen bg-gray-900 text-gray-100 p-6 flex items-center justify-center">
   <div class="w-full max-w-lg bg-gray-800 rounded-lg shadow-lg p-6">
-    <h1 class="text-2xl font-bold mb-6">Novo Participante</h1>
+    <h1 class="text-2xl font-bold mb-6">
+      {{ p.id !== '00000000-0000-0000-0000-000000000000' ? 'Editar Participante' : 'Novo Participante' }}
+    </h1>
 
     <form #formParticipante="ngForm" (ngSubmit)="save()">
 
-      <!-- Grid responsivo: 2 colunas no desktop, 1 coluna no mobile -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
         <!-- Nome -->
         <div class="flex flex-col">
-          <label class="mb-1" for="nome">Nome <span class="text-red-500">*</span></label>
-          <input type="text" id="nome" name="nome" required
-                 [(ngModel)]="p.nome"
-                 class="px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <label class="mb-1" for="nome">
+            Nome <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            required
+            [(ngModel)]="p.nome"
+            class="px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
 
         <!-- Apelido -->
         <div class="flex flex-col">
           <label class="mb-1" for="apelido">Apelido</label>
-          <input type="text" id="apelido" name="apelido"
-                 [(ngModel)]="p.apelido"
-                 class="px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <input
+            type="text"
+            id="apelido"
+            name="apelido"
+            [(ngModel)]="p.apelido"
+            class="px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
 
-        <!-- Data Cadastro
+        <!-- Email -->
         <div class="flex flex-col">
-          <label class="mb-1" for="dataCadastro">Data de Cadastro</label>
-          <input type="date" id="dataCadastro" name="dataCadastro"
-                 [(ngModel)]="p.dataCadastro "
-                 class="px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div> -->
-
-        <!-- Posição Preferida -->
-        <div class="flex flex-col">
-          <label class="mb-1" for="posicao">Posição Preferida</label>
-          <select id="posicao" name="posicao" [(ngModel)]="posicaoPreferidaId"
-        class="px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
-  <option [ngValue]="null" disabled>Selecione...</option>
-  <option *ngFor="let pos of posicoes" [ngValue]="pos.id">{{ pos.nome }}</option>
-</select>
+          <label class="mb-1" for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="p.email"
+            class="px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
 
         <!-- Telefone -->
         <div class="flex flex-col">
           <label class="mb-1" for="telefone">Telefone</label>
-          <input type="text" id="telefone" name="telefone"
-                 [(ngModel)]="p.telefone"
-                 class="px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <input
+            type="text"
+            id="telefone"
+            name="telefone"
+            [(ngModel)]="p.telefone"
+            class="px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <!-- Posição Preferida -->
+        <div class="flex flex-col">
+          <label class="mb-1" for="posicao">Posição Preferida</label>
+          <select
+            id="posicao"
+            name="posicao"
+            [(ngModel)]="p.posicaoPreferida"
+            class="px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option [ngValue]="undefined">Selecione...</option>
+            <option *ngFor="let pos of posicoes" [ngValue]="pos">
+              {{ pos.nome }}
+            </option>
+          </select>
         </div>
 
         <!-- Ativo -->
         <div class="flex items-center mt-6 md:mt-0">
-          <input type="checkbox" id="ativo" name="ativo"
-                 [(ngModel)]="p.ativo"
-                 class="mr-2 h-4 w-4 text-blue-500 bg-gray-700 border-gray-600 rounded focus:ring-2 focus:ring-blue-500" />
+          <input
+            type="checkbox"
+            id="ativo"
+            name="ativo"
+            [(ngModel)]="p.ativo"
+            class="mr-2 h-4 w-4 text-blue-500 bg-gray-700 border-gray-600 rounded focus:ring-2 focus:ring-blue-500"
+          />
           <label for="ativo">Ativo</label>
         </div>
 
@@ -61,13 +91,19 @@
 
       <!-- Botões -->
       <div class="flex justify-end mt-6 space-x-3">
-        <button type="submit"
-                class="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded disabled:opacity-50">
+        <button
+          type="submit"
+          [disabled]="formParticipante.invalid"
+          class="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded disabled:opacity-50"
+        >
           Salvar
         </button>
-        <button type="button"
-                class="bg-gray-600 hover:bg-gray-700 text-white font-medium px-4 py-2 rounded"
-                (click)="cancel()">
+
+        <button
+          type="button"
+          class="bg-gray-600 hover:bg-gray-700 text-white font-medium px-4 py-2 rounded"
+          (click)="cancel()"
+        >
           Cancelar
         </button>
       </div>

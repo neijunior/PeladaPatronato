@@ -7,6 +7,7 @@ export interface Participante {
   telefone?: string;  
   posicaoPreferida?:Posicao;
   ativo: boolean;
-  dataCadastro?: Date
+  dataCadastro?: Date;
+  email?: string
   // outros campos que você quiser...
 }
