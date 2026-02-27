@@ -89,7 +89,7 @@ namespace PeladaPatronato.Application.Core.Participante
 
       return new PagedResponse<ParticipanteResponse>
       {
-        Items = participantes.Select(p => p.ToResponse()),
+        Items = items.Select(p => p.ToResponse()),
         TotalCount = totalCount,
         PageNumber = paramConsulta.PageNumber,
         PageSize = paramConsulta.PageSize
