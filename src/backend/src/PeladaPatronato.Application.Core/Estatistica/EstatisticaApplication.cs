@@ -1,8 +1,11 @@
 ﻿using PeladaPatronato.Application.Estatistica;
 using PeladaPatronato.Application.Participante;
+using PeladaPatronato.Domain.Entidades;
 using PeladaPatronato.Domain.Interfaces;
 using PeladaPatronato.Infra.CrossCutting.Request.Estatistica;
+using PeladaPatronato.Infra.CrossCutting.Response;
 using PeladaPatronato.Infra.CrossCutting.Response.Estatistica;
+using PeladaPatronato.Infra.CrossCutting.Response.Participante;
 
 namespace PeladaPatronato.Application.Core.Estatistica
 {
@@ -13,20 +16,32 @@ namespace PeladaPatronato.Application.Core.Estatistica
     {
       _legadoEstatisticaRepository = legadoEstatisticaRepository;
     }
-    public async Task<IEnumerable<EstatisticaResponse>> Listar(ConsultaEstatisticaRequest paramConsulta)
+    public async Task<PagedResponse<EstatisticaResponse>> Listar(ConsultaEstatisticaRequest paramConsulta)
     {
 
       try
-      {
+      { 
         var lista = await _legadoEstatisticaRepository.Listar(paramConsulta);
-        return lista.Select(s => new EstatisticaResponse()
+
+        var totalCount = lista.Count();
+
+        var listaTratada = lista.Select(s => new EstatisticaResponse()
         {
           ParticipanteId = s.Participante.Id,
           Participante = s.Participante.ToResponse(),
+          Periodo = s.Periodo,
           TotalPartidas = s.TotalPartidas,
           TotalAssistencias = s.TotalAssistencias,
           TotalGols = s.TotalGols
         }).ToList();
+
+        return new PagedResponse<EstatisticaResponse>
+        {
+          Items = listaTratada,
+          TotalCount = totalCount,
+          PageNumber = paramConsulta.PageNumber,
+          PageSize = paramConsulta.PageSize
+        };
       }
       catch (Exception)
       {
