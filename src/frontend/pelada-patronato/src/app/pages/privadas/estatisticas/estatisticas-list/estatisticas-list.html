@@ -31,7 +31,7 @@
       <!-- Ordenação -->
       <div class="flex flex-col">
         <label class="text-sm text-gray-400 mb-1">Ordenar por</label>
-        <select class="px-3 py-2 rounded bg-gray-700 text-white outline-none" [(ngModel)]="filtro.orderBy">
+        <select class="px-3 py-2 rounded bg-gray-700 text-white outline-none" [(ngModel)]="filtro.ordenacoes">
           <option value="nome">Nome</option>
           <option value="periodo">Período</option>
         </select>
@@ -85,7 +85,7 @@
 
       <tbody>
 
-        @for (estatistica of estatisticas; track estatistica.periodo) {
+        @for (estatistica of estatisticas; track estatistica.participanteId) {
         <tr class="border-b border-gray-700 hover:bg-gray-750">
 
           <td class="px-6 py-4"> {{ estatistica.periodo }} </td>

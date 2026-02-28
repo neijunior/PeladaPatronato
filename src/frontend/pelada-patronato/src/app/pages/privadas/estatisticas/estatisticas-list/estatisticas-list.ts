@@ -26,8 +26,7 @@ export class EstatisticasList implements OnInit {
 
   filtro: EstatisticaFiltro = {
     pageNumber: 1,
-    pageSize: 10,
-    orderBy: 'nomeParticipante',
+    pageSize: 10,    
     nomeParticipante: '',
     posicao: 0,
     periodo: '',
@@ -84,8 +83,7 @@ export class EstatisticasList implements OnInit {
   limparFiltro(): void {
     this.filtro = {
       pageNumber: 1,
-      pageSize: 10,
-      orderBy: 'nome',
+      pageSize: 10,      
     };
 
     this.carregar();

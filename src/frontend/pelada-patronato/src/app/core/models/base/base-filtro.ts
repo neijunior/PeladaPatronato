@@ -1,6 +1,10 @@
 export interface BaseFiltro {
   pageNumber: number;
   pageSize: number;
-  orderBy?: string;
-  direction?: 'asc' | 'desc';
+  ordenacoes?: Ordenacao[];
+}
+
+export interface Ordenacao {
+  campo: string;
+  direcao: 'asc' | 'desc';
 }

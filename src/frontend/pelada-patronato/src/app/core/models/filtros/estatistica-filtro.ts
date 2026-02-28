@@ -7,3 +7,5 @@ export interface EstatisticaFiltro extends BaseFiltro {
   dataInicio?: Date;
   dataFim?: Date;
 }
+
+

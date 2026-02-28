@@ -34,9 +34,7 @@ export class ParticipanteList implements OnInit {
     pageNumber: 1,
     pageSize: 10,
     ativo: true,
-    exibePosicao: true,
-    orderBy: 'nome',
-    direction: 'asc'
+    exibePosicao: true    
   };
 
   constructor(
@@ -101,9 +99,8 @@ export class ParticipanteList implements OnInit {
       pageNumber: 1,
       pageSize: 10,
       ativo: true,
-      exibePosicao: true,
-      orderBy: 'nome',
-      direction: 'asc'
+      exibePosicao: true     
+
     };
 
     this.carregar();
