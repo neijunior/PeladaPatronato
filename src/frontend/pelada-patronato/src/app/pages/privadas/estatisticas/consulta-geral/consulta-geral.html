@@ -26,7 +26,7 @@
                 <mat-datepicker-toggle matSuffix [for]="pickerFim"></mat-datepicker-toggle>
                 <mat-datepicker #pickerFim></mat-datepicker>
             </div>
-            <div class="flex flex-col">
+            <!-- <div class="flex flex-col">
                 <label class="text-sm text-gray-400 mb-1">Semestre</label>
 
                 <select [(ngModel)]="filtro.periodo" class="px-3 py-2 rounded bg-gray-700 text-white outline-none">
@@ -34,7 +34,7 @@
                     <option [value]="sem">{{ sem }}</option>
                     }
                 </select>
-            </div>
+            </div> -->
 
 
             <div class="flex flex-col">
@@ -60,7 +60,7 @@
                     [ngModel]="filtro.ordenacoes?.[0]?.campo" (ngModelChange)="alterarOrdenacao($event)">
                     <option value="TotalGols">Gol</option>
                     <option value="TotalAssistencias">Assistência</option>
-                    <option value="vitoria">Vitória</option>
+                    <!-- <option value="vitoria">Vitória</option> -->
                 </select>
             </div>
 

@@ -26,8 +26,7 @@ export class RankingSemestral implements OnInit {
   filtro: EstatisticaFiltro = {
     pageNumber: 1,
     pageSize: 10,
-    nomeParticipante: '',
-    posicao: 0,
+    nomeParticipante: '',    
     periodo: '',
     dataInicio: new Date(),
     dataFim: new Date(),
@@ -43,8 +42,7 @@ export class RankingSemestral implements OnInit {
   ngOnInit(): void {
     const anoAtual = new Date().getFullYear();
     this.gerarSemestres(anoAtual - 1, anoAtual);
-    this.limparFiltro();
-    this.carregar();
+    this.limparFiltro();    
   }
 
   get registroInicial(): number {
@@ -88,7 +86,6 @@ export class RankingSemestral implements OnInit {
 
   limparFiltro(): void {
     this.filtro = {
-      nomeParticipante: '',
       ordenacoes: [{ campo: 'TotalGols', direcao: 'desc' }],
       pageNumber: 1,
       pageSize: 10,
