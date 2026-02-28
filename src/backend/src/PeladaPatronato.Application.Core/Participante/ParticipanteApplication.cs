@@ -71,16 +71,11 @@ namespace PeladaPatronato.Application.Core.Participante
 
       var participantes = await _participanteRepository.Listar(filtro, include);
 
-      //if (!string.IsNullOrWhiteSpace(paramConsulta.OrderBy))
-      //{
-      //  participantes = paramConsulta.Direction.ToLower() == "desc"
-      //      ? participantes.OrderByDescending(e => EF.Property<object>(e, paramConsulta.OrderBy))
-      //      : participantes.OrderBy(e => EF.Property<object>(e, paramConsulta.OrderBy));
-      //}
+      
 
       var totalCount = participantes.Count();
 
-      var items = participantes
+      var items = participantes.OrderBy(o => o.Nome)
           .Skip((paramConsulta.PageNumber - 1) * paramConsulta.PageSize)
           .Take(paramConsulta.PageSize)
           .ToList();

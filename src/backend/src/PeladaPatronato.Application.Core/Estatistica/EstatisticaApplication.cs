@@ -1,4 +1,5 @@
-﻿using PeladaPatronato.Application.Estatistica;
+﻿using Microsoft.EntityFrameworkCore;
+using PeladaPatronato.Application.Estatistica;
 using PeladaPatronato.Application.Participante;
 using PeladaPatronato.Domain.Entidades;
 using PeladaPatronato.Domain.Interfaces;
@@ -6,7 +7,8 @@ using PeladaPatronato.Infra.CrossCutting.Request.Estatistica;
 using PeladaPatronato.Infra.CrossCutting.Response;
 using PeladaPatronato.Infra.CrossCutting.Response.Estatistica;
 using PeladaPatronato.Infra.CrossCutting.Response.Participante;
-using System.Linq.Dynamic.Core; 
+using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 
 namespace PeladaPatronato.Application.Core.Estatistica
 {
@@ -17,12 +19,45 @@ namespace PeladaPatronato.Application.Core.Estatistica
     {
       _legadoEstatisticaRepository = legadoEstatisticaRepository;
     }
+
+    private async Task<IEnumerable<LegadoTotalEstatistica>> ListarLegadoTotalEstatistica(ConsultaEstatisticaRequest paramConsulta)
+    {
+      Expression<Func<Domain.Entidades.LegadoTotalEstatistica, bool>>? filtro = null;
+      Func<IQueryable<Domain.Entidades.LegadoTotalEstatistica>, IQueryable<Domain.Entidades.LegadoTotalEstatistica>>? include = null;
+
+      include = q => q.Include(p => p.Participante.Posicao);      
+
+      if (!string.IsNullOrEmpty(paramConsulta.NomeParticipante))
+      {
+        filtro = filtro.And(p => p.Participante.Nome == paramConsulta.NomeParticipante);
+      }
+
+      if (!paramConsulta.IdPosicao.HasValue)
+      {
+        filtro = filtro.And(p => p.Participante.IdPosicaoPreferida == paramConsulta.IdPosicao.Value);
+      }
+
+      if (!string.IsNullOrEmpty(paramConsulta.Periodo))
+      {
+        filtro = filtro.And(p => p.Periodo == paramConsulta.Periodo);
+      }
+
+      //public DateTime? DataInicio { get; set; }
+      //public DateTime? DataFim { get; set; }
+
+      var lista = await _legadoEstatisticaRepository.Listar(filtro, include);
+
+      return lista;
+    }
+
     public async Task<PagedResponse<EstatisticaResponse>> Listar(ConsultaEstatisticaRequest paramConsulta)
     {
 
+      
+
       try
       { 
-        var lista = await _legadoEstatisticaRepository.Listar(paramConsulta);
+        var lista = await ListarLegadoTotalEstatistica(paramConsulta);
 
         var totalCount = lista.Count();
 
