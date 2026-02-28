@@ -15,7 +15,7 @@ export class EstatisticaService {
     private baseUrl = `${environment.apiUrl}/estatistica`;
 
     listar(filtro: EstatisticaFiltro): Observable<PagedResponse<Estatistica>> {
-        console.warn(filtro);
+        console.log(filtro);
         let lista = this.http.post<PagedResponse<Estatistica>>(`${this.baseUrl}/listar`, filtro);
         return lista;
     }

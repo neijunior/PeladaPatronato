@@ -26,8 +26,8 @@ export class ParticipanteService {
   }
 
   get(id: string): Observable<Participante> {
-  return this.http.get<Participante>(`${this.baseUrl}/${id}`);
-}
+    return this.http.get<Participante>(`${this.baseUrl}/consultar?Id=${id}`);
+  }
 
   salvar(p: Participante): Observable<Participante> {
     const payload = {

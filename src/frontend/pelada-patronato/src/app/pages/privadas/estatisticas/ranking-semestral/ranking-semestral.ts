@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { PagedResponse } from '../../../../core/models/base/paged-response';
-import { PaginationComponent } from '../../../../shared/components/pagination/pagination/pagination';
 import { Estatistica } from '../../../../core/models/estatistica';
 import { EstatisticaFiltro } from '../../../../core/models/filtros/estatistica-filtro';
 import { EstatisticaService } from '../estatisticas.service';
+import { Router } from '@angular/router';
+import { PagedResponse } from '../../../../core/models/base/paged-response';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination/pagination';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-estatistica-list',
-  standalone: true,
-  imports: [CommonModule, FormsModule, PaginationComponent
-  ],
-  templateUrl: './estatisticas-list.html',
-  styleUrls: ['./estatisticas-list.css']
+  selector: 'app-ranking-semestral',
+  imports: [CommonModule, FormsModule, PaginationComponent],
+  templateUrl: './ranking-semestral.html',
+  styleUrl: './ranking-semestral.css',
 })
-export class EstatisticasList implements OnInit {
+export class RankingSemestral implements OnInit {
+
 
   estatisticas: Estatistica[] = [];
   totalRegistros = 0;
@@ -26,13 +25,13 @@ export class EstatisticasList implements OnInit {
 
   filtro: EstatisticaFiltro = {
     pageNumber: 1,
-    pageSize: 10,    
+    pageSize: 10,
     nomeParticipante: '',
     posicao: 0,
     periodo: '',
     dataInicio: new Date(),
-    dataFim: new Date()
-
+    dataFim: new Date(),
+    ordenacoes: [{ campo: 'TotalGols', direcao: 'desc' }]
   };
 
   constructor(
@@ -42,6 +41,9 @@ export class EstatisticasList implements OnInit {
   }
 
   ngOnInit(): void {
+    const anoAtual = new Date().getFullYear();
+    this.gerarSemestres(anoAtual - 1, anoAtual);
+    this.limparFiltro();
     this.carregar();
   }
 
@@ -80,10 +82,17 @@ export class EstatisticasList implements OnInit {
     this.carregar();
   }
 
+  get startIndex(): number {
+    return (this.filtro.pageNumber - 1) * this.filtro.pageSize;
+  }
+
   limparFiltro(): void {
     this.filtro = {
+      nomeParticipante: '',
+      ordenacoes: [{ campo: 'TotalGols', direcao: 'desc' }],
       pageNumber: 1,
-      pageSize: 10,      
+      pageSize: 10,
+      periodo: this.getSemestreAtual()
     };
 
     this.carregar();
@@ -94,5 +103,31 @@ export class EstatisticasList implements OnInit {
 
     this.filtro.pageNumber = page;
     this.carregar();
+  }
+
+  alterarOrdenacao(campo: string) {
+    this.filtro.ordenacoes = [
+      {
+        campo: campo,
+        direcao: 'desc' // pode mudar depois se quiser botão asc/desc
+      }
+    ];
+  }
+
+  semestres: string[] = [];
+  gerarSemestres(anoInicio: number, anoFim: number) {
+    for (let ano = anoInicio; ano <= anoFim; ano++) {
+      this.semestres.push(`${ano}.1`);
+      if (ano < new Date().getFullYear())
+        this.semestres.push(`${ano}.2`);
+    }
+  }
+
+  getSemestreAtual(): string {
+    const hoje = new Date();
+    const ano = hoje.getFullYear();
+    const mes = hoje.getMonth() + 1; // 1-12
+    const semestre = mes <= 6 ? 1 : 2;
+    return `${ano}.${semestre}`;
   }
 }

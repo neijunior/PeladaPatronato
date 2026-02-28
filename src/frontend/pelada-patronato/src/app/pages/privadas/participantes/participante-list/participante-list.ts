@@ -8,6 +8,7 @@ import { ParticipanteService } from '../participante.service';
 import { ParticipanteFiltro } from '../../../../core/models/filtros/participante-filtro';
 import { PagedResponse } from '../../../../core/models/base/paged-response';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination/pagination';
+import { TelefonePipe } from '../../../../pipes/telefone-pipe';
 
 @Component({
   selector: 'app-participante-list',
@@ -15,7 +16,8 @@ import { PaginationComponent } from '../../../../shared/components/pagination/pa
   imports: [
     CommonModule,
     FormsModule,
-    PaginationComponent
+    PaginationComponent,
+    TelefonePipe
   ],
   templateUrl: './participante-list.html',
   styleUrls: ['./participante-list.css']

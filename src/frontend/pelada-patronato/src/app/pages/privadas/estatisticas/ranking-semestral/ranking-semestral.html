@@ -1,0 +1,128 @@
+<div class="p-6 space-y-6">
+
+    <!-- TÍTULO -->
+    <div class="flex items-center justify-between">
+        <h1 class="text-2xl font-semibold text-white">
+            Estatísticas
+        </h1>
+    </div>
+
+    <!-- FILTRO -->
+    <div class="bg-gray-800 p-4 rounded-lg shadow">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+
+            <div class="flex flex-col">
+                <label class="text-sm text-gray-400 mb-1">Semestre</label>
+
+                <select [(ngModel)]="filtro.periodo" class="px-3 py-2 rounded bg-gray-700 text-white outline-none">
+                    @for (sem of semestres; track sem) {
+                    <option [value]="sem">{{ sem }}</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Ordenação -->
+            <div class="flex flex-col">
+                <label class="text-sm text-gray-400 mb-1">Ordenar por</label>
+                <select class="px-3 py-2 rounded bg-gray-700 text-white outline-none"
+                    [ngModel]="filtro.ordenacoes?.[0]?.campo" (ngModelChange)="alterarOrdenacao($event)">
+                    <option value="TotalGols">Gol</option>
+                    <option value="TotalAssistencias">Assistência</option>
+                    <option value="vitoria">Vitória</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- Botões -->
+        <div class="flex gap-3 mt-4">
+            <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white disabled:opacity-50"
+                (click)="aplicarFiltro()" [disabled]="!filtro.ordenacoes">
+                Buscar
+            </button>
+
+            <button class="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded text-white" (click)="limparFiltro()">
+                Limpar
+            </button>
+        </div>
+    </div>
+
+    <!-- TABELA -->
+    <div class="bg-gray-800 rounded-lg shadow overflow-hidden">
+
+        @if (carregando) {
+        <div class="p-6 text-center text-gray-400">
+            Carregando...
+        </div>
+        }
+
+        @if (!carregando && estatisticas.length === 0) {
+        <div class="p-6 text-center text-gray-400">
+            Nenhum registro encontrado.
+        </div>
+        }
+
+        @if (!carregando && estatisticas.length > 0) {
+
+        <table class="w-full text-sm text-left text-gray-300">
+
+            <thead class="bg-gray-700 text-gray-200 uppercase text-xs">
+                <tr>
+                    <th class="px-6 py-3 w-16 text-center">#</th>
+                    <th class="px-6 py-3">Período</th>
+                    <th class="px-6 py-3">Nome</th>
+                    <th class="px-6 py-3 text-center">Partidas</th>
+                    <th class="px-6 py-3 text-center">Gols</th>
+                    <th class="px-6 py-3 text-center">Média Gols</th>
+                    <th class="px-6 py-3 text-center">Assistências</th>
+                    <th class="px-6 py-3 text-center">Média Assistências</th>                    
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @for (estatistica of estatisticas; track estatistica.participanteId; let i = $index) {
+                <tr class="border-b border-gray-700" [ngClass]="{ 'bg-yellow-500/20': i === 0 && filtro.pageNumber === 1,
+                                                            'bg-gray-400/20': i === 1 && filtro.pageNumber === 1,
+                                                            'bg-amber-700/20': i === 2 && filtro.pageNumber === 1,
+                                                            'hover:bg-gray-750': i > 2  }">
+                    <td class="px-6 py-4 text-center font-semibold">
+                        {{ startIndex + i + 1 }}
+                    </td>
+                    <td class="px-6 py-4"> {{ estatistica.periodo }} </td>
+                    <td class="px-6 py-4"> {{ estatistica.participante.nome }} </td>
+                    <td class="px-6 py-4 text-center"> {{ estatistica.totalPartidas }} </td>
+                    <td class="px-6 py-4 text-center"> {{ estatistica.totalGols }} </td>
+                    <td class="px-6 py-4 text-center"> {{ estatistica.mediaGols | number:'1.2-2' }} </td>
+                    <td class="px-6 py-4 text-center"> {{ estatistica.totalAssistencias }} </td>
+                    <td class="px-6 py-4 text-center"> {{ estatistica.mediaAssistencias | number:'1.2-2' }} </td>
+                </tr>
+                }
+
+            </tbody>
+        </table>
+
+        }
+
+    </div>
+
+    <!-- RODAPÉ PAGINAÇÃO -->
+    <div class="flex items-center justify-between">
+
+        @if (totalRegistros > 0) {
+
+        <span class="text-sm text-gray-400">
+            Mostrando {{ registroInicial }} - {{ registroFinal }}
+            de {{ totalRegistros }}
+        </span>
+
+        @if (totalRegistros > filtro.pageSize) {
+        <app-pagination [totalItems]="totalRegistros" [pageSize]="filtro.pageSize" [currentPage]="filtro.pageNumber"
+            (pageChange)="mudarPagina($event)" />
+        }
+
+        }
+
+    </div>
+
+</div>

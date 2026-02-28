@@ -4,7 +4,11 @@ import { routes } from './app/app.routes';
 import { App } from './app/app';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './app/core/interceptors/auth-interceptor';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 import { LOCALE_ID } from '@angular/core';
+
+registerLocaleData(localePt);
 
 bootstrapApplication(App, {
   providers: [

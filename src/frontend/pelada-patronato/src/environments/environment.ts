@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  //apiUrl: 'http://localhost:5000' // endpoint da sua API
+  // apiUrl: 'https://localhost:7164' 
   apiUrl: 'https://peladadopatronatoapi.neijunior.dev.br'
 };

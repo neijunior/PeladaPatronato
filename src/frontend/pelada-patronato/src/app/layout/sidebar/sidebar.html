@@ -17,12 +17,36 @@
   </div>
 
   <nav class="flex-1 flex flex-col space-y-2 overflow-y-auto">
-    <a *ngFor="let item of menu"
+  <ng-container *ngFor="let item of menu">
+    
+    <!-- Item simples -->
+    <a *ngIf="!item.children"
        [routerLink]="item.path"
        routerLinkActive="bg-gray-700 text-white"
        class="block px-4 py-2 rounded hover:bg-gray-700 transition-colors"
        (click)="sidebar.close()">
       {{ item.label }}
     </a>
-  </nav>
+
+    <!-- Item com filhos -->
+    <div *ngIf="item.children" class="flex flex-col">
+      <span class="block px-4 py-2 rounded hover:bg-gray-700 transition-colors font-semibold cursor-pointer"
+            (click)="item.expanded = !item.expanded">
+        {{ item.label }}
+        <span class="float-right">{{ item.expanded ? '▾' : '▸' }}</span>
+      </span>
+
+      <div *ngIf="item.expanded" class="ml-4 flex flex-col space-y-1">
+        <a *ngFor="let child of item.children"
+           [routerLink]="child.path"
+           routerLinkActive="bg-gray-700 text-white"
+           class="block px-4 py-2 rounded hover:bg-gray-700 transition-colors"
+           (click)="sidebar.close()">
+          {{ child.label }}
+        </a>
+      </div>
+    </div>
+
+  </ng-container>
+</nav>
 </div>

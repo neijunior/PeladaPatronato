@@ -6,8 +6,10 @@ import { AuthService } from '../../services/auth.service';
 
 interface MenuItem {
   label: string;
-  path: string;
+  path?: string;
   requiresAuth?: boolean;
+  children?: MenuItem[];
+  expanded?: boolean 
 }
 
 @Component({
@@ -18,14 +20,24 @@ interface MenuItem {
 })
 export class Sidebar {
 
-  constructor(public sidebar: SidebarService, private auth: AuthService) {}
+  constructor(public sidebar: SidebarService, private auth: AuthService) { }
 
   private allMenu: MenuItem[] = [
-    { label: 'Home', path: '/' },    
+    { label: 'Home', path: '/' },
     { label: 'Dashboard', path: '/dashboard', requiresAuth: true },
     { label: 'Participantes', path: '/participantes', requiresAuth: true },
-    // { label: 'Rodadas', path: '/rodadas' },
-    { label: 'Estatísticas', path: '/estatisticas', requiresAuth: true },
+
+    // Estatísticas com submenu
+    {
+      label: 'Estatísticas',
+      requiresAuth: true,
+      expanded: false,
+      children: [
+        { label: 'Ranking Semestral', path: '/estatisticas/ranking' },
+        { label: 'Consulta Livre', path: '/estatisticas/consulta' }
+      ]
+    },
+
     { label: 'Estatuto', path: '/documentos/estatuto/estatuto-financeiro' },
     { label: 'Sobre', path: '/sobre' },
   ];
