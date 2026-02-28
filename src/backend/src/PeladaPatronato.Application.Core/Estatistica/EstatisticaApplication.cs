@@ -29,10 +29,10 @@ namespace PeladaPatronato.Application.Core.Estatistica
 
       if (!string.IsNullOrEmpty(paramConsulta.NomeParticipante))
       {
-        filtro = filtro.And(p => p.Participante.Nome == paramConsulta.NomeParticipante);
+        filtro = filtro.And(p => p.Participante.Nome.Contains(paramConsulta.NomeParticipante));
       }
 
-      if (!paramConsulta.IdPosicao.HasValue)
+      if (paramConsulta.IdPosicao.HasValue)
       {
         filtro = filtro.And(p => p.Participante.IdPosicaoPreferida == paramConsulta.IdPosicao.Value);
       }
