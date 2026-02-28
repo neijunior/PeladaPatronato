@@ -18,5 +18,13 @@ namespace PeladaPatronato.Infra.CrossCutting.Request.Estatistica
     public int PageSize { get; set; } = 10;
     public string? OrderBy { get; set; }
     public string Direction { get; set; } = "asc";
+
+    public ICollection<Ordenacao> ordenacoes { get; set; } = new List<Ordenacao>();
+  }
+
+  public class Ordenacao
+  {
+    public string Campo { get; set; } = string.Empty;
+    public string Direcao { get; set; } = "asc";
   }
 }

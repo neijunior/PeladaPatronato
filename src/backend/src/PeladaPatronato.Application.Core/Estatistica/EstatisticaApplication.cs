@@ -6,6 +6,7 @@ using PeladaPatronato.Infra.CrossCutting.Request.Estatistica;
 using PeladaPatronato.Infra.CrossCutting.Response;
 using PeladaPatronato.Infra.CrossCutting.Response.Estatistica;
 using PeladaPatronato.Infra.CrossCutting.Response.Participante;
+using System.Linq.Dynamic.Core; 
 
 namespace PeladaPatronato.Application.Core.Estatistica
 {
@@ -25,7 +26,24 @@ namespace PeladaPatronato.Application.Core.Estatistica
 
         var totalCount = lista.Count();
 
-        var listaTratada = lista.Select(s => new EstatisticaResponse()
+        if (paramConsulta.ordenacoes != null && paramConsulta.ordenacoes.Any())
+        {
+          // Cria a string de ordenação dinâmica
+          var ordenacaoString = string.Join(", ",
+              paramConsulta.ordenacoes.Select(o =>
+              {
+                var dir = o.Direcao?.ToLower() == "desc" ? "descending" : "ascending";
+                return $"{o.Campo} {dir}";
+              })
+          );
+
+          // Aplica a ordenação
+          lista = lista.AsQueryable().OrderBy(ordenacaoString).ToList();
+        }
+
+        var listaTratada = lista.Skip((paramConsulta.PageNumber - 1) * paramConsulta.PageSize)
+          .Take(paramConsulta.PageSize)
+          .Select(s => new EstatisticaResponse()
         {
           ParticipanteId = s.Participante.Id,
           Participante = s.Participante.ToResponse(),
@@ -45,10 +63,8 @@ namespace PeladaPatronato.Application.Core.Estatistica
       }
       catch (Exception)
       {
-
         throw;
       }
-      throw new NotImplementedException();
     }
   }
 }

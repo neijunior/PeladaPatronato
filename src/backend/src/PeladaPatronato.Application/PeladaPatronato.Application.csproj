@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PeladaPatronato.Infra.CrossCutting.Request\PeladaPatronato.Infra.CrossCutting.Request.csproj" />
     <ProjectReference Include="..\PeladaPatronato.Infra.CrossCutting.Response\PeladaPatronato.Infra.CrossCutting.Response.csproj" />
     <ProjectReference Include="..\PeladaPatronato.Domain\PeladaPatronato.Domain.csproj" />
