@@ -3,6 +3,7 @@ using PeladaPatronato.Domain.Entidades;
 using PeladaPatronato.Domain.Interfaces;
 using PeladaPatronato.Infra.CrossCutting.Data;
 using PeladaPatronato.Infra.CrossCutting.Request.Rodada;
+using PeladaPatronato.Infra.CrossCutting.Response.Rodada;
 
 namespace PeladaPatronato.Application.Core.Rodada
 {
@@ -75,6 +76,28 @@ namespace PeladaPatronato.Application.Core.Rodada
         throw;
       }
 
+    }
+
+    public async Task<ICollection<RodadaResponse>> Listar(ConsultarRodadaRequest request)
+    {
+      _unitOfWork.BeginTransaction();
+      try
+      {
+        var rodadas = await _rodadaRepository.Listar(request.DataInicio, request.DataFim);
+
+        return rodadas.Select(s => new RodadaResponse
+        {
+          Id = s.Id,
+          DataHora = s.DataHora,
+          Observacao = s.Observacao,
+          ValorDiarista = s.ValorDiarista
+        }).ToList();
+      }
+      catch (Exception)
+      {
+        _unitOfWork.Rollback();
+        throw;
+      }
     }
 
     public async Task SalvarEventos(SalvarEventosRequest request)

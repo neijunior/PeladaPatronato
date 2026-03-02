@@ -13,5 +13,6 @@ namespace PeladaPatronato.Domain.Interfaces
     public Task CriarRodada(Rodada rodada);
     Task<Rodada?> ObterPorId(Guid id);    
     void Atualizar(Rodada rodada);
+    public Task<ICollection<Rodada>> Listar(DateTime dataInicio, DateTime? dataFim);
   }
 }

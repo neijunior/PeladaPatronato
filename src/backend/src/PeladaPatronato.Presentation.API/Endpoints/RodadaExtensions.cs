@@ -11,7 +11,25 @@ namespace PeladaPatronato.Presentation.API.Endpoints
     {
       var grupo = app.MapGroup("/rodada")
                      .WithTags("Rodada")
-                     .RequireAuthorization(); 
+                     .RequireAuthorization();
+
+      grupo.MapPost("/listar", async (IRodadaApplication rodadaApp, [FromBody] ConsultarRodadaRequest request) =>
+      {
+        try
+        {
+
+          var lista = await rodadaApp.Listar(request);
+          return Results.Ok(lista.OrderBy(o => o.DataHora).ToList());
+        }
+        catch (Exception ex)
+        {
+          return Results.BadRequest(new
+          {
+            sucesso = false,
+            mensagem = ex.Message
+          });
+        }
+      });
 
       grupo.MapPost("/", async (IRodadaApplication rodadaApp, [FromBody] CriarRodadaRequest request) =>
       {

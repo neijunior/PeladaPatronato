@@ -33,5 +33,10 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
     {
       _context.Rodada.Update(rodada);
     }
+
+    public async Task<ICollection<Rodada>> Listar(DateTime dataInicio, DateTime? dataFim)
+    {
+      return await _context.Rodada.Where(w => w.DataHora >= dataInicio && (dataFim == null || w.DataHora <= dataFim)).ToListAsync(); 
+    }
   }
 }

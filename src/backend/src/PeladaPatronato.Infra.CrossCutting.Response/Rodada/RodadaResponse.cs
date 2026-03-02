@@ -9,10 +9,10 @@ namespace PeladaPatronato.Infra.CrossCutting.Response.Rodada
 {
   public class RodadaResponse
   {
-    public Guid Id { get; private set; }
-    public DateTime DataHora { get; private set; }
-    public decimal ValorDiarista { get; private set; }
-    public string? Observacao { get; private set; }
+    public Guid Id { get; set; }
+    public DateTime DataHora { get; set; }
+    public decimal ValorDiarista { get; set; }
+    public string? Observacao { get; set; }
     public ICollection<ParticipanteResponse> ListaParticipantes { get; set; } = new List<ParticipanteResponse>();
   }
 }
