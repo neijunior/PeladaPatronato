@@ -5,33 +5,26 @@ namespace PeladaPatronato.Domain.Entidades
   public class RodadaTime : Entity
   {
     public Guid RodadaId { get; private set; }
-    public Guid TimeId { get; private set; }
+    public Guid TimeBaseId { get; private set; }
 
     public int Vitorias { get; private set; }
     public int Derrotas { get; private set; }
     public int Empates { get; private set; }
     public int GolsPro { get; private set; }
     public int GolsContra { get; private set; }
-
-    private readonly List<RodadaParticipante> _participantes = new();
-    public IReadOnlyCollection<RodadaParticipante> Participantes => _participantes;
-
-    private readonly List<RodadaPartida> _partidas = new();
-    public IReadOnlyCollection<RodadaPartida> Partidas => _partidas;
-
+    public ICollection<RodadaTimeParticipante> Participantes { get; private set; } = new HashSet<RodadaTimeParticipante>();
     protected RodadaTime() { }
 
-    internal RodadaTime(Guid rodadaId, Guid timeId)
+    public RodadaTime(Guid rodadaId, Guid timeBaseId)
     {
       RodadaId = rodadaId;
-      TimeId = timeId;
+      TimeBaseId = timeBaseId;
     }
 
-    public RodadaParticipante AdicionarParticipante(Guid participanteId, eCategoriaPosicao categoriaPosicao)
+    public void AdicionarParticipante(RodadaTimeParticipante item)
     {
-      var rp = new RodadaParticipante(Id, participanteId, categoriaPosicao);
-      _participantes.Add(rp);
-      return rp;
+      this.Participantes??= new List<RodadaTimeParticipante>();
+      this.Participantes.Add(item);
     }
 
     internal void RegistrarResultado(int golsPro, int golsContra)

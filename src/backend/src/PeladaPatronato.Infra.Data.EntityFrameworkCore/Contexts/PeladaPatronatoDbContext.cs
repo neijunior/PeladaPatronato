@@ -8,7 +8,8 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Contexts
   {
     public DbSet<Participante> Participante { get; set; }
     public DbSet<LegadoTotalEstatistica> LegadoTotalEstatistica { get; set; }
-    
+    public DbSet<Rodada> Rodada { get; set; }
+
     public IDbContextTransaction Transaction { get; private set; }
     public PeladaPatronatoDbContext(DbContextOptions<PeladaPatronatoDbContext> options) : base(options)
     {
