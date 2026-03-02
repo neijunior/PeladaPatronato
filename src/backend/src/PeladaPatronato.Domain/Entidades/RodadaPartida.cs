@@ -15,10 +15,11 @@ namespace PeladaPatronato.Domain.Entidades
     public int Ordem { get; private set; }
     public Guid? TimeComPosseInicialId { get; private set; }
     public DateTime? DataHora { get; private set; }
-    public ICollection<RodadaPartidaParticipante> Participantes = new HashSet<RodadaPartidaParticipante>();
+    private readonly List<RodadaPartidaParticipante> _participantes = new();
+    public IReadOnlyCollection<RodadaPartidaParticipante> Participantes => _participantes;
 
-    private readonly List<RodadaEventoPartida> _eventos = new();
-    public IReadOnlyCollection<RodadaEventoPartida> Eventos => _eventos;
+    private readonly List<RodadaPartidaEvento> _eventos = new();
+    public IReadOnlyCollection<RodadaPartidaEvento> Eventos => _eventos;
     //public Rodada Rodada { get; private set; }
 
     protected RodadaPartida() { }
@@ -40,7 +41,7 @@ namespace PeladaPatronato.Domain.Entidades
       if (rodadaTimeId != RodadaTimeAId && rodadaTimeId != RodadaTimeBId)
         throw new Exception("Time não participa desta partida.");
 
-      var evento = new RodadaEventoPartida(this.RodadaId, rodadaTimeId, participanteId, tipo);
+      var evento = new RodadaPartidaEvento(this.RodadaId, rodadaTimeId, participanteId, tipo);
 
       _eventos.Add(evento);
     }

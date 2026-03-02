@@ -4,11 +4,11 @@ using PeladaPatronato.Domain.Entidades;
 
 namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Configuration
 {
-  public class RodadaEventoPartidaConfiguration : IEntityTypeConfiguration<RodadaEventoPartida>
+  public class RodadaPartidaEventoConfiguration : IEntityTypeConfiguration<RodadaPartidaEvento>
   {
-    public void Configure(EntityTypeBuilder<RodadaEventoPartida> builder)
+    public void Configure(EntityTypeBuilder<RodadaPartidaEvento> builder)
     {
-      builder.ToTable("RodadaEventoPartida", "PeladaPatronato");
+      builder.ToTable("RodadaPartidaEvento", "PeladaPatronato");
       builder.HasKey(c => c.Id);
       builder.Property(c => c.TipoEvento).HasColumnType("int").IsRequired();
       builder.Property(c => c.RodadaTimeId).IsRequired();

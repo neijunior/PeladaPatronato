@@ -6,5 +6,10 @@ namespace PeladaPatronato.Domain.Entidades
   {
     public Guid RodadaPartidaId { get; private set; }
     public Guid RodadaTimeParticipanteId { get; private set; }
+
+    public RodadaPartidaParticipante()
+    {
+        
+    }
   }
 }

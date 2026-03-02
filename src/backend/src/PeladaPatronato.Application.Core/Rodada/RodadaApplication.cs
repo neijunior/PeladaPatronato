@@ -42,23 +42,9 @@ namespace PeladaPatronato.Application.Core.Rodada
         var rodada = await _rodadaRepository.ObterPorId(request.rodadaId)
           ?? throw new Exception("Rodada não encontrada");
 
-        ICollection<RodadaTime> lista = new HashSet<RodadaTime>();
-        foreach (var item in request.Times)
-        {
-          var time = lista.FirstOrDefault(f => f.TimeBaseId == item.TimeId);
-          if (time == null)
-          {
-            time = new RodadaTime(request.rodadaId, item.TimeId);
-            lista.Add(time);
-          }
+        var times = request.Times.Select(s => new CriarTimeInfo(s.TimeId, s.ParticipantesIds));
 
-          foreach (var part in item.ParticipantesIds)
-          {
-            time.AdicionarParticipante(new RodadaTimeParticipante(time.Id, part));
-          }
-        }
-
-        rodada.DefinirTimes(lista);
+        rodada.DefinirTimes(times);
 
         _rodadaRepository.Atualizar(rodada);
         _unitOfWork.Commit();

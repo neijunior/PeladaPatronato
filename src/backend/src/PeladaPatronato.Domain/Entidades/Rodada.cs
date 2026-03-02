@@ -34,13 +34,22 @@ namespace PeladaPatronato.Domain.Entidades
       TempoPorPartida = tempoPorPartida;
       Status = StatusRodada.Criada;
     }
-    public void DefinirTimes(IEnumerable<RodadaTime> listaTimes)
+    public void DefinirTimes(IEnumerable<CriarTimeInfo> lista)
     {
       if (Status != StatusRodada.Criada)
         throw new Exception("Times só podem ser definidos quando a rodada estiver criada.");
 
       _times.Clear();
-      _times.AddRange(listaTimes);
+
+      foreach (var item in lista)
+      {
+        var time = new RodadaTime(this.Id, item.TimeBaseId);
+
+        foreach (var part in item.ParticipantesIds)
+          time.AdicionarParticipante(part);
+
+        _times.Add(time);
+      }
 
       Status = StatusRodada.TimesDefinidos;
     }
