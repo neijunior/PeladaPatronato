@@ -7,7 +7,8 @@
       app.MapAuthEndpoints()
          .MapParticipanteEndpoints()
          .MapEstatisticaEndpoints()
-         .MapLookupEndpoints();
+         .MapLookupEndpoints()
+         .MapRodadaEndpoints();
     }
   }
 }

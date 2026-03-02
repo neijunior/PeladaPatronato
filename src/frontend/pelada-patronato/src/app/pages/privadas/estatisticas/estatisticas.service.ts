@@ -16,6 +16,7 @@ export class EstatisticaService {
 
     listar(filtro: EstatisticaFiltro): Observable<PagedResponse<Estatistica>> {        
         let lista = this.http.post<PagedResponse<Estatistica>>(`${this.baseUrl}/listar`, filtro);
+        
         return lista;
     }
 }

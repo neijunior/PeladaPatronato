@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PeladaPatronato.Domain.Interfaces;
+using PeladaPatronato.Infra.CrossCutting.Data;
+using PeladaPatronato.Infra.Data.EntityFrameworkCore;
+using PeladaPatronato.Infra.Data.EntityFrameworkCore.Contexts;
 using PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories;
 
 namespace PeladaPatronato.Infra.CrossCutting.IoC
@@ -11,6 +14,8 @@ namespace PeladaPatronato.Infra.CrossCutting.IoC
       svcCollection.AddScoped<IParticipanteRepository, ParticipanteRepository>();
       svcCollection.AddScoped<IPosicaoRepository, PosicaoRepository>();
       svcCollection.AddScoped<ILegadoTotalEstatisticaRepository, LegadoTotalEstatisticaRepository>();
+      svcCollection.AddScoped<IRodadaRepository, RodadaRepository>();
+      svcCollection.AddScoped<IUnitOfWork, TransactionDbManager>();
     }
   }
 }

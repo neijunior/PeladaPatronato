@@ -7,6 +7,8 @@ using PeladaPatronato.Application.Core.Estatistica;
 using PeladaPatronato.Application.Estatistica;
 using PeladaPatronato.Application.Generico;
 using PeladaPatronato.Application.Participante;
+using PeladaPatronato.Application.Rodada;
+using PeladaPatronato.Application.Core.Rodada;
 
 namespace PeladaPatronato.Infra.CrossCutting.IoC
 {
@@ -18,6 +20,7 @@ namespace PeladaPatronato.Infra.CrossCutting.IoC
       svcCollection.AddScoped<IParticipanteApplication, ParticipanteApplication>();
       svcCollection.AddScoped<IGenericoApplication, GenericoApplication>();
       svcCollection.AddScoped<IEstatisticaApplication, EstatisticaApplication>();
+      svcCollection.AddScoped<IRodadaApplication, RodadaApplication>();
     }
   }
 }

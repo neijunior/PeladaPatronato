@@ -31,10 +31,17 @@ export const routes: Routes = [
             .then(m => m.ParticipanteForm)
       },
       {
-        path: 'rodadas', canActivate: [authGuard],
-        loadComponent: () =>
-          import('./pages/privadas/rodadas/rodadas-list/rodadas-list')
-            .then(m => m.RodadasList)
+        path: 'rodada',
+        canActivate: [authGuard],
+        loadComponent: () => import('./pages/privadas/rodada/rodada-shell/rodada-shell').then(m => m.RodadaShell),
+        children: [
+          { path: '', loadComponent: () => import('./pages/privadas/rodada/rodada-list/rodada-list').then(m => m.RodadaList) },
+          { path: 'nova', loadComponent: () => import('./pages/privadas/rodada/rodada-create/rodada-create').then(m => m.RodadaCreate) },
+          { path: ':id', loadComponent: () => import('./pages/privadas/rodada/rodada-detalhe/rodada-detalhe').then(m => m.RodadaDetalhe) },
+          { path: ':id/times', loadComponent: () => import('./pages/privadas/rodada/rodada-times/rodada-times').then(m => m.RodadaTimes) },
+          { path: ':id/partidas', loadComponent: () => import('./pages/privadas/rodada/rodada-partidas/rodada-partidas').then(m => m.RodadaPartidas) },
+          { path: ':id/eventos', loadComponent: () => import('./pages/privadas/rodada/rodada-eventos/rodada-eventos').then(m => m.RodadaEventos) },
+        ]
       },
       {
         path: 'estatisticas',

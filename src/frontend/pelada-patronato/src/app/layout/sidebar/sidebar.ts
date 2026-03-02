@@ -26,8 +26,15 @@ export class Sidebar {
     { label: 'Home', path: '/' },
     { label: 'Dashboard', path: '/dashboard', requiresAuth: true },
     { label: 'Participantes', path: '/participantes', requiresAuth: true },
-
-    // Estatísticas com submenu
+    {
+      label: 'Rodadas',
+      requiresAuth: true,
+      expanded: false,
+      children: [
+        { label: 'Lista de Rodadas', path: '/rodada' },
+        { label: 'Nova Rodada', path: '/rodada/nova' }
+      ]
+    },
     {
       label: 'Estatísticas',
       requiresAuth: true,

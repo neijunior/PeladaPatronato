@@ -1,0 +1,25 @@
+<div class="p-6 space-y-6">
+  <h1 class="text-2xl font-semibold text-white">Nova Rodada</h1>
+
+  <form [formGroup]="form" class="space-y-6">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label class="text-gray-300">Data</label>
+        <input type="date" formControlName="data" class="bg-gray-700 text-white px-3 py-2 rounded-lg"/>
+      </div>
+      <div>
+        <label class="text-gray-300">Local</label>
+        <input type="text" formControlName="local" placeholder="Ex: Quadra Patronato" class="bg-gray-700 text-white px-3 py-2 rounded-lg"/>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-white">Participantes</h2>
+      <app-selecionar-participantes (participantesSelecionados)="onParticipantesSelecionados($event)"></app-selecionar-participantes>
+    </div>
+
+    <button type="button" (click)="criarRodada()" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Criar Rodada</button>
+
+  </form>
+</div>
