@@ -20,10 +20,7 @@ namespace PeladaPatronato.Presentation.API.Endpoints
         {
           var rodada = await rodadaApp.ObterPorId(rodadaId);
 
-          if (rodada is null)
-            return Results.NotFound();
-
-          return Results.Ok(rodada);
+          return (rodada == null) ? Results.NotFound() : Results.Ok(rodada);
         }
         catch (Exception ex)
         {
@@ -35,7 +32,7 @@ namespace PeladaPatronato.Presentation.API.Endpoints
         }
       });
 
-      grupo.MapGet("/", async (IRodadaApplication rodadaApp, [FromBody] ConsultarRodadaRequest request) =>
+      grupo.MapPost("/pesquisar", async (IRodadaApplication rodadaApp, [FromBody] ConsultarRodadaRequest request) =>
       {
         try
         {
@@ -71,7 +68,7 @@ namespace PeladaPatronato.Presentation.API.Endpoints
         }
       });
 
-      grupo.MapPost("/{rodadaId:guid}/criarTimes", async (IRodadaApplication rodadaApp, Guid rodadaId, [FromBody] CriarTimesRequest request) =>
+      grupo.MapPost("/{rodadaId:guid}/times", async (IRodadaApplication rodadaApp, Guid rodadaId, [FromBody] CriarTimesRequest request) =>
       {
         try
         {
@@ -88,12 +85,12 @@ namespace PeladaPatronato.Presentation.API.Endpoints
         }
       });
 
-      grupo.MapPost("/{Id}/partidas", async (IRodadaApplication rodadaApp, Guid Id) =>
+      grupo.MapPost("/{rodadaId}/partidas", async (IRodadaApplication rodadaApp, Guid rodadaId) =>
       {
         try
         {
 
-          await rodadaApp.GerarPartidas(Id);
+          await rodadaApp.GerarPartidas(rodadaId);
           return Results.Ok();
         }
         catch (Exception ex)
