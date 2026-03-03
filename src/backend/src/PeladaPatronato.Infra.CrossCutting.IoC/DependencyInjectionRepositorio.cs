@@ -13,6 +13,7 @@ namespace PeladaPatronato.Infra.CrossCutting.IoC
     {      
       svcCollection.AddScoped<IParticipanteRepository, ParticipanteRepository>();
       svcCollection.AddScoped<IPosicaoRepository, PosicaoRepository>();
+      svcCollection.AddScoped<ITimeRepository, TimeRepository>();
       svcCollection.AddScoped<ILegadoTotalEstatisticaRepository, LegadoTotalEstatisticaRepository>();
       svcCollection.AddScoped<IRodadaRepository, RodadaRepository>();
       svcCollection.AddScoped<IUnitOfWork, TransactionDbManager>();

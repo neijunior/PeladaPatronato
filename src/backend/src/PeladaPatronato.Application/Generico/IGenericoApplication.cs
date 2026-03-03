@@ -12,5 +12,6 @@ namespace PeladaPatronato.Application.Generico
   public interface IGenericoApplication
   {
     Task<IEnumerable<PosicaoResponse>> ListarPosicoes();
+    Task<IEnumerable<TimeResponse>> ListarTimes(bool? ativo);
   }
 }

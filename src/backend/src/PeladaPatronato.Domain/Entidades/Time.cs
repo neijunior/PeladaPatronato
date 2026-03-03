@@ -10,7 +10,7 @@ namespace PeladaPatronato.Domain.Entidades
   {
     public Guid Id { get; private set; }
     public string Nome { get; private set; } = null!;
-
+    public bool Ativo { get; private set; }
     public Time()
     {
       

@@ -21,7 +21,21 @@ namespace PeladaPatronato.Presentation.API.Endpoints
         }
       }).WithTags("LookUp");
 
+      app.MapPost($"/{_nomeRota}time", async (IGenericoApplication app) =>
+      {
+        try
+        {
+          return Results.Ok(await app.ListarTimes(true));
+
+        }
+        catch (Exception ex)
+        {
+          return Results.BadRequest(ex.Message);
+        }
+      }).WithTags("LookUp");
+
       return app;
     }
+
   }
 }
