@@ -37,12 +37,12 @@ namespace PeladaPatronato.Application.Core.Rodada
       }
     }
 
-    public async Task CriarTimes(CriarTimesRequest request)
+    public async Task CriarTimes(Guid rodadaId, CriarTimesRequest request)
     {
       _unitOfWork.BeginTransaction();
       try
       {
-        var rodada = await _rodadaRepository.ObterPorId(request.rodadaId)
+        var rodada = await _rodadaRepository.ObterPorId(rodadaId)
           ?? throw new Exception("Rodada não encontrada");
 
         var times = request.Times.Select(s => new CriarTimeInfo(s.TimeId, s.ParticipantesIds));
@@ -99,6 +99,7 @@ namespace PeladaPatronato.Application.Core.Rodada
             ValorDiarista = s.ValorDiarista
           }).ToList();
 
+        _unitOfWork.Commit();
         return PagedResponseExtension<RodadaResponse>.Popular(listaTratada, totalItens, request.PageNumber, request.PageSize);
       }
       catch (Exception)
@@ -108,15 +109,71 @@ namespace PeladaPatronato.Application.Core.Rodada
       }
     }
 
-    public async Task SalvarEventos(SalvarEventosRequest request)
+    public async Task<RodadaResponse> ObterPorId(Guid rodadaId)
     {
       _unitOfWork.BeginTransaction();
       try
       {
-        var rodada = await _rodadaRepository.ObterPorId(request.rodadaId)
+        var rodada = await _rodadaRepository.ObterPorId(rodadaId)
           ?? throw new Exception("Rodada não encontrada");
 
-        var eventosDominio = request.Eventos.Select(e => (e.PartidaId, (eTipoEvento)e.TipoEvento, e.TimeId, e.ParticipanteId));
+        _unitOfWork.Commit();
+        return new RodadaResponse
+        {
+          Id = rodada.Id,
+          DataHora = rodada.DataHora,
+          Observacao = rodada.Observacao,
+          ValorDiarista = rodada.ValorDiarista,
+          //TempoTotal = rodada.TempoTotal,
+          //TempoPorPartida = rodada.TempoPorPartida,
+          //Partidas = rodada.Partidas.Select(p => new PartidaResponse
+          //{
+          //  Id = p.Id,
+          //  TimeA = new TimeResponse
+          //  {
+          //    Id = p.TimeA.Id,
+          //    Participantes = p.TimeA.Participantes.Select(pa => new ParticipanteResponse
+          //    {
+          //      Id = pa.Id,
+          //      Nome = pa.Nome
+          //    }).ToList()
+          //  },
+          //  TimeB = new TimeResponse
+          //  {
+          //    Id = p.TimeB.Id,
+          //    Participantes = p.TimeB.Participantes.Select(pb => new ParticipanteResponse
+          //    {
+          //      Id = pb.Id,
+          //      Nome = pb.Nome
+          //    }).ToList()
+          //  },
+          //  Eventos = p.Eventos.Select(e => new EventoResponse
+          //  {
+          //    Id = e.Id,
+          //    TipoEvento = (int)e.TipoEvento,
+          //    TimeId = e.TimeId,
+          //    ParticipanteId = e.ParticipanteId
+          //  }).ToList()
+          //}).ToList()
+        };
+        
+      }
+      catch (Exception)
+      {
+        _unitOfWork.Rollback();
+        throw;
+      }
+    }
+
+    public async Task SalvarEventos(Guid rodadaId, Guid partidaId, SalvarEventosRequest request)
+    {
+      _unitOfWork.BeginTransaction();
+      try
+      {
+        var rodada = await _rodadaRepository.ObterPorId(rodadaId)
+          ?? throw new Exception("Rodada não encontrada");
+
+        var eventosDominio = request.Eventos.Select(e => (partidaId, (eTipoEvento)e.TipoEvento, e.TimeId, e.ParticipanteId));
 
         rodada.RegistrarEventosEmLote(eventosDominio);
 

@@ -8,8 +8,9 @@ namespace PeladaPatronato.Application.Rodada
   {
     Task<PagedResponse<RodadaResponse>> Listar(ConsultarRodadaRequest request);
     Task<Guid> CriarRodada(CriarRodadaRequest request);
-    Task CriarTimes(CriarTimesRequest request);
+    Task CriarTimes(Guid rodadaId, CriarTimesRequest request);
     Task GerarPartidas(Guid rodadaId);
-    Task SalvarEventos(SalvarEventosRequest request);
+    Task SalvarEventos(Guid rodadaId, Guid partidaId, SalvarEventosRequest request);
+    Task<RodadaResponse> ObterPorId(Guid rodadaId);
   }
 }

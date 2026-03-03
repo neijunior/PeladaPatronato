@@ -8,7 +8,6 @@ namespace PeladaPatronato.Infra.CrossCutting.Request.Rodada
 {
   public class CriarTimesRequest
   {
-    public Guid rodadaId { get; set; }
     public List<CriarTimeItemRequest> Times { get; set; } = new();
   }
 
