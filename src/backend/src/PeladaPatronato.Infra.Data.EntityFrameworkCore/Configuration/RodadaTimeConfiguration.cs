@@ -16,8 +16,6 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Configuration
       builder.Property(x => x.Empates);
       builder.Property(x => x.GolsPro);
       builder.Property(x => x.GolsContra);
-
-      //builder.HasMany(x => x.Participantes).WithOne().HasForeignKey(x => x.RodadaTimeId).OnDelete(DeleteBehavior.Cascade);
             
       builder.HasIndex(x => new { x.RodadaId, x.TimeBaseId }).IsUnique();
     }

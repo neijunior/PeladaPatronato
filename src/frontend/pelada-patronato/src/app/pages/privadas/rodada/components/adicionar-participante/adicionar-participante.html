@@ -1,0 +1,38 @@
+<div class="bg-gray-800 p-6 rounded-2xl shadow-md">
+
+  <h2 class="text-lg font-semibold text-white mb-4">
+    Adicionar Participante
+  </h2>
+
+  <div class="flex gap-4 items-end">
+
+    <!-- Select participante -->
+    <div class="flex-1">
+      <label class="block text-sm text-gray-400 mb-1">Participante</label>
+      <select
+        [(ngModel)]="participanteSelecionadoId"
+        class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2 text-white">
+        
+        <option *ngFor="let p of participantesDisponiveis" [value]="p.id">
+          {{ p.nome }}
+        </option>
+
+      </select>
+    </div>
+
+    <!-- Checkbox diarista -->
+    <div class="flex items-center gap-2">
+      <input type="checkbox" [(ngModel)]="diarista" />
+      <label class="text-gray-300">Diarista</label>
+    </div>
+
+    <!-- Botão -->
+    <button
+      class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-white"
+      (click)="adicionar()">
+      Adicionar
+    </button>
+
+  </div>
+
+</div>

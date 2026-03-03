@@ -156,7 +156,7 @@ namespace PeladaPatronato.Application.Core.Rodada
           //  }).ToList()
           //}).ToList()
         };
-        
+
       }
       catch (Exception)
       {
@@ -187,5 +187,28 @@ namespace PeladaPatronato.Application.Core.Rodada
       }
 
     }
+    public async Task AdicionarParticipante(Guid rodadaId, AdicionarParticipanteRequest request)
+    {
+      _unitOfWork.BeginTransaction();
+      try
+      {
+        var rodada = await _rodadaRepository.ObterPorId(rodadaId);
+
+        if (rodada == null)
+          throw new Exception("Rodada não encontrada.");
+
+        rodada.AdicionarParticipante(request.ParticipanteId, request.Diarista);
+
+        
+        await _unitOfWork.CommitAsync();
+      }
+      catch (Exception)
+      {
+        _unitOfWork.Rollback();
+        throw;
+
+      }
+    }
+
   }
 }

@@ -31,7 +31,7 @@ export class Sidebar {
       requiresAuth: true,
       expanded: false,
       children: [
-        { label: 'Lista de Rodadas', path: '/rodada' },
+        { label: 'Lista de Rodadas', path: '/rodadas' },
         { label: 'Nova Rodada', path: '/rodada/nova' }
       ]
     },

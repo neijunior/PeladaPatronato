@@ -13,8 +13,10 @@ namespace PeladaPatronato.Domain.Entidades
     public StatusRodada Status { get; private set; }
     private readonly List<RodadaTime> _times = new();
     private readonly List<RodadaPartida> _partidas = new();
+    private readonly List<RodadaParticipante> _participantes = new();
     public IReadOnlyCollection<RodadaTime> Times => _times;
     public IReadOnlyCollection<RodadaPartida> Partidas => _partidas;
+    public IReadOnlyCollection<RodadaParticipante> Participantes => _participantes;
     protected Rodada() { } // EF
     public Rodada(DateTime dataHora, decimal valorDiarista, string? observacao, TimeSpan tempoTotal, TimeSpan tempoPorPartida)
     {
@@ -174,6 +176,18 @@ namespace PeladaPatronato.Domain.Entidades
 
         partida.RegistrarEvento(e.tipo, e.rodadaTimeId, e.participanteId);
       }
+    }
+
+    public void AdicionarParticipante(Guid participanteId, bool diarista)
+    {
+      if (Status != StatusRodada.Criada)
+        throw new Exception("Rodada não está aberta.");
+
+      if (_participantes.Any(x => x.ParticipanteId == participanteId))
+        throw new Exception("Participante já adicionado.");
+
+      _participantes.Add(new RodadaParticipante(Id, participanteId, diarista));
+            
     }
   }
   public enum StatusRodada

@@ -21,6 +21,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
     {
       return await _context.Rodada.Include(r => r.Times).ThenInclude(t => t.Participantes)
                                   .Include(r => r.Partidas).ThenInclude(p => p.Eventos)
+                                  .Include(r => r.Participantes)
           .FirstOrDefaultAsync(r => r.Id == id);
     }
 
@@ -33,6 +34,8 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
     {
       _context.Rodada.Update(rodada);
     }
+
+    
 
     public async Task<ICollection<Rodada>> Listar(DateTime dataInicio, DateTime? dataFim)
     {

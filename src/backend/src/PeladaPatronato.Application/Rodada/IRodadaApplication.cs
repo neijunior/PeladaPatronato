@@ -12,5 +12,6 @@ namespace PeladaPatronato.Application.Rodada
     Task GerarPartidas(Guid rodadaId);
     Task SalvarEventos(Guid rodadaId, Guid partidaId, SalvarEventosRequest request);
     Task<RodadaResponse> ObterPorId(Guid rodadaId);
+    Task AdicionarParticipante(Guid rodadaId, AdicionarParticipanteRequest request);
   }
 }

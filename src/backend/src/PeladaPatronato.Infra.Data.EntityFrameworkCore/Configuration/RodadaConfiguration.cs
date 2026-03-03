@@ -17,11 +17,16 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Configuration
       builder.Property(x => x.TempoPorPartida).IsRequired();
       builder.Property(x => x.Status).HasColumnType("int").IsRequired();
 
-      builder.HasMany(x => x.Times).WithOne().HasForeignKey(x => x.RodadaId).OnDelete(DeleteBehavior.Cascade);
+      builder.HasMany(x => x.Times).WithOne().HasForeignKey(x => x.RodadaId).OnDelete(DeleteBehavior.Restrict);
       builder.Metadata.FindNavigation(nameof(Rodada.Times))!.SetPropertyAccessMode(PropertyAccessMode.Field);
 
-      builder.HasMany(x => x.Partidas).WithOne().HasForeignKey(x => x.RodadaId).OnDelete(DeleteBehavior.Cascade);
+      builder.HasMany(x => x.Partidas).WithOne().HasForeignKey(x => x.RodadaId).OnDelete(DeleteBehavior.Restrict);
       builder.Metadata.FindNavigation(nameof(Rodada.Partidas))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+
+      builder.Metadata.FindNavigation(nameof(Rodada.Participantes))!.SetField("_participantes");
+
+      builder.HasMany(x => x.Participantes).WithOne().HasForeignKey(x => x.RodadaId).OnDelete(DeleteBehavior.Restrict);
+      builder.Metadata.FindNavigation(nameof(Rodada.Participantes))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
   }
 }

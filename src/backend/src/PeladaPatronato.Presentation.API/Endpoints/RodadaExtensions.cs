@@ -121,6 +121,24 @@ namespace PeladaPatronato.Presentation.API.Endpoints
         }
       });
 
+      grupo.MapPost("/rodadas/{rodadaId}/participantes", async (Guid rodadaId, AdicionarParticipanteRequest request, IRodadaApplication app) =>
+      {
+        try
+        {
+          await app.AdicionarParticipante(rodadaId, request);
+
+          return Results.Ok();
+        }
+        catch (Exception ex)
+        {
+          return Results.BadRequest(new
+          {
+            sucesso = false,
+            mensagem = ex.Message
+          });
+        }
+
+      });
 
       return app;
     }

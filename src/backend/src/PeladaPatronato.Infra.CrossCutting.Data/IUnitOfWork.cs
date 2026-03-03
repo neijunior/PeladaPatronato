@@ -7,5 +7,7 @@
     void Commit();
 
     void Rollback();
+
+    Task CommitAsync();
   }
 }
