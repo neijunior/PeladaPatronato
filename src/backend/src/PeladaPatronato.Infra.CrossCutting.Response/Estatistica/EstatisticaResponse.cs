@@ -11,7 +11,7 @@ namespace PeladaPatronato.Infra.CrossCutting.Response.Estatistica
     public int TotalGols  { get; set; }
     public int TotalAssistencias { get; set; }
     public decimal MediaGols => TotalPartidas == 0 ? 0 : Math.Round((decimal)TotalGols / TotalPartidas, 2);
-    public decimal MediaAssistencias => TotalPartidas == 0 ? 0 : Math.Round((decimal)TotalGols / TotalPartidas, 2);
+    public decimal MediaAssistencias => TotalPartidas == 0 ? 0 : Math.Round((decimal)TotalAssistencias / TotalPartidas, 2);
     public ParticipanteResponse Participante { get; set; } = new ParticipanteResponse();
   }
 }

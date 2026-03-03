@@ -3,6 +3,8 @@ using PeladaPatronato.Domain.Entidades;
 using PeladaPatronato.Domain.Interfaces;
 using PeladaPatronato.Infra.CrossCutting.Data;
 using PeladaPatronato.Infra.CrossCutting.Request.Rodada;
+using PeladaPatronato.Infra.CrossCutting.Response;
+using PeladaPatronato.Infra.CrossCutting.Response.Estatistica;
 using PeladaPatronato.Infra.CrossCutting.Response.Rodada;
 
 namespace PeladaPatronato.Application.Core.Rodada
@@ -78,20 +80,26 @@ namespace PeladaPatronato.Application.Core.Rodada
 
     }
 
-    public async Task<ICollection<RodadaResponse>> Listar(ConsultarRodadaRequest request)
+    public async Task<PagedResponse<RodadaResponse>> Listar(ConsultarRodadaRequest request)
     {
       _unitOfWork.BeginTransaction();
       try
       {
         var rodadas = await _rodadaRepository.Listar(request.DataInicio, request.DataFim);
 
-        return rodadas.Select(s => new RodadaResponse
-        {
-          Id = s.Id,
-          DataHora = s.DataHora,
-          Observacao = s.Observacao,
-          ValorDiarista = s.ValorDiarista
-        }).ToList();
+        int totalItens = rodadas.Count();
+
+        var listaTratada = rodadas.Skip((request.PageNumber - 1) * request.PageSize)
+          .Take(request.PageSize)
+          .Select(s => new RodadaResponse
+          {
+            Id = s.Id,
+            DataHora = s.DataHora,
+            Observacao = s.Observacao,
+            ValorDiarista = s.ValorDiarista
+          }).ToList();
+
+        return PagedResponseExtension<RodadaResponse>.Popular(listaTratada, totalItens, request.PageNumber, request.PageSize);
       }
       catch (Exception)
       {

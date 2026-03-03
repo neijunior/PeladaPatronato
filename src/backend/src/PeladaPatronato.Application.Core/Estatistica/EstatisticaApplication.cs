@@ -88,13 +88,7 @@ namespace PeladaPatronato.Application.Core.Estatistica
           TotalGols = s.TotalGols
         }).ToList();
 
-        return new PagedResponse<EstatisticaResponse>
-        {
-          Items = listaTratada,
-          TotalCount = totalCount,
-          PageNumber = paramConsulta.PageNumber,
-          PageSize = paramConsulta.PageSize
-        };
+        return PagedResponseExtension<EstatisticaResponse>.Popular(listaTratada, totalCount, paramConsulta.PageNumber, paramConsulta.PageSize);        
       }
       catch (Exception)
       {

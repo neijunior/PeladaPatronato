@@ -19,7 +19,7 @@ namespace PeladaPatronato.Presentation.API.Endpoints
         {
 
           var lista = await rodadaApp.Listar(request);
-          return Results.Ok(lista.OrderBy(o => o.DataHora).ToList());
+          return Results.Ok(lista);
         }
         catch (Exception ex)
         {
