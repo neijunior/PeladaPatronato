@@ -8,6 +8,8 @@ namespace PeladaPatronato.Domain.Entidades
     public Guid ParticipanteId { get; private set; }
     public DateTime? DataConfirmacao { get; private set; }
     public bool? Diarista { get; private set; }
+    public bool? Pago { get; private set; }
+    public virtual Participante? Participante { get; private set; }
     public RodadaParticipante()
     {
         
@@ -19,6 +21,10 @@ namespace PeladaPatronato.Domain.Entidades
       ParticipanteId = participanteId;
       Diarista = diarista;
       DataConfirmacao = null;
+      Pago = null;
     }
+
+    public void AtualizarPagamento(bool pago) => Pago = pago;
+    
   }
 }

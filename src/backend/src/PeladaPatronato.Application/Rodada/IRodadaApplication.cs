@@ -13,5 +13,6 @@ namespace PeladaPatronato.Application.Rodada
     Task SalvarEventos(Guid rodadaId, Guid partidaId, SalvarEventosRequest request);
     Task<RodadaResponse> ObterPorId(Guid rodadaId);
     Task AdicionarParticipante(Guid rodadaId, AdicionarParticipanteRequest request);
+    Task RemoverParticipante(Guid rodadaId, Guid participanteId);
   }
 }

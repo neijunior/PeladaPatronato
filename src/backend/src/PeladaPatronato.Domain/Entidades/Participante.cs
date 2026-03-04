@@ -4,9 +4,7 @@ namespace PeladaPatronato.Domain.Entidades
 {
   public class Participante : Entity
   {
-
-    protected Participante() { }
-    
+    protected Participante() { }    
     public string Nome { get; private set; } = string.Empty;
     public string? Apelido { get; private set; }
     public string? Telefone { get; private set; }

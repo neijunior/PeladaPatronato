@@ -16,8 +16,7 @@ export class ParticipanteService {
   private baseUrl = `${environment.apiUrl}/participante`;
 
   listar(filtro: ParticipanteFiltro): Observable<PagedResponse<Participante>> {
-    let lista = this.http.post<PagedResponse<Participante>>(`${this.baseUrl}/listar`, filtro);
-    debugger;
+    let lista = this.http.post<PagedResponse<Participante>>(`${this.baseUrl}/listar`, filtro);    
     return lista;
   }
 
@@ -30,6 +29,7 @@ export class ParticipanteService {
   }
 
   salvar(p: Participante): Observable<Participante> {
+    debugger;
     const payload = {
       id: p.id,
       nome: p.nome,

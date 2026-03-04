@@ -21,6 +21,7 @@ import { ParticipanteFiltro } from '../../../../core/models/filtros/participante
   styleUrl: './rodada-detalhe.css',
 })
 export class RodadaDetalhe implements OnInit {
+
   todosParticipantes: Participante[] = []
   mostrarPainelTimes = false;
 
@@ -42,13 +43,21 @@ export class RodadaDetalhe implements OnInit {
       }
     });
   }
+  removerParticipante(idParticipante: string) {
+    debugger;
+    if (!idParticipante) return;
+
+    this.rodadaService.removerParticipante(this.rodada!.id, idParticipante).subscribe(() => {
+      this.carregarRodada(this.rodada!.id);
+    })
+  }
 
   carregarParticipantes() {
 
     const filtro: ParticipanteFiltro = {
       nome: '',
       pageNumber: 1,
-      pageSize: 9999      
+      pageSize: 9999
     }
 
     this.participanteService.listar(filtro)
@@ -57,6 +66,7 @@ export class RodadaDetalhe implements OnInit {
         this.todosParticipantes = res.items
       })
   }
+
   carregarRodada(id: string) {
     this.rodadaService.consultar(id)
       .subscribe(res => {
@@ -82,5 +92,53 @@ export class RodadaDetalhe implements OnInit {
   onTimesCriados() {
     this.carregarRodada(this.rodada!.id);
     this.mostrarPainelTimes = false;
+  }
+
+  get mensalistas(): number {
+    return this.rodada?.participantes?.filter(p => !p.diarista).length || 0;
+  }
+
+  get diaristas(): number {
+    return this.rodada?.participantes?.filter(p => p.diarista).length || 0;
+  }
+
+  get valorPrevisto(): number {
+    return this.diaristas * (this.rodada?.valorDiarista || 0);
+  }
+
+  get valorPago(): number {
+    return this.rodada?.participantes
+      ?.filter(p => p.diarista && p.pago)
+      .reduce((total, p) => total + (this.rodada?.valorDiarista || 0), 0) || 0;
+  }
+
+  get valorPendente(): number {
+    return this.valorPrevisto - this.valorPago;
+  }
+
+  get participantesParaTimes() {
+    return this.rodada?.participantes
+      ?.map(rp => rp.participante) || [];
+  }
+
+  gerarBackground(p: any): string {
+
+    if (!p.diarista) {
+      return '#1f2937';
+    }
+
+    // 🎯 Se for diarista → divide tipo + pagamento
+
+    const corTipo = '#78350f'; // amarelo/marrom (diarista)
+
+    const corPagamento = p.pago
+      ? '#064e3b'   // verde (pago)
+      : '#7f1d1d';  // vermelho (pendente)
+
+    return `linear-gradient(to right, 
+          ${corTipo} 0%, 
+          ${corTipo} 50%, 
+          ${corPagamento} 50%, 
+          ${corPagamento} 100%)`;
   }
 }

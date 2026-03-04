@@ -13,6 +13,7 @@ namespace PeladaPatronato.Infra.CrossCutting.Response.Rodada
     public DateTime DataHora { get; set; }
     public decimal ValorDiarista { get; set; }
     public string? Observacao { get; set; }
-    public ICollection<ParticipanteResponse> ListaParticipantes { get; set; } = new List<ParticipanteResponse>();
+    public string? DescricaoStatus { get; set; }
+    public ICollection<RodadaParticipanteResponse> participantes { get; set; } = new List<RodadaParticipanteResponse>();
   }
 }

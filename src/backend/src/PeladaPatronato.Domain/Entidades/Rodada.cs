@@ -1,4 +1,5 @@
 ﻿using PeladaPatronato.Infra.CrossCutting.Data;
+using System.ComponentModel;
 
 namespace PeladaPatronato.Domain.Entidades
 {
@@ -192,9 +193,13 @@ namespace PeladaPatronato.Domain.Entidades
   }
   public enum StatusRodada
   {
+    [Description("Criada")]
     Criada = 1,
+    [Description("Times Definidos")]
     TimesDefinidos = 2,
+    [Description("Partidas Geradas")]
     PartidasGeradas = 3,
+    [Description("Finalizada")]
     Finalizada = 4
   }
 }

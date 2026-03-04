@@ -5,7 +5,9 @@ using PeladaPatronato.Infra.CrossCutting.Data;
 using PeladaPatronato.Infra.CrossCutting.Request.Rodada;
 using PeladaPatronato.Infra.CrossCutting.Response;
 using PeladaPatronato.Infra.CrossCutting.Response.Estatistica;
+using PeladaPatronato.Infra.CrossCutting.Response.Participante;
 using PeladaPatronato.Infra.CrossCutting.Response.Rodada;
+using PeladaPatronato.Infra.CrossCutting.Foundation;
 
 namespace PeladaPatronato.Application.Core.Rodada
 {
@@ -120,41 +122,22 @@ namespace PeladaPatronato.Application.Core.Rodada
         _unitOfWork.Commit();
         return new RodadaResponse
         {
+
           Id = rodada.Id,
+          DescricaoStatus = rodada.Status.ObterDescricaoItemEnum(),
           DataHora = rodada.DataHora,
           Observacao = rodada.Observacao,
           ValorDiarista = rodada.ValorDiarista,
-          //TempoTotal = rodada.TempoTotal,
-          //TempoPorPartida = rodada.TempoPorPartida,
-          //Partidas = rodada.Partidas.Select(p => new PartidaResponse
-          //{
-          //  Id = p.Id,
-          //  TimeA = new TimeResponse
-          //  {
-          //    Id = p.TimeA.Id,
-          //    Participantes = p.TimeA.Participantes.Select(pa => new ParticipanteResponse
-          //    {
-          //      Id = pa.Id,
-          //      Nome = pa.Nome
-          //    }).ToList()
-          //  },
-          //  TimeB = new TimeResponse
-          //  {
-          //    Id = p.TimeB.Id,
-          //    Participantes = p.TimeB.Participantes.Select(pb => new ParticipanteResponse
-          //    {
-          //      Id = pb.Id,
-          //      Nome = pb.Nome
-          //    }).ToList()
-          //  },
-          //  Eventos = p.Eventos.Select(e => new EventoResponse
-          //  {
-          //    Id = e.Id,
-          //    TipoEvento = (int)e.TipoEvento,
-          //    TimeId = e.TimeId,
-          //    ParticipanteId = e.ParticipanteId
-          //  }).ToList()
-          //}).ToList()
+          participantes = rodada.Participantes.Select(p => new RodadaParticipanteResponse
+          {
+            Participante = p.Participante != null ? new ParticipanteResponse
+            {
+              Id = p.Participante.Id,
+              Nome = p.Participante.Nome
+            } : null,
+            Diarista = p.Diarista,
+            Pago = p.Pago
+          }).OrderBy(o => o.Participante.Nome).ToList()          
         };
 
       }
@@ -192,19 +175,26 @@ namespace PeladaPatronato.Application.Core.Rodada
       _unitOfWork.BeginTransaction();
       try
       {
-        var rodada = await _rodadaRepository.ObterPorId(rodadaId);
+        await _rodadaRepository.AdicionarParticipante(rodadaId, request.ParticipanteId, request.Diarista);        
+        await _unitOfWork.CommitAsync();
+      }
+      catch (Exception)
+      {        
+        throw;
 
-        if (rodada == null)
-          throw new Exception("Rodada não encontrada.");
+      }
+    }
 
-        rodada.AdicionarParticipante(request.ParticipanteId, request.Diarista);
-
-        
+    public async Task RemoverParticipante(Guid rodadaId, Guid participanteId)
+    {
+      _unitOfWork.BeginTransaction();
+      try
+      {
+        await _rodadaRepository.RemoverParticipante(rodadaId, participanteId);
         await _unitOfWork.CommitAsync();
       }
       catch (Exception)
       {
-        _unitOfWork.Rollback();
         throw;
 
       }

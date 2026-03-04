@@ -16,7 +16,6 @@ export class RodadaService {
   private baseUrl = `${environment.apiUrl}/rodadas`;
 
   listar(filtro: RodadaFiltro): Observable<PagedResponse<Rodada>> {
-    debugger;
     let lista = this.http.post<PagedResponse<Rodada>>(`${this.baseUrl}/pesquisar`, filtro);
 
     return lista;
@@ -43,6 +42,12 @@ export class RodadaService {
       `${this.baseUrl}/rodadas/${rodadaId}/participantes`,
       request
     )
+  }
+
+  removerParticipante(rodadaId: string, participanteId: string) {
+    return this.http.delete(
+      `${this.baseUrl}/rodadas/${rodadaId}/participantes/${participanteId}`
+    );
   }
 
 }

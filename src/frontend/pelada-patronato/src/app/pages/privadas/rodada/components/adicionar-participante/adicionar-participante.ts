@@ -29,7 +29,7 @@ export class AdicionarParticipante implements OnChanges{
     this.atualizarDisponiveis();
   }
 
-  atualizarDisponiveis() {
+  atualizarDisponiveis() {    ;
     const idsRodada = this.participantesRodada.map(p => p.id);
 
     this.participantesDisponiveis = this.participantes

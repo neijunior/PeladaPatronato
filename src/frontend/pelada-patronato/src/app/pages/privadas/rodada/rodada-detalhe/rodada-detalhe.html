@@ -11,7 +11,7 @@
 
   </button>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="w-full">
 
     <div class="bg-gray-800 p-6 rounded-2xl shadow-md">
 
@@ -44,17 +44,59 @@
         <!-- Status -->
         <div class="bg-gray-900 rounded-xl p-4 border border-gray-700">
           <p class="text-sm text-gray-400">Status</p>
-          <span class="inline-block px-3 py-1 text-sm font-medium rounded-full" [ngClass]="{
-          'bg-green-600 text-white': rodada?.status === 'Fechada',
-          'bg-yellow-500 text-black': rodada?.status === 'Aberta',
-          'bg-red-600 text-white': rodada?.status === 'Cancelada'
-        }">
-            {{ rodada?.status }}
+          <span class="inline-block px-3 py-1 text-sm font-medium rounded-full">
+            {{ rodada?.descricaoStatus }}
           </span>
         </div>
 
       </div>
 
+    </div>
+
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+
+    <!-- Mensalistas -->
+    <div class="bg-gray-900 rounded-xl p-4 border border-gray-700">
+      <p class="text-sm text-gray-400">Mensalistas</p>
+      <p class="text-2xl font-bold text-blue-400">
+        {{ mensalistas }}
+      </p>
+    </div>
+
+    <!-- Diaristas -->
+    <div class="bg-gray-900 rounded-xl p-4 border border-gray-700">
+      <p class="text-sm text-gray-400">Diaristas</p>
+      <p class="text-2xl font-bold text-yellow-400">
+        {{ diaristas }}
+      </p>
+    </div>
+
+    <!-- Valor Previsto -->
+    <div class="bg-gray-900 rounded-xl p-4 border border-gray-700">
+      <p class="text-sm text-gray-400">Previsto</p>
+      <p class="text-2xl font-bold text-green-400">
+        R$ {{ valorPrevisto | number:'1.2-2' }}
+      </p>
+    </div>
+
+    <!-- Valor Pago -->
+    <div class="bg-gray-900 rounded-xl p-4 border border-gray-700">
+      <p class="text-sm text-gray-400">Pago</p>
+      <p class="text-2xl font-bold text-emerald-400">
+        R$ {{ valorPago | number:'1.2-2' }}
+      </p>
+    </div>
+
+    <!-- Pendente -->
+    <div class="bg-gray-900 rounded-xl p-4 border border-gray-700">
+      <p class="text-sm text-gray-400">Pendente</p>
+      <p class="text-2xl font-bold" [ngClass]="{
+         'text-red-400': valorPendente > 0,
+         'text-green-400': valorPendente === 0
+       }">
+        R$ {{ valorPendente | number:'1.2-2' }}
+      </p>
     </div>
 
   </div>
@@ -66,34 +108,39 @@
       Participantes
     </h2>
 
-    <ul class="space-y-2">
-      <li
-        *ngFor="let p of rodada?.participantes"
-        class="bg-gray-900 p-3 rounded-lg border border-gray-700 text-gray-300">
-        {{ p.nome }}
+    <ul class="grid grid-cols-4 gap-3 overflow-y-auto">
+
+      <li *ngFor="let p of rodada?.participantes" class="p-3 rounded-lg border border-gray-700 
+           text-white flex items-center justify-between transition-all duration-200" [ngStyle]="{
+      background: gerarBackground(p)
+    }">
+
+        <span class="truncate font-medium">
+          {{ p.participante.nome }}
+        </span>
+
+        <button (click)="removerParticipante(p.participante.id)" class="ml-2 text-white hover:text-red-400 text-sm">
+          ✕
+        </button>
+
       </li>
+
     </ul>
 
   </div>
 
   <!-- COMPONENTE MONTAR TIMES -->
-  <app-montar-times
-    *ngIf="mostrarPainelTimes"
-    [rodadaId]="rodada?.id!"
-    [participantes]="rodada?.participantes || []"
+  <app-montar-times *ngIf="mostrarPainelTimes" [rodadaId]="rodada?.id!" [participantes]="participantesParaTimes || []"
     (timesCriados)="onTimesCriados()">
   </app-montar-times>
 
-  <app-adicionar-participante
-  [rodadaId]="rodada?.id!"
-  [participantes]="todosParticipantes"
-  [participantesRodada]="rodada?.participantes || []"
-  (participanteAdicionado)="carregarRodada(rodada?.id!)">
-</app-adicionar-participante>
+  <app-adicionar-participante [rodadaId]="rodada?.id!" [participantes]="todosParticipantes"
+    [participantesRodada]="participantesParaTimes" (participanteAdicionado)="carregarRodada(rodada?.id!)">
+  </app-adicionar-participante>
 
   <button class="px-4 py-2 bg-gray-700 text-white rounded" (click)="voltar()">
     Voltar
-  </button>  
+  </button>
 
 
 </div>

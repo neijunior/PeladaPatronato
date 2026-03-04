@@ -140,6 +140,25 @@ namespace PeladaPatronato.Presentation.API.Endpoints
 
       });
 
+      grupo.MapDelete("/rodadas/{rodadaId}/participantes/{participanteId}", async (Guid rodadaId, Guid participanteId, IRodadaApplication app) =>
+      {
+        try
+        {
+          await app.RemoverParticipante(rodadaId, participanteId);
+
+          return Results.Ok();
+        }
+        catch (Exception ex)
+        {
+          return Results.BadRequest(new
+          {
+            sucesso = false,
+            mensagem = ex.Message
+          });
+        }
+
+      });
+
       return app;
     }
   }

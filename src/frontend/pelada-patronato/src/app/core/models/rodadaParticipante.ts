@@ -1,5 +1,7 @@
+import { Participante } from "./participante";
 
 export interface RodadaParticipante {
-  participanteId: string;
-  diarista: boolean;  
+  participante: Participante;  
+  diarista?: boolean;  
+  pago?: boolean
 }
