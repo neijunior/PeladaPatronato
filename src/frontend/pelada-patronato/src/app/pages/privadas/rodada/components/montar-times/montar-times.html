@@ -7,13 +7,11 @@
   <!-- Selecionar Time -->
   <div>
     <label class="text-sm text-gray-400">Time</label>
-    <select
-      class="w-full mt-1 bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white"
+    <select class="w-full mt-1 bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white"
       [(ngModel)]="timeSelecionado">
 
       <option [ngValue]="null">Selecione</option>
-      <option *ngFor="let t of timesDisponiveis"
-              [ngValue]="t.id">
+      <option *ngFor="let t of timesDisponiveisFiltrados" [ngValue]="t.id">
         {{ t.nome }}
       </option>
 
@@ -23,12 +21,10 @@
   <!-- Selecionar Participantes -->
   <div>
     <label class="text-sm text-gray-400">Participantes</label>
-    <select multiple
-      class="w-full mt-1 bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white h-40"
+    <select multiple class="w-full mt-1 bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white h-40"
       [(ngModel)]="participantesSelecionados">
 
-      <option *ngFor="let p of participantes"
-              [ngValue]="p.id">
+      <option *ngFor="let p of participantesDisponiveis" [ngValue]="p.id">
         {{ p.nome }}
       </option>
 
@@ -36,19 +32,16 @@
   </div>
 
   <!-- Botão adicionar -->
-  <button
-    class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-white"
-    (click)="adicionarTimeTemp()">
+  <button class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-white" (click)="adicionarTimeTemp()">
 
     Adicionar Time
 
   </button>
 
   <!-- Lista temporária -->
-  <div *ngIf="timesTemp.length > 0" class="space-y-3">
+  <div *ngIf="timesTemp.length > 0" class="space-y-3 w-1/4">
 
-    <div *ngFor="let t of timesTemp"
-         class="bg-gray-900 p-4 rounded-xl border border-gray-700">
+    <div *ngFor="let t of timesTemp" class="bg-gray-900 p-4 rounded-xl border border-gray-700">
 
       <p class="font-semibold text-white">
         {{ obterNomeTime(t.timeId) }}
@@ -65,12 +58,10 @@
   </div>
 
   <!-- Botão salvar -->
-  <!-- <button
-    class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white"
-    (click)="salvarTimes()">
+  <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white" (click)="salvarTimes()">
 
     Salvar Times
 
-  </button> -->
+  </button>
 
 </div>

@@ -3,6 +3,7 @@ import { Participante } from '../../../../../core/models/participante';
 import { RodadaService } from '../../rodada.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Time } from '../../../../../core/models/time';
 
 @Component({
   selector: 'app-montar-times',
@@ -21,7 +22,7 @@ export class MontarTimes implements OnInit {
 
   timesTemp: any[] = [];
 
-  timesDisponiveis: any[] = [];
+  timesDisponiveis: Time[] = [];
 
   constructor(private rodadaService: RodadaService) { }
 
@@ -33,8 +34,11 @@ export class MontarTimes implements OnInit {
   carregarTimes() {
     this.rodadaService.listarTimes()
       .subscribe(times => {
+        console.log('Times disponíveis:', times);
         this.timesDisponiveis = times;
       });
+
+    console.log(this.timesDisponiveis);
   }
 
   // 🔹 Adiciona time na estrutura temporária
@@ -42,6 +46,14 @@ export class MontarTimes implements OnInit {
 
     if (!this.timeSelecionado || this.participantesSelecionados.length === 0)
       return;
+
+    const participantesJaUsados = this.timesTemp
+      .flatMap(t => t.participantesIds);
+
+    const duplicado = this.participantesSelecionados
+      .some(p => participantesJaUsados.includes(p));
+
+    if (duplicado) return;
 
     // evita duplicar o mesmo time
     const jaExiste = this.timesTemp.some(t => t.timeId === this.timeSelecionado);
@@ -57,27 +69,27 @@ export class MontarTimes implements OnInit {
   }
 
   // 🔹 Envia para backend
-  // salvarTimes() {
+  salvarTimes() {
 
-  //   if (this.timesTemp.length === 0)
-  //     return;
+    if (this.timesTemp.length === 0)
+      return;
 
-  //   const request = {
-  //     times: this.timesTemp
-  //   };
+    const request = {
+      times: this.timesTemp
+    };
 
-  //   this.rodadaService
-  //     .criarTimes(this.rodadaId, request)
-  //     .subscribe({
-  //       next: () => {
-  //         this.timesTemp = [];
-  //         this.timesCriados.emit();
-  //       },
-  //       error: err => {
-  //         console.error(err);
-  //       }
-  //     });
-  // }
+    this.rodadaService
+      .criarTimes(this.rodadaId, request)
+      .subscribe({
+        next: () => {
+          this.timesTemp = [];
+          this.timesCriados.emit();
+        },
+        error: err => {
+          console.error(err);
+        }
+      });
+  }
 
   // 🔹 Helpers para exibição
   obterNomeTime(timeId: string) {
@@ -86,5 +98,22 @@ export class MontarTimes implements OnInit {
 
   obterNomeParticipante(participanteId: string) {
     return this.participantes.find(p => p.id === participanteId)?.nome;
+  }
+
+  get timesDisponiveisFiltrados(): Time[] {
+
+    const usados = this.timesTemp.map(t => t.timeId);
+
+    return this.timesDisponiveis
+      .filter(t => !usados.includes(t.id));
+  }
+
+  get participantesDisponiveis(): Participante[] {
+
+    const usados = this.timesTemp
+      .flatMap(t => t.participantesIds);
+
+    return this.participantes
+      .filter(p => !usados.includes(p.id));
   }
 }

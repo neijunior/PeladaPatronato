@@ -29,6 +29,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
     public void Atualizar(Rodada rodada)
     {
       _context.Rodada.Update(rodada);
+      _context.SaveChanges();
     }
 
     public async Task AdicionarParticipante(Guid rodadaId, Guid participanteId, bool diarista)

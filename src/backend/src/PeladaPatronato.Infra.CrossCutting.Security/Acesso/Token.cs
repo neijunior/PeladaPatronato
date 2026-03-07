@@ -24,7 +24,6 @@ namespace PeladaPatronato.Infra.CrossCutting.Security.Acesso
         };
 
       var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
-
       var credenciais = new SigningCredentials(chave, SecurityAlgorithms.HmacSha256);
 
       var token = new JwtSecurityToken(issuer: _configuration["Jwt:Issuer"],

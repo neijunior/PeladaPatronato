@@ -101,6 +101,10 @@
 
   </div>
 
+  <app-adicionar-participante [rodadaId]="rodada?.id!" [participantes]="todosParticipantes"
+    [participantesRodada]="participantesParaTimes || []" (participanteAdicionado)="carregarRodada(rodada?.id!)">
+  </app-adicionar-participante>
+
   <!-- LISTA PARTICIPANTES -->
   <div class="bg-gray-800 p-6 rounded-2xl shadow-md">
 
@@ -114,29 +118,20 @@
            text-white flex items-center justify-between transition-all duration-200" [ngStyle]="{
       background: gerarBackground(p)
     }">
-
         <span class="truncate font-medium">
           {{ p.participante.nome }}
         </span>
-
         <button (click)="removerParticipante(p.participante.id)" class="ml-2 text-white hover:text-red-400 text-sm">
           ✕
         </button>
-
       </li>
-
     </ul>
-
   </div>
 
   <!-- COMPONENTE MONTAR TIMES -->
   <app-montar-times *ngIf="mostrarPainelTimes" [rodadaId]="rodada?.id!" [participantes]="participantesParaTimes || []"
     (timesCriados)="onTimesCriados()">
   </app-montar-times>
-
-  <app-adicionar-participante [rodadaId]="rodada?.id!" [participantes]="todosParticipantes"
-    [participantesRodada]="participantesParaTimes" (participanteAdicionado)="carregarRodada(rodada?.id!)">
-  </app-adicionar-participante>
 
   <button class="px-4 py-2 bg-gray-700 text-white rounded" (click)="voltar()">
     Voltar

@@ -26,13 +26,13 @@ export class RodadaService {
     return rodada;
   }
 
-  listarTimes(): Observable<Time[]> {
-    return this.http.post<Time[]>(`${environment.apiUrl}/lookup/times`, null);
+  listarTimes(): Observable<Time[]> {   
+    return this.http.post<Time[]>(`${environment.apiUrl}/lookup/time`, null);
   }
 
   criarTimes(rodadaId: string, request: any) {
     return this.http.post(
-      `${this.baseUrl}/rodadas/${rodadaId}/times`,
+      `${this.baseUrl}/${rodadaId}/times`,
       request
     );
   }

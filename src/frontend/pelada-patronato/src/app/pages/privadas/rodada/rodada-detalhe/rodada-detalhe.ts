@@ -61,8 +61,7 @@ export class RodadaDetalhe implements OnInit {
     }
 
     this.participanteService.listar(filtro)
-      .subscribe(res => {
-        console.log(res);
+      .subscribe(res => {        
         this.todosParticipantes = res.items
       })
   }

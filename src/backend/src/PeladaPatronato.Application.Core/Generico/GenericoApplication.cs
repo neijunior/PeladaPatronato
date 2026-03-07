@@ -34,7 +34,7 @@ namespace PeladaPatronato.Application.Core.Generico
       if (ativo.HasValue)
         filtro = filtro.And(p => p.Ativo == ativo.HasValue);
 
-      var lista = await _timeRepository.Listar();
+      var lista = await _timeRepository.Listar(filtro, null);
 
       return lista.Select(x => new TimeResponse
       {
