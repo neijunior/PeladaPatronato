@@ -116,4 +116,14 @@ export class MontarTimes implements OnInit {
     return this.participantes
       .filter(p => !usados.includes(p.id));
   }
+
+  toggleParticipante(id: string) {
+  const index = this.participantesSelecionados.indexOf(id);
+
+  if (index === -1) {
+    this.participantesSelecionados.push(id);
+  } else {
+    this.participantesSelecionados.splice(index, 1);
+  }
+}
 }

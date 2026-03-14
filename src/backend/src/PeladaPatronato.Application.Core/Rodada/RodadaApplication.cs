@@ -39,27 +39,7 @@ namespace PeladaPatronato.Application.Core.Rodada
       }
     }
 
-    public async Task CriarTimes(Guid rodadaId, CriarTimesRequest request)
-    {
-      _unitOfWork.BeginTransaction();
-      try
-      {
-        var rodada = await _rodadaRepository.ObterPorId(rodadaId)
-          ?? throw new Exception("Rodada não encontrada");
 
-        var times = request.Times.Select(s => new CriarTimeInfo(s.TimeId, s.ParticipantesIds));
-
-        rodada.DefinirTimes(times);
-
-        _rodadaRepository.Atualizar(rodada);
-        _unitOfWork.Commit();
-      }
-      catch (Exception)
-      {
-        _unitOfWork.Rollback();
-        throw;
-      }
-    }
 
     public async Task GerarPartidas(Guid rodadaId)
     {
@@ -137,7 +117,7 @@ namespace PeladaPatronato.Application.Core.Rodada
             } : null,
             Diarista = p.Diarista,
             Pago = p.Pago
-          }).OrderBy(o => o.Participante.Nome).ToList()          
+          }).OrderBy(o => o.Participante.Nome).ToList()
         };
 
       }
@@ -175,13 +155,47 @@ namespace PeladaPatronato.Application.Core.Rodada
       _unitOfWork.BeginTransaction();
       try
       {
-        await _rodadaRepository.AdicionarParticipante(rodadaId, request.ParticipanteId, request.Diarista);        
+        await _rodadaRepository.AdicionarParticipante(rodadaId, request.ParticipanteId, request.Diarista);
         await _unitOfWork.CommitAsync();
       }
       catch (Exception)
-      {        
+      {
         throw;
 
+      }
+    }
+
+    public async Task CriarTimes(Guid rodadaId, CriarTimesRequest request)
+    {
+      _unitOfWork.BeginTransaction();
+      try
+      {
+        var rodada = await _rodadaRepository.ObterPorId(rodadaId)
+          ?? throw new Exception("Rodada não encontrada");
+
+        var times = request.Times.Select(s => new CriarTimeInfo(s.TimeId, s.ParticipantesIds));
+        
+        foreach (var item in times)
+        {
+          RodadaTime time = new RodadaTime(rodadaId, item.TimeBaseId);
+
+          foreach (var participanteId in item.ParticipantesIds)
+          {
+            time.AdicionarParticipante(participanteId);
+          }
+
+          await _rodadaRepository.AdicionarTime(rodadaId, time);
+        }
+
+        rodada.AtualizarStatusRodada(StatusRodada.TimesDefinidos);
+        _rodadaRepository.Atualizar(rodada);
+
+        await _unitOfWork.CommitAsync();
+      }
+      catch (Exception)
+      {
+        _unitOfWork.Rollback();
+        throw;
       }
     }
 

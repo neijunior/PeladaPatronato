@@ -188,8 +188,10 @@ namespace PeladaPatronato.Domain.Entidades
         throw new Exception("Participante já adicionado.");
 
       _participantes.Add(new RodadaParticipante(Id, participanteId, diarista));
-            
+
     }
+
+    public void AtualizarStatusRodada(StatusRodada status) => Status = status;
   }
   public enum StatusRodada
   {

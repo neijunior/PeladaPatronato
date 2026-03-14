@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PeladaPatronato.Infra.Data.EntityFrameworkCore.Contexts;
 
@@ -11,9 +12,11 @@ using PeladaPatronato.Infra.Data.EntityFrameworkCore.Contexts;
 namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(PeladaPatronatoDbContext))]
-    partial class PeladaPatronatoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260314025938_AddTable_RodadaTimeParticipantes_13032026_2359")]
+    partial class AddTable_RodadaTimeParticipantes_13032026_2359
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -341,7 +344,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RodadaTimeId");
+                    b.HasIndex("RodadaParticipanteId");
 
                     b.ToTable("RodadaTimeParticipante", "PeladaPatronato");
                 });
@@ -442,7 +445,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Migrations
                 {
                     b.HasOne("PeladaPatronato.Domain.Entidades.RodadaTime", null)
                         .WithMany("Participantes")
-                        .HasForeignKey("RodadaTimeId")
+                        .HasForeignKey("RodadaParticipanteId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

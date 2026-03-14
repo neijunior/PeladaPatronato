@@ -37,7 +37,7 @@
         <div class="bg-gray-900 rounded-xl p-4 border border-gray-700">
           <p class="text-sm text-gray-400">Participantes</p>
           <p class="text-lg font-semibold text-white">
-            {{ rodada?.participantes?.length || 0 }} / {{ rodada?.participantes?.length || 0 }}
+            {{ rodada?.participantes?.length || 0 }} / 20
           </p>
         </div>
 
@@ -100,13 +100,13 @@
     </div>
 
   </div>
-
+<div *ngIf="!mostrarPainelTimes">
   <app-adicionar-participante [rodadaId]="rodada?.id!" [participantes]="todosParticipantes"
     [participantesRodada]="participantesParaTimes || []" (participanteAdicionado)="carregarRodada(rodada?.id!)">
   </app-adicionar-participante>
 
   <!-- LISTA PARTICIPANTES -->
-  <div class="bg-gray-800 p-6 rounded-2xl shadow-md">
+  <div class="bg-gray-800 p-6 rounded-2xl shadow-md mt-4">
 
     <h2 class="text-lg font-semibold text-white mb-4">
       Participantes
@@ -127,7 +127,7 @@
       </li>
     </ul>
   </div>
-
+</div>
   <!-- COMPONENTE MONTAR TIMES -->
   <app-montar-times *ngIf="mostrarPainelTimes" [rodadaId]="rodada?.id!" [participantes]="participantesParaTimes || []"
     (timesCriados)="onTimesCriados()">

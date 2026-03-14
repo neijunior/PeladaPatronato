@@ -20,16 +20,26 @@
 
   <!-- Selecionar Participantes -->
   <div>
-    <label class="text-sm text-gray-400">Participantes</label>
-    <select multiple class="w-full mt-1 bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white h-40"
-      [(ngModel)]="participantesSelecionados">
+  <label class="text-sm text-gray-400">Participantes ({{ participantesSelecionados.length }} selecionados)</label>
 
-      <option *ngFor="let p of participantesDisponiveis" [ngValue]="p.id">
-        {{ p.nome }}
-      </option>
+  <div class="mt-2 bg-gray-900 border border-gray-700 rounded-lg p-3 max-h-52 overflow-y-auto grid grid-cols-4 gap-2">
 
-    </select>
+    <label *ngFor="let p of participantesDisponiveis"
+           class="flex items-center gap-2 text-white cursor-pointer">
+
+      <input
+        type="checkbox"
+        class="accent-blue-500"
+        [checked]="participantesSelecionados.includes(p.id)"
+        (change)="toggleParticipante(p.id)" />
+
+      {{ p.nome }}
+
+    </label>
+
   </div>
+
+</div>
 
   <!-- Botão adicionar -->
   <button class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-white" (click)="adicionarTimeTemp()">
@@ -39,7 +49,7 @@
   </button>
 
   <!-- Lista temporária -->
-  <div *ngIf="timesTemp.length > 0" class="space-y-3 w-1/4">
+  <div *ngIf="timesTemp.length > 0" class="grid grid-cols-4 gap-3">
 
     <div *ngFor="let t of timesTemp" class="bg-gray-900 p-4 rounded-xl border border-gray-700">
 

@@ -29,7 +29,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
     public void Atualizar(Rodada rodada)
     {
       _context.Rodada.Update(rodada);
-      _context.SaveChanges();
+      //_context.SaveChanges();
     }
 
     public async Task AdicionarParticipante(Guid rodadaId, Guid participanteId, bool diarista)
@@ -88,6 +88,20 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
     public async Task<ICollection<Rodada>> Listar(DateTime dataInicio, DateTime? dataFim)
     {
       return await _context.Rodada.Where(w => w.DataHora >= dataInicio && (dataFim == null || w.DataHora <= dataFim)).ToListAsync();
+    }
+
+    public async Task AdicionarTime(Guid rodadaId, RodadaTime time)
+    {
+      try
+      {
+        //var rodada = await ObterPorId(rodadaId);
+        _context.Add(time);
+      }
+      catch (Exception)
+      {
+
+        throw;
+      }
     }
   }
 }
