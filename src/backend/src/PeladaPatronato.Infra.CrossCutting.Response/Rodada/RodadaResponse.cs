@@ -1,11 +1,4 @@
-﻿using PeladaPatronato.Infra.CrossCutting.Response.Participante;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PeladaPatronato.Infra.CrossCutting.Response.Rodada
+﻿namespace PeladaPatronato.Infra.CrossCutting.Response.Rodada
 {
   public class RodadaResponse
   {
@@ -15,5 +8,6 @@ namespace PeladaPatronato.Infra.CrossCutting.Response.Rodada
     public string? Observacao { get; set; }
     public string? DescricaoStatus { get; set; }
     public ICollection<RodadaParticipanteResponse> participantes { get; set; } = new List<RodadaParticipanteResponse>();
+    public ICollection<RodadaTimeParticipanteResponse> times { get; set; } = new List<RodadaTimeParticipanteResponse>();
   }
 }

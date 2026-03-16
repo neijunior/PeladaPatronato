@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PeladaPatronato.Infra.Data.EntityFrameworkCore.Contexts;
 
@@ -11,9 +12,11 @@ using PeladaPatronato.Infra.Data.EntityFrameworkCore.Contexts;
 namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(PeladaPatronatoDbContext))]
-    partial class PeladaPatronatoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260316221438_AlterConfigs_16032026_1914")]
+    partial class AlterConfigs_16032026_1914
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -343,7 +346,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ParticipanteId")
+                    b.Property<Guid>("RodadaParticipanteId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RodadaTimeId")
@@ -351,7 +354,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParticipanteId");
+                    b.HasIndex("RodadaParticipanteId");
 
                     b.HasIndex("RodadaTimeId");
 
@@ -464,9 +467,9 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Migrations
 
             modelBuilder.Entity("PeladaPatronato.Domain.Entidades.RodadaTimeParticipante", b =>
                 {
-                    b.HasOne("PeladaPatronato.Domain.Entidades.Participante", "Participante")
+                    b.HasOne("PeladaPatronato.Domain.Entidades.RodadaParticipante", "RodadaParticipante")
                         .WithMany()
-                        .HasForeignKey("ParticipanteId")
+                        .HasForeignKey("RodadaParticipanteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -476,7 +479,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Participante");
+                    b.Navigation("RodadaParticipante");
 
                     b.Navigation("RodadaTime");
                 });

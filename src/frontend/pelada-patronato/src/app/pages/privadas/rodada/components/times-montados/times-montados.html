@@ -1,0 +1,17 @@
+<div *ngIf="times.length > 0" class="grid grid-cols-4 gap-3">
+
+  <div *ngFor="let t of times" class="bg-gray-900 p-4 rounded-xl border border-gray-700">
+
+    <p class="font-semibold text-white">
+      {{ obterNomeTime(t.timeId) }}
+    </p>
+
+    <ul class="text-sm text-gray-300 list-disc ml-5 mt-2">
+      <li *ngFor="let p of t.participantesIds">
+        {{ obterNomeParticipante(p) }}
+      </li>
+    </ul>
+
+  </div>
+
+</div>

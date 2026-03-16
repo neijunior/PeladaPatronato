@@ -15,7 +15,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
     }
     public async Task<Rodada?> ObterPorId(Guid id)
     {
-      return await _context.Rodada.Include(r => r.Times).ThenInclude(t => t.Participantes)
+      return await _context.Rodada.Include(r => r.Times).ThenInclude(t => t.Participantes).ThenInclude(t => t.Participante)
                                   .Include(r => r.Partidas).ThenInclude(p => p.Eventos)
                                   .Include(r => r.Participantes).ThenInclude(p => p.Participante)
           .FirstOrDefaultAsync(r => r.Id == id);

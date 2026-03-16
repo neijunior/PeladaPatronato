@@ -12,6 +12,8 @@ namespace PeladaPatronato.Domain.Entidades
     public int Empates { get; private set; }
     public int GolsPro { get; private set; }
     public int GolsContra { get; private set; }
+    public virtual Rodada? Rodada { get; private set; }
+    public virtual Time? Time { get; private set; }
     private readonly List<RodadaTimeParticipante> _participantes = new();
     public IReadOnlyCollection<RodadaTimeParticipante> Participantes => _participantes;
     protected RodadaTime() { }

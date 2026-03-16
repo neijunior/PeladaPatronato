@@ -117,7 +117,16 @@ namespace PeladaPatronato.Application.Core.Rodada
             } : null,
             Diarista = p.Diarista,
             Pago = p.Pago
-          }).OrderBy(o => o.Participante.Nome).ToList()
+          }).OrderBy(o => o.Participante.Nome).ToList(),
+          times = rodada.Times.Select(t => new RodadaTimeParticipanteResponse
+          {
+            TimeBaseId = t.TimeBaseId,
+            Participantes = t.Participantes.Select(s => new ParticipanteResponse
+            {
+              Id = s.ParticipanteId,
+              Nome = s.Participante.Nome
+            }).ToList()
+          }).ToList()
         };
 
       }
@@ -174,7 +183,7 @@ namespace PeladaPatronato.Application.Core.Rodada
           ?? throw new Exception("Rodada não encontrada");
 
         var times = request.Times.Select(s => new CriarTimeInfo(s.TimeId, s.ParticipantesIds));
-        
+
         foreach (var item in times)
         {
           RodadaTime time = new RodadaTime(rodadaId, item.TimeBaseId);

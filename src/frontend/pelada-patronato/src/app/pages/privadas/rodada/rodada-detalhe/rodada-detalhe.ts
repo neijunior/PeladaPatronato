@@ -12,11 +12,12 @@ import { AdicionarParticipante } from '../components/adicionar-participante/adic
 import { ParticipanteService } from '../../participantes/participante.service';
 import { Participante } from '../../../../core/models/participante';
 import { ParticipanteFiltro } from '../../../../core/models/filtros/participante-filtro';
+import { TimesMontados } from '../components/times-montados/times-montados';
 
 
 @Component({
   selector: 'app-rodada-detalhe',
-  imports: [CommonModule, FormsModule, MatDatepickerModule, MatInputModule, MatNativeDateModule, MontarTimes, AdicionarParticipante],
+  imports: [CommonModule, FormsModule, MatDatepickerModule, MatInputModule, MatNativeDateModule, MontarTimes, AdicionarParticipante, TimesMontados],
   templateUrl: './rodada-detalhe.html',
   styleUrl: './rodada-detalhe.css',
 })
@@ -26,6 +27,9 @@ export class RodadaDetalhe implements OnInit {
   mostrarPainelTimes = false;
 
   rodada: Rodada | undefined;
+  exibeMontarTimes: Boolean = true;
+
+  timesRodada: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -43,8 +47,7 @@ export class RodadaDetalhe implements OnInit {
       }
     });
   }
-  removerParticipante(idParticipante: string) {
-    debugger;
+  removerParticipante(idParticipante: string) {    
     if (!idParticipante) return;
 
     this.rodadaService.removerParticipante(this.rodada!.id, idParticipante).subscribe(() => {
@@ -68,8 +71,11 @@ export class RodadaDetalhe implements OnInit {
 
   carregarRodada(id: string) {
     this.rodadaService.consultar(id)
+    
       .subscribe(res => {
+        debugger;
         this.rodada = res;
+        this.exibeMontarTimes = res.descricaoStatus !== 'Criada';
       });
   }
 
@@ -91,7 +97,19 @@ export class RodadaDetalhe implements OnInit {
   onTimesCriados() {
     this.carregarRodada(this.rodada!.id);
     this.mostrarPainelTimes = false;
+    this.carregarTimesRodada();
   }
+
+  carregarTimesRodada() {
+
+  // this.rodadaService
+  //   .listarTimesRodada(this.rodada!.id)
+  //   .subscribe(times => {
+  //     this.timesRodada = times;
+  //     this.exibeMontarTimes = times.length > 0;
+  //   });
+
+}
 
   get mensalistas(): number {
     return this.rodada?.participantes?.filter(p => !p.diarista).length || 0;

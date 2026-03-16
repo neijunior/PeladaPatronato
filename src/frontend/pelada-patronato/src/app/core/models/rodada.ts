@@ -1,5 +1,6 @@
 import { Participante } from "./participante";
 import { RodadaParticipante } from "./rodadaParticipante";
+import { RodadaTime } from "./rodadaTime";
 
 export interface Rodada {
     id: string;
@@ -10,5 +11,5 @@ export interface Rodada {
     tempoPorPartida: number;
     tempoTotal: number;    
     participantes?: RodadaParticipante[];
-    
+    times?: RodadaTime[];
 }

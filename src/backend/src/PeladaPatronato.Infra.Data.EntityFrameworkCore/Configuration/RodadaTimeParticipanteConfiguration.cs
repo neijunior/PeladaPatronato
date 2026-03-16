@@ -12,7 +12,12 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Configuration
       builder.HasKey(x => x.Id);
 
       builder.Property(x => x.RodadaTimeId).IsRequired();
-      builder.Property(x => x.RodadaParticipanteId).IsRequired();
+
+      builder.Property(x => x.ParticipanteId).IsRequired();
+
+      builder.HasOne(x => x.RodadaTime).WithMany(x => x.Participantes).HasForeignKey(x => x.RodadaTimeId);
+
+      builder.HasOne(x => x.Participante).WithMany().HasForeignKey(x => x.ParticipanteId);
     }
   }
 }

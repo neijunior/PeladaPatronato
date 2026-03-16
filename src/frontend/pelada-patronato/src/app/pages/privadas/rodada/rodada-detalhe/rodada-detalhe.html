@@ -4,7 +4,7 @@
     Detalhes da Rodada
   </h1>
 
-  <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white"
+  <button  *ngIf="!exibeMontarTimes" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white"
     (click)="mostrarPainelTimes = !mostrarPainelTimes">
 
     {{ mostrarPainelTimes ? 'Fechar' : 'Montar Times' }}
@@ -100,38 +100,43 @@
     </div>
 
   </div>
-<div *ngIf="!mostrarPainelTimes">
-  <app-adicionar-participante [rodadaId]="rodada?.id!" [participantes]="todosParticipantes"
-    [participantesRodada]="participantesParaTimes || []" (participanteAdicionado)="carregarRodada(rodada?.id!)">
-  </app-adicionar-participante>
+  <div *ngIf="!mostrarPainelTimes">
+    <app-adicionar-participante *ngIf="!exibeMontarTimes" [rodadaId]="rodada?.id!" [participantes]="todosParticipantes"
+      [participantesRodada]="participantesParaTimes || []" (participanteAdicionado)="carregarRodada(rodada?.id!)">
+    </app-adicionar-participante>
 
-  <!-- LISTA PARTICIPANTES -->
-  <div class="bg-gray-800 p-6 rounded-2xl shadow-md mt-4">
+    <!-- LISTA PARTICIPANTES -->
+    <div class="bg-gray-800 p-6 rounded-2xl shadow-md mt-4">
 
-    <h2 class="text-lg font-semibold text-white mb-4">
-      Participantes
-    </h2>
+      <h2 class="text-lg font-semibold text-white mb-4">
+        Participantes
+      </h2>
 
-    <ul class="grid grid-cols-4 gap-3 overflow-y-auto">
+      <ul class="grid grid-cols-4 gap-3 overflow-y-auto">
 
-      <li *ngFor="let p of rodada?.participantes" class="p-3 rounded-lg border border-gray-700 
+        <li *ngFor="let p of rodada?.participantes" class="p-3 rounded-lg border border-gray-700 
            text-white flex items-center justify-between transition-all duration-200" [ngStyle]="{
       background: gerarBackground(p)
     }">
-        <span class="truncate font-medium">
-          {{ p.participante.nome }}
-        </span>
-        <button (click)="removerParticipante(p.participante.id)" class="ml-2 text-white hover:text-red-400 text-sm">
-          ✕
-        </button>
-      </li>
-    </ul>
+          <span class="truncate font-medium">
+            {{ p.participante.nome }}
+          </span>
+          <button (click)="removerParticipante(p.participante.id)" class="ml-2 text-white hover:text-red-400 text-sm">
+            ✕
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
   <!-- COMPONENTE MONTAR TIMES -->
   <app-montar-times *ngIf="mostrarPainelTimes" [rodadaId]="rodada?.id!" [participantes]="participantesParaTimes || []"
     (timesCriados)="onTimesCriados()">
   </app-montar-times>
+
+  <app-times-montados
+  *ngIf="timesRodada.length > 0"
+  [times]="timesRodada">
+</app-times-montados>
 
   <button class="px-4 py-2 bg-gray-700 text-white rounded" (click)="voltar()">
     Voltar

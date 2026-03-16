@@ -4,10 +4,11 @@ import { RodadaService } from '../../rodada.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Time } from '../../../../../core/models/time';
+import { TimesMontados } from '../times-montados/times-montados';
 
 @Component({
   selector: 'app-montar-times',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TimesMontados],
   templateUrl: './montar-times.html',
   styleUrl: './montar-times.css',
 })
@@ -19,6 +20,7 @@ export class MontarTimes implements OnInit {
 
   timeSelecionado: string | null = null;
   participantesSelecionados: string[] = [];
+  timesSalvos = false;
 
   timesTemp: any[] = [];
 
@@ -83,6 +85,7 @@ export class MontarTimes implements OnInit {
       .subscribe({
         next: () => {
           this.timesTemp = [];
+          this.timesSalvos = true;
           this.timesCriados.emit();
         },
         error: err => {

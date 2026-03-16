@@ -20,26 +20,22 @@
 
   <!-- Selecionar Participantes -->
   <div>
-  <label class="text-sm text-gray-400">Participantes ({{ participantesSelecionados.length }} selecionados)</label>
+    <label class="text-sm text-gray-400">Participantes ({{ participantesSelecionados.length }} selecionados)</label>
 
-  <div class="mt-2 bg-gray-900 border border-gray-700 rounded-lg p-3 max-h-52 overflow-y-auto grid grid-cols-4 gap-2">
+    <div class="mt-2 bg-gray-900 border border-gray-700 rounded-lg p-3 max-h-52 overflow-y-auto grid grid-cols-4 gap-2">
 
-    <label *ngFor="let p of participantesDisponiveis"
-           class="flex items-center gap-2 text-white cursor-pointer">
+      <label *ngFor="let p of participantesDisponiveis" class="flex items-center gap-2 text-white cursor-pointer">
 
-      <input
-        type="checkbox"
-        class="accent-blue-500"
-        [checked]="participantesSelecionados.includes(p.id)"
-        (change)="toggleParticipante(p.id)" />
+        <input type="checkbox" class="accent-blue-500" [checked]="participantesSelecionados.includes(p.id)"
+          (change)="toggleParticipante(p.id)" />
 
-      {{ p.nome }}
+        {{ p.nome }}
 
-    </label>
+      </label>
+
+    </div>
 
   </div>
-
-</div>
 
   <!-- Botão adicionar -->
   <button class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-white" (click)="adicionarTimeTemp()">
@@ -49,23 +45,9 @@
   </button>
 
   <!-- Lista temporária -->
-  <div *ngIf="timesTemp.length > 0" class="grid grid-cols-4 gap-3">
-
-    <div *ngFor="let t of timesTemp" class="bg-gray-900 p-4 rounded-xl border border-gray-700">
-
-      <p class="font-semibold text-white">
-        {{ obterNomeTime(t.timeId) }}
-      </p>
-
-      <ul class="text-sm text-gray-300 list-disc ml-5 mt-2">
-        <li *ngFor="let p of t.participantesIds">
-          {{ obterNomeParticipante(p) }}
-        </li>
-      </ul>
-
-    </div>
-
-  </div>
+  <app-times-montados [times]="timesTemp" [obterNomeTime]="obterNomeTime.bind(this)"
+    [obterNomeParticipante]="obterNomeParticipante.bind(this)">
+  </app-times-montados>
 
   <!-- Botão salvar -->
   <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white" (click)="salvarTimes()">
