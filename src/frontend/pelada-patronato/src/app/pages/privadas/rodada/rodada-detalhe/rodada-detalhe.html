@@ -4,7 +4,7 @@
     Detalhes da Rodada
   </h1>
 
-  <button  *ngIf="!exibeMontarTimes" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white"
+  <button *ngIf="!exibeMontarTimes" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white"
     (click)="mostrarPainelTimes = !mostrarPainelTimes">
 
     {{ mostrarPainelTimes ? 'Fechar' : 'Montar Times' }}
@@ -135,7 +135,9 @@
 
   <app-times-montados
   *ngIf="timesRodada.length > 0"
-  [times]="timesRodada">
+  [times]="timesRodada"
+  [obterNomeTime]="obterNomeTime"
+  [obterNomeParticipante]="obterNomeParticipante">
 </app-times-montados>
 
   <button class="px-4 py-2 bg-gray-700 text-white rounded" (click)="voltar()">

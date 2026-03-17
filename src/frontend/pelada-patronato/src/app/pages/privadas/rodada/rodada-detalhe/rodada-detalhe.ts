@@ -13,6 +13,7 @@ import { ParticipanteService } from '../../participantes/participante.service';
 import { Participante } from '../../../../core/models/participante';
 import { ParticipanteFiltro } from '../../../../core/models/filtros/participante-filtro';
 import { TimesMontados } from '../components/times-montados/times-montados';
+import { RodadaTime } from '../../../../core/models/rodadaTime';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class RodadaDetalhe implements OnInit {
   rodada: Rodada | undefined;
   exibeMontarTimes: Boolean = true;
 
-  timesRodada: any[] = [];
+  timesRodada: RodadaTime[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -47,7 +48,7 @@ export class RodadaDetalhe implements OnInit {
       }
     });
   }
-  removerParticipante(idParticipante: string) {    
+  removerParticipante(idParticipante: string) {
     if (!idParticipante) return;
 
     this.rodadaService.removerParticipante(this.rodada!.id, idParticipante).subscribe(() => {
@@ -64,17 +65,18 @@ export class RodadaDetalhe implements OnInit {
     }
 
     this.participanteService.listar(filtro)
-      .subscribe(res => {        
+      .subscribe(res => {
         this.todosParticipantes = res.items
       })
   }
 
   carregarRodada(id: string) {
     this.rodadaService.consultar(id)
-    
+
       .subscribe(res => {
         debugger;
         this.rodada = res;
+        this.timesRodada = res.times || [];
         this.exibeMontarTimes = res.descricaoStatus !== 'Criada';
       });
   }
@@ -102,14 +104,14 @@ export class RodadaDetalhe implements OnInit {
 
   carregarTimesRodada() {
 
-  // this.rodadaService
-  //   .listarTimesRodada(this.rodada!.id)
-  //   .subscribe(times => {
-  //     this.timesRodada = times;
-  //     this.exibeMontarTimes = times.length > 0;
-  //   });
+    // this.rodadaService
+    //   .listarTimesRodada(this.rodada!.id)
+    //   .subscribe(times => {
+    //     this.timesRodada = times;
+    //     this.exibeMontarTimes = times.length > 0;
+    //   });
 
-}
+  }
 
   get mensalistas(): number {
     return this.rodada?.participantes?.filter(p => !p.diarista).length || 0;
@@ -157,5 +159,16 @@ export class RodadaDetalhe implements OnInit {
           ${corTipo} 50%, 
           ${corPagamento} 50%, 
           ${corPagamento} 100%)`;
+  }
+
+  obterNomeTime = (id: string): string | undefined => {    
+    const time = this.timesRodada.find(t => t.timeBaseId === id);    
+    return time?.nomeTime; // ajuste conforme seu model
+  }
+
+  obterNomeParticipante = (id: string): string | undefined => {
+    return this.rodada?.participantes
+      ?.find(p => p.participante.id === id)
+      ?.participante.nome;
   }
 }

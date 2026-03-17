@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { RodadaTime } from '../../../../../core/models/rodadaTime';
 
 @Component({
   selector: 'app-times-montados',
@@ -8,7 +9,7 @@ import { Component, Input } from '@angular/core';
   styleUrl: './times-montados.css',
 })
 export class TimesMontados {
-  @Input() times: any[] = [];
+  @Input() times: RodadaTime[] = [];
   @Input() obterNomeTime!: (id: string) => string | undefined;
   @Input() obterNomeParticipante!: (id: string) => string | undefined;
 }

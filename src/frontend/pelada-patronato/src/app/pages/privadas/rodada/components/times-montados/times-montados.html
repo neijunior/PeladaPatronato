@@ -2,16 +2,17 @@
 
   <div *ngFor="let t of times" class="bg-gray-900 p-4 rounded-xl border border-gray-700">
 
-    <p class="font-semibold text-white">
-      {{ obterNomeTime(t.timeId) }}
+    <p class="font-semibold text-white">              
+      {{ t.nomeTime  }}
     </p>
 
     <ul class="text-sm text-gray-300 list-disc ml-5 mt-2">
-      <li *ngFor="let p of t.participantesIds">
-        {{ obterNomeParticipante(p) }}
+      <li *ngFor="let p of t.participantes">
+        {{ obterNomeParticipante(p.id) }}
       </li>
     </ul>
 
   </div>
 
 </div>
+<br>

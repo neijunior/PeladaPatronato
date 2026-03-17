@@ -1,7 +1,9 @@
+import { Participante } from "./participante";
 import { RodadaTimeParticipante } from "./rodadaTimeParticipante";
-import { Time } from "./time";
+
 
 export interface RodadaTime {
   timeBaseId: string;  
-  participantes: RodadaTimeParticipante[];
+  nomeTime: string;
+  participantes: Participante[];
 }

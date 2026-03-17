@@ -14,11 +14,13 @@ namespace PeladaPatronato.Application.Core.Rodada
   public class RodadaApplication : IRodadaApplication
   {
     private readonly IRodadaRepository _rodadaRepository;
+    private readonly ITimeRepository _timeRepository;
     private readonly IUnitOfWork _unitOfWork;
-    public RodadaApplication(IRodadaRepository repository, IUnitOfWork unitOfWork)
+    public RodadaApplication(IRodadaRepository repository, IUnitOfWork unitOfWork, ITimeRepository timeRepository)
     {
       _rodadaRepository = repository;
       _unitOfWork = unitOfWork;
+      _timeRepository = timeRepository;
     }
     public async Task<Guid> CriarRodada(CriarRodadaRequest request)
     {
@@ -78,8 +80,9 @@ namespace PeladaPatronato.Application.Core.Rodada
             Id = s.Id,
             DataHora = s.DataHora,
             Observacao = s.Observacao,
-            ValorDiarista = s.ValorDiarista
-          }).ToList();
+            ValorDiarista = s.ValorDiarista,
+            DescricaoStatus = s.Status.ObterDescricaoItemEnum(),
+          }).ToList().OrderByDescending(o => o.DataHora).ToList();
 
         _unitOfWork.Commit();
         return PagedResponseExtension<RodadaResponse>.Popular(listaTratada, totalItens, request.PageNumber, request.PageSize);
@@ -93,13 +96,13 @@ namespace PeladaPatronato.Application.Core.Rodada
 
     public async Task<RodadaResponse> ObterPorId(Guid rodadaId)
     {
-      _unitOfWork.BeginTransaction();
+      
       try
       {
         var rodada = await _rodadaRepository.ObterPorId(rodadaId)
           ?? throw new Exception("Rodada não encontrada");
 
-        _unitOfWork.Commit();
+        var listaTimes = await _timeRepository.Listar();
         return new RodadaResponse
         {
 
@@ -121,10 +124,12 @@ namespace PeladaPatronato.Application.Core.Rodada
           times = rodada.Times.Select(t => new RodadaTimeParticipanteResponse
           {
             TimeBaseId = t.TimeBaseId,
+            NomeTime = listaTimes.FirstOrDefault(w => w.Id == t.TimeBaseId)?.Nome,
             Participantes = t.Participantes.Select(s => new ParticipanteResponse
             {
               Id = s.ParticipanteId,
-              Nome = s.Participante.Nome
+              Nome = s.Participante.Nome,
+              Ativo = s.Participante.Ativo
             }).ToList()
           }).ToList()
         };
@@ -132,7 +137,7 @@ namespace PeladaPatronato.Application.Core.Rodada
       }
       catch (Exception)
       {
-        _unitOfWork.Rollback();
+        
         throw;
       }
     }
