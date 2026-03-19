@@ -1,11 +1,13 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Participante } from '../../../core/models/participante';
-import { map, Observable } from 'rxjs';
-import { environment } from '../../../../environments/environment';
-import { Posicao } from '../../../core/models/posicao';
-import { ParticipanteFiltro } from '../../../core/models/filtros/participante-filtro';
-import { PagedResponse } from '../../../core/models/base/paged-response';
+import { Observable } from 'rxjs';
+import { Participante } from '../models/participante';
+import { environment } from '../../../environments/environment';
+import { ParticipanteFiltro } from '../models/filtros/participante-filtro';
+import { PagedResponse } from '../models/base/paged-response';
+import { Posicao } from '../models/posicao';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +28,7 @@ export class ParticipanteService {
   }
 
   listar(filtro: ParticipanteFiltro): Observable<PagedResponse<Participante>> {
-    let lista = this.http.post<PagedResponse<Participante>>(`${this.baseUrl}/listar`, filtro);
-    return lista;
+    return this.http.post<PagedResponse<Participante>>(`${this.baseUrl}/listar`, filtro);    
   }
 
   listarPosicoes(): Observable<Posicao[]> {
@@ -48,8 +49,7 @@ export class ParticipanteService {
       posicaoPreferida: p.posicaoPreferida ? Number(p.posicaoPreferida) : null
     };
 
-    var ret = this.http.post<Participante>(`${this.baseUrl}/salvar`, payload);
-    return ret;
+    return this.http.post<Participante>(`${this.baseUrl}/salvar`, payload);    
   }
 
   update(id: number, p: Participante): Observable<Participante> {

@@ -1,5 +1,4 @@
 import { Participante } from "./participante";
-import { RodadaTimeParticipante } from "./rodadaTimeParticipante";
 
 
 export interface RodadaTime {

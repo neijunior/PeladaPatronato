@@ -18,7 +18,7 @@ export class Login {
   carregando = false;
 
   constructor(private authService: AuthService,
-              private router: Router) {}
+    private router: Router) { }
 
   login() {
 

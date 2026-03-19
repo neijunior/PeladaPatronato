@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Estatistica } from '../../../../core/models/estatistica';
-import { EstatisticaFiltro } from '../../../../core/models/filtros/estatistica-filtro';
+import { Estatistica } from '../../../core/models/estatistica';
+import { EstatisticaFiltro } from '../../../core/models/filtros/estatistica-filtro';
 import { EstatisticaService } from '../estatisticas.service';
 import { Router } from '@angular/router';
-import { PagedResponse } from '../../../../core/models/base/paged-response';
-import { PaginationComponent } from '../../../../shared/components/pagination/pagination/pagination';
+import { PagedResponse } from '../../../core/models/base/paged-response';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination/pagination';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

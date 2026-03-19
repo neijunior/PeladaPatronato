@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Participante } from '../../../../core/models/participante';
 import { Posicao } from '../../../../core/models/posicao';
-import { ParticipanteService } from '../participante.service';
+import { ParticipanteService } from '../../../../core/services/participante.service';
 
 @Component({
   selector: 'app-participante-form',

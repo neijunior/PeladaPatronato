@@ -1,4 +1,3 @@
-import { Participante } from "./participante";
 import { RodadaParticipante } from "./rodadaParticipante";
 import { RodadaTime } from "./rodadaTime";
 

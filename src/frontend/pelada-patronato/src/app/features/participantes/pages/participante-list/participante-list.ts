@@ -4,12 +4,12 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { Participante } from '../../../../core/models/participante';
-import { ParticipanteService } from '../participante.service';
 import { ParticipanteFiltro } from '../../../../core/models/filtros/participante-filtro';
 import { PagedResponse } from '../../../../core/models/base/paged-response';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination/pagination';
 import { TelefonePipe } from '../../../../pipes/telefone-pipe';
-import { ParticipanteFiltroComponent } from '../participante-filtro/participante-filtro';
+import { ParticipanteService } from '../../../../core/services/participante.service';
+import { ParticipanteFiltroComponent } from '../../components/participante-filtro/participante-filtro';
 
 @Component({
   selector: 'app-participante-list',
@@ -19,7 +19,7 @@ import { ParticipanteFiltroComponent } from '../participante-filtro/participante
     FormsModule,
     PaginationComponent,
     TelefonePipe,
-    ParticipanteFiltroComponent    
+    ParticipanteFiltroComponent 
 ],
   templateUrl: './participante-list.html',
   styleUrls: ['./participante-list.css']
@@ -45,6 +45,9 @@ export class ParticipanteList implements OnInit {
     private readonly svc: ParticipanteService,
     private readonly router: Router
   ) { 
+    effect(() => {
+      this.participantes = this.svc.getParticipantes;
+    });
     this.loadPosicoes();
   }
 
@@ -90,23 +93,7 @@ export class ParticipanteList implements OnInit {
     });
   }
 
-  aplicarFiltro(): void {
-    this.filtro.pageNumber = 1;
-    this.carregar();
-  }
-
-  limparFiltro(): void {
-    this.filtro = {
-      nome: '',
-      pageNumber: 1,
-      pageSize: 10,
-      ativo: true,
-      exibePosicao: true     
-
-    };
-
-    this.carregar();
-  }
+  
 
   mudarPagina(page: number): void {
     if (page === this.filtro.pageNumber) return;
@@ -115,9 +102,7 @@ export class ParticipanteList implements OnInit {
     this.carregar();
   }
 
-  novoParticipante(): void {
-    this.router.navigate(['participantes/novo']);
-  }
+  
 
   editar(id: string): void {
     this.router.navigate(['participantes/novo'], {

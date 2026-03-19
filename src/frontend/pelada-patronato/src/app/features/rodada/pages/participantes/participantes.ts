@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { AdicionarParticipante } from '../../components/adicionar-participante/adicionar-participante';
 import { Rodada } from '../../../../core/models/rodada';
 import { Participante } from '../../../../core/models/participante';
-import { ParticipanteService } from '../../../../pages/privadas/participantes/participante.service';
 import { ParticipanteFiltro } from '../../../../core/models/filtros/participante-filtro';
 import { RodadaService } from '../../../../core/services/rodada.service';
+import { ParticipanteService } from '../../../../core/services/participante.service';
 
 @Component({
   selector: 'app-participantes',
@@ -23,7 +23,7 @@ export class Participantes implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private svcRodada: RodadaService,
-    private participanteService: ParticipanteService
+    private svcParticipante: ParticipanteService
   ) { }
 
   ngOnInit(): void {
@@ -39,7 +39,7 @@ export class Participantes implements OnInit {
       pageSize: 9999
     }
 
-    this.participanteService.listar(filtro)
+    this.svcParticipante.listar(filtro)
       .subscribe(res => {
         this.todosParticipantes = res.items
       })

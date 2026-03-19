@@ -6,7 +6,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CommonModule } from '@angular/common';
 import { Rodada } from '../../../../core/models/rodada';
 import { FormsModule } from '@angular/forms';
-import { ParticipanteService } from '../../../../pages/privadas/participantes/participante.service';
 import { RodadaService } from '../../../../core/services/rodada.service';
 
 
@@ -24,8 +23,7 @@ export class RodadaDetalhe implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private svcRodada: RodadaService,
-    private participanteService: ParticipanteService
+    private svcRodada: RodadaService    
   ) { }
 
   ngOnInit() {

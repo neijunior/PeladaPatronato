@@ -6,6 +6,8 @@ import { Observable } from "rxjs";
 import { PagedResponse } from "../models/base/paged-response";
 import { Rodada } from "../models/rodada";
 import { Time } from "../models/time";
+import { RodadaTime } from "../models/rodadaTime";
+import { CriarTimesRequest } from "../models/request/criarTimesRequest";
 
 @Injectable({
   providedIn: 'root'
@@ -16,21 +18,18 @@ export class RodadaService {
   private baseUrl = `${environment.apiUrl}/rodadas`;
 
   listar(filtro: RodadaFiltro): Observable<PagedResponse<Rodada>> {
-    let lista = this.http.post<PagedResponse<Rodada>>(`${this.baseUrl}/pesquisar`, filtro);
-
-    return lista;
+    return this.http.post<PagedResponse<Rodada>>(`${this.baseUrl}/pesquisar`, filtro);
   }
 
   consultar(id: string): Observable<Rodada> {
-    let rodada = this.http.get<Rodada>(`${this.baseUrl}/${id}`);
-    return rodada;
+    return this.http.get<Rodada>(`${this.baseUrl}/${id}`);    
   }
 
   listarTimes(): Observable<Time[]> {   
     return this.http.post<Time[]>(`${environment.apiUrl}/lookup/time`, null);
   }
 
-  criarTimes(rodadaId: string, request: any) {
+  criarTimes(rodadaId: string, request: CriarTimesRequest[]) {
     return this.http.post(
       `${this.baseUrl}/${rodadaId}/times`,
       request

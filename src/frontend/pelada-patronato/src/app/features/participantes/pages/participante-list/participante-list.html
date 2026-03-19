@@ -6,24 +6,7 @@
       Participantes
     </h1>
   </div>
-  <app-participante-filtro [filtro]="filtro" [posicoes]="posicoes" (buscar)="aplicarFiltro()" (limpar)="limparFiltro()"></app-participante-filtro>
-
-  <!-- FILTRO -->
-  <div class="bg-gray-800 p-4 rounded-lg shadow">
-    <!-- Botões -->
-    <div class="flex gap-3 mt-4">
-      <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white" (click)="aplicarFiltro()">
-        Buscar
-      </button>
-
-      <button class="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded text-white" (click)="limparFiltro()">
-        Limpar
-      </button>
-      <button class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded text-white" (click)="novoParticipante()">
-        Novo
-      </button>
-    </div>
-  </div>
+  <app-participante-filtro [posicoes]="posicoes"></app-participante-filtro>
 
   <!-- TABELA -->
   <div class="bg-gray-800 rounded-lg shadow overflow-hidden">

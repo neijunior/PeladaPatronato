@@ -9,7 +9,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./layout/layout').then(m => m.Layout),
     children: [
-      { path: 'login', loadComponent: () => import('./pages/auth/login/login').then(m => m.Login) },
+      { path: 'login', loadComponent: () => import('./public/auth/login/login').then(m => m.Login) },
       {
         path: '',
         loadComponent: () =>
@@ -18,18 +18,18 @@ export const routes: Routes = [
       },
       { path: 'sobre', loadComponent: () => import('./public/sobre/sobre').then(m => m.Sobre) },
       {
-        path: 'dashboard', canActivate: [authGuard], loadComponent: () => import('./pages/privadas/dashboard/dashboard').then(m => m.Dashboard)
+        path: 'dashboard', canActivate: [authGuard], loadComponent: () => import('./features/dashboard/dashboard').then(m => m.Dashboard)
       },
       {
         path: 'participantes', canActivate: [authGuard],
         loadComponent: () =>
-          import('./pages/privadas/participantes/participante-list/participante-list')
+          import('./features/participantes/pages/participante-list/participante-list')
             .then(m => m.ParticipanteList)
       },
       {
         path: 'participantes/novo', canActivate: [authGuard],
         loadComponent: () =>
-          import('./pages/privadas/participantes/participante-form/participante-form')
+          import('./features/participantes/pages/participante-form/participante-form')
             .then(m => m.ParticipanteForm)
       },
       {
@@ -64,13 +64,13 @@ export const routes: Routes = [
           {
             path: 'ranking',
             loadComponent: () =>
-              import('./pages/privadas/estatisticas/ranking-semestral/ranking-semestral')
+              import('./features/estatisticas/ranking-semestral/ranking-semestral')
                 .then(m => m.RankingSemestral)
           },
           {
             path: 'consulta',
             loadComponent: () =>
-              import('./pages/privadas/estatisticas/consulta-geral/consulta-geral')
+              import('./features/estatisticas/consulta-geral/consulta-geral')
                 .then(m => m.ConsultaGeral)
           },
           { path: '', redirectTo: 'ranking', pathMatch: 'full' } // opcional: default para ranking

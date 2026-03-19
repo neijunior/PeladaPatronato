@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Time } from '../../../../core/models/time';
 import { RodadaService } from '../../../../core/services/rodada.service';
+import { RodadaTime } from '../../../../core/models/rodadaTime';
+import { CriarTimesRequest } from '../../../../core/models/request/criarTimesRequest';
 
 @Component({
   selector: 'app-montar-times',
@@ -75,12 +77,13 @@ export class MontarTimes implements OnInit {
     if (this.timesTemp.length === 0)
       return;
 
-    const request = {
-      times: this.timesTemp
-    };
+    const times: CriarTimesRequest[] = this.timesTemp.map(t => ({
+      timeId: t.timeId,
+      participantesIds: t.participantesIds
+    }));
 
     this.svcRodada
-      .criarTimes(this.rodadaId, request)
+      .criarTimes(this.rodadaId, times)
       .subscribe({
         next: () => {
           this.timesTemp = [];

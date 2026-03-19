@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class IdleService {
 
-    private timeoutId: any;
+    private timeoutId: number | undefined;
     private readonly idleTime = 10 * 60 * 1000; // 10 minutos
 
     private idleSubject = new Subject<void>();
@@ -15,7 +15,10 @@ export class IdleService {
     ) { }
 
     stopWatching() {
-        clearTimeout(this.timeoutId);
+        if (this.timeoutId !== undefined) {
+            clearTimeout(this.timeoutId);
+            this.timeoutId = undefined;
+        }
     }
 
     startWatching() {
