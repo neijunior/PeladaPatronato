@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Participante } from '../../../core/models/participante';
 import { map, Observable } from 'rxjs';
@@ -15,8 +15,18 @@ export class ParticipanteService {
   private http = inject(HttpClient);
   private baseUrl = `${environment.apiUrl}/participante`;
 
+  private participantesSignal = signal<Participante[]>([]);
+
+  get getParticipantes() {
+    return this.participantesSignal();
+  }
+
+  set setParticipantes(value: Participante[]) {
+    this.participantesSignal.set(value);
+  }
+
   listar(filtro: ParticipanteFiltro): Observable<PagedResponse<Participante>> {
-    let lista = this.http.post<PagedResponse<Participante>>(`${this.baseUrl}/listar`, filtro);    
+    let lista = this.http.post<PagedResponse<Participante>>(`${this.baseUrl}/listar`, filtro);
     return lista;
   }
 
@@ -28,8 +38,7 @@ export class ParticipanteService {
     return this.http.get<Participante>(`${this.baseUrl}/consultar?Id=${id}`);
   }
 
-  salvar(p: Participante): Observable<Participante> {
-    debugger;
+  salvar(p: Participante): Observable<Participante> {    
     const payload = {
       id: p.id,
       nome: p.nome,
@@ -39,7 +48,8 @@ export class ParticipanteService {
       posicaoPreferida: p.posicaoPreferida ? Number(p.posicaoPreferida) : null
     };
 
-    return this.http.post<Participante>(`${this.baseUrl}/salvar`, payload);
+    var ret = this.http.post<Participante>(`${this.baseUrl}/salvar`, payload);
+    return ret;
   }
 
   update(id: number, p: Participante): Observable<Participante> {

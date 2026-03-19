@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { RodadaService } from '../../rodada.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Participante } from '../../../../../core/models/participante';
+import { Participante } from '../../../../core/models/participante';
+import { RodadaService } from '../../../../core/services/rodada.service';
 
 @Component({
   standalone: true,
@@ -23,7 +23,7 @@ export class AdicionarParticipante implements OnChanges{
   participanteSelecionadoId!: string
   diarista: boolean = false
 
-  constructor(private rodadaService: RodadaService) { }
+  constructor(private svcRodada: RodadaService) { }
   
   ngOnChanges(changes: SimpleChanges): void {
     this.atualizarDisponiveis();
@@ -39,7 +39,7 @@ export class AdicionarParticipante implements OnChanges{
   adicionar() {
     if (!this.participanteSelecionadoId) return;
 
-    this.rodadaService.adicionarParticipante(
+    this.svcRodada.adicionarParticipante(
       this.rodadaId,
       {
         participanteId: this.participanteSelecionadoId,

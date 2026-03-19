@@ -1,0 +1,34 @@
+<app-adicionar-participante
+    *ngIf="isRodadaCriada()"
+  [rodadaId]="rodada.id"
+  [participantes]="todosParticipantes"
+  [participantesRodada]="participantesParaTimes || []"
+  (participanteAdicionado)="carregarRodada()">
+</app-adicionar-participante>
+
+<div class="bg-gray-800 p-6 rounded-2xl shadow-md mt-4">
+
+  <h2 class="text-lg font-semibold text-white mb-4">
+    Participantes
+  </h2>
+
+  <ul class="grid grid-cols-4 gap-3 overflow-y-auto">
+
+    <li *ngFor="let p of rodada.participantes"
+        class="p-3 rounded-lg border border-gray-700 text-white flex items-center justify-between"
+        [ngStyle]="{ background: gerarBackground(p) }">
+
+      <span class="truncate font-medium">
+        {{ p.participante.nome }}
+      </span>
+
+      <button
+        (click)="removerParticipante(p.participante.id)"
+        class="ml-2 text-white hover:text-red-400 text-sm">
+        ✕
+      </button>
+
+    </li>
+  </ul>
+</div>
+<br>

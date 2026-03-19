@@ -1,11 +1,11 @@
-import { inject, Injectable } from "@angular/core";
-import { environment } from "../../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
+import { inject, Injectable } from "@angular/core";
+import { environment } from "../../../environments/environment";
+import { RodadaFiltro } from "../models/filtros/rodada-filtro";
 import { Observable } from "rxjs";
-import { Rodada } from "../../../core/models/rodada";
-import { RodadaFiltro } from "../../../core/models/filtros/rodada-filtro";
-import { PagedResponse } from "../../../core/models/base/paged-response";
-import { Time } from "../../../core/models/time";
+import { PagedResponse } from "../models/base/paged-response";
+import { Rodada } from "../models/rodada";
+import { Time } from "../models/time";
 
 @Injectable({
   providedIn: 'root'

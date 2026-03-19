@@ -4,13 +4,6 @@
     Detalhes da Rodada
   </h1>
 
-  <button *ngIf="!exibeMontarTimes" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-white"
-    (click)="mostrarPainelTimes = !mostrarPainelTimes">
-
-    {{ mostrarPainelTimes ? 'Fechar' : 'Montar Times' }}
-
-  </button>
-
   <div class="w-full">
 
     <div class="bg-gray-800 p-6 rounded-2xl shadow-md">
@@ -100,46 +93,25 @@
     </div>
 
   </div>
-  <div *ngIf="!mostrarPainelTimes">
-    <app-adicionar-participante *ngIf="!exibeMontarTimes" [rodadaId]="rodada?.id!" [participantes]="todosParticipantes"
-      [participantesRodada]="participantesParaTimes || []" (participanteAdicionado)="carregarRodada(rodada?.id!)">
-    </app-adicionar-participante>
 
-    <!-- LISTA PARTICIPANTES -->
-    <div class="bg-gray-800 p-6 rounded-2xl shadow-md mt-4">
+  <div class="flex gap-4 border-b border-gray-700 pb-2 mt-6">
+    <a [routerLink]="['participantes']" routerLinkActive="text-blue-400 border-b-2 border-blue-400"
+      class="pb-1 text-gray-300">
+      Participantes
+    </a>
 
-      <h2 class="text-lg font-semibold text-white mb-4">
-        Participantes
-      </h2>
+    <a [routerLink]="['times']" routerLinkActive="text-blue-400 border-b-2 border-blue-400" class="pb-1 text-gray-300">
+      Times
+    </a>
 
-      <ul class="grid grid-cols-4 gap-3 overflow-y-auto">
-
-        <li *ngFor="let p of rodada?.participantes" class="p-3 rounded-lg border border-gray-700 
-           text-white flex items-center justify-between transition-all duration-200" [ngStyle]="{
-      background: gerarBackground(p)
-    }">
-          <span class="truncate font-medium">
-            {{ p.participante.nome }}
-          </span>
-          <button (click)="removerParticipante(p.participante.id)" class="ml-2 text-white hover:text-red-400 text-sm">
-            ✕
-          </button>
-        </li>
-      </ul>
-    </div>
+    <a [routerLink]="['resultados']" routerLinkActive="text-blue-400 border-b-2 border-blue-400"
+      class="pb-1 text-gray-300">
+      Resultados
+    </a>
   </div>
-  <!-- COMPONENTE MONTAR TIMES -->
-  <app-montar-times *ngIf="mostrarPainelTimes" [rodadaId]="rodada?.id!" [participantes]="participantesParaTimes || []"
-    (timesCriados)="onTimesCriados()">
-  </app-montar-times>
 
-  <app-times-montados
-  *ngIf="timesRodada.length > 0"
-  [times]="timesRodada"
-  [obterNomeTime]="obterNomeTime"
-  [obterNomeParticipante]="obterNomeParticipante">
-</app-times-montados>
-
+  <router-outlet></router-outlet>
+  
   <button class="px-4 py-2 bg-gray-700 text-white rounded" (click)="voltar()">
     Voltar
   </button>

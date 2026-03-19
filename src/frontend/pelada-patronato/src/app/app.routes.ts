@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
+import { Times } from './features/rodada/pages/times/times';
+import { Participantes } from './features/rodada/pages/participantes/participantes';
 
 export const routes: Routes = [
   {
@@ -11,10 +13,10 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./pages/publicas/home/home')
+          import('./public/home/home')
             .then(m => m.Home)
       },
-      { path: 'sobre', loadComponent: () => import('./pages/publicas/sobre/sobre').then(m => m.Sobre) },
+      { path: 'sobre', loadComponent: () => import('./public/sobre/sobre').then(m => m.Sobre) },
       {
         path: 'dashboard', canActivate: [authGuard], loadComponent: () => import('./pages/privadas/dashboard/dashboard').then(m => m.Dashboard)
       },
@@ -35,32 +37,38 @@ export const routes: Routes = [
         canActivate: [authGuard],
         children: [
           {
-            path: '',  
+            path: '',
             loadComponent: () =>
-              import('./pages/privadas/rodada/rodada-list/rodada-list')
+              import('./features/rodada/pages/rodada-list/rodada-list')
                 .then(m => m.RodadaList)
           },
           {
-            path: ':id', 
+            path: ':id',
             loadComponent: () =>
-              import('./pages/privadas/rodada/rodada-detalhe/rodada-detalhe')
-                .then(m => m.RodadaDetalhe)
+              import('./features/rodada/pages/rodada-detalhe/rodada-detalhe')
+                .then(m => m.RodadaDetalhe),
+            children: [
+              { path: '', redirectTo: 'participantes', pathMatch: 'full' },
+               { path: 'participantes', component: Participantes },
+               { path: 'times', component: Times },
+              // { path: 'resultados', component: ResultadosComponent }
+            ]
           },
           { path: '', redirectTo: 'ranking', pathMatch: 'full' } // opcional: default para ranking
         ]
-      },      
+      },
       {
         path: 'estatisticas',
         canActivate: [authGuard],
         children: [
           {
-            path: 'ranking',  
+            path: 'ranking',
             loadComponent: () =>
               import('./pages/privadas/estatisticas/ranking-semestral/ranking-semestral')
                 .then(m => m.RankingSemestral)
           },
           {
-            path: 'consulta', 
+            path: 'consulta',
             loadComponent: () =>
               import('./pages/privadas/estatisticas/consulta-geral/consulta-geral')
                 .then(m => m.ConsultaGeral)
@@ -71,7 +79,7 @@ export const routes: Routes = [
       {
         path: 'documentos/:tipo/:arquivo', canActivate: [authGuard],
         loadComponent: () =>
-          import('./pages/publicas/documentos/viewer/documento-viewer')
+          import('./public/documentos/viewer/documento-viewer')
             .then(m => m.DocumentoViewer)
       }
     ]

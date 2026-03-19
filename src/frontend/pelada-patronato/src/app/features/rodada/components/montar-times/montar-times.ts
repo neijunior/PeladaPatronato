@@ -1,14 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Participante } from '../../../../../core/models/participante';
-import { RodadaService } from '../../rodada.service';
+import { Participante } from '../../../../core/models/participante';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Time } from '../../../../../core/models/time';
-import { TimesMontados } from '../times-montados/times-montados';
+import { Time } from '../../../../core/models/time';
+import { RodadaService } from '../../../../core/services/rodada.service';
 
 @Component({
   selector: 'app-montar-times',
-  imports: [CommonModule, FormsModule, TimesMontados],
+  imports: [CommonModule, FormsModule],
   templateUrl: './montar-times.html',
   styleUrl: './montar-times.css',
 })
@@ -26,7 +25,7 @@ export class MontarTimes implements OnInit {
 
   timesDisponiveis: Time[] = [];
 
-  constructor(private rodadaService: RodadaService) { }
+  constructor(private svcRodada: RodadaService) { }
 
   ngOnInit(): void {
     this.carregarTimes();
@@ -34,7 +33,7 @@ export class MontarTimes implements OnInit {
 
   // 🔹 Buscar lista de times disponíveis
   carregarTimes() {
-    this.rodadaService.listarTimes()
+    this.svcRodada.listarTimes()
       .subscribe(times => {
         console.log('Times disponíveis:', times);
         this.timesDisponiveis = times;
@@ -80,7 +79,7 @@ export class MontarTimes implements OnInit {
       times: this.timesTemp
     };
 
-    this.rodadaService
+    this.svcRodada
       .criarTimes(this.rodadaId, request)
       .subscribe({
         next: () => {

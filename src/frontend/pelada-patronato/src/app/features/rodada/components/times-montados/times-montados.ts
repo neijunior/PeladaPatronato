@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { RodadaTime } from '../../../../../core/models/rodadaTime';
+import { RodadaTime } from '../../../../core/models/rodadaTime';
 
 @Component({
   selector: 'app-times-montados',

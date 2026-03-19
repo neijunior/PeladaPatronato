@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +9,7 @@ import { ParticipanteFiltro } from '../../../../core/models/filtros/participante
 import { PagedResponse } from '../../../../core/models/base/paged-response';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination/pagination';
 import { TelefonePipe } from '../../../../pipes/telefone-pipe';
+import { ParticipanteFiltroComponent } from '../participante-filtro/participante-filtro';
 
 @Component({
   selector: 'app-participante-list',
@@ -17,8 +18,9 @@ import { TelefonePipe } from '../../../../pipes/telefone-pipe';
     CommonModule,
     FormsModule,
     PaginationComponent,
-    TelefonePipe
-  ],
+    TelefonePipe,
+    ParticipanteFiltroComponent    
+],
   templateUrl: './participante-list.html',
   styleUrls: ['./participante-list.css']
 })
@@ -56,9 +58,6 @@ export class ParticipanteList implements OnInit {
       error: (err) => console.error('Erro ao carregar posições', err)
     });
   }
-  // ===============================
-  // GETTERS PAGINAÇÃO
-  // ===============================
 
   get registroInicial(): number {
     return this.totalRegistros === 0
@@ -82,6 +81,7 @@ export class ParticipanteList implements OnInit {
         this.participantes = response.items ?? [];
         this.totalRegistros = response.totalCount ?? 0;
         this.carregando = false;
+        this.svc.setParticipantes = this.participantes;
       },
       error: () => {
         this.erro = 'Erro ao carregar participantes';
@@ -114,10 +114,6 @@ export class ParticipanteList implements OnInit {
     this.filtro.pageNumber = page;
     this.carregar();
   }
-
-  // ===============================
-  // NAVEGAÇÃO
-  // ===============================
 
   novoParticipante(): void {
     this.router.navigate(['participantes/novo']);

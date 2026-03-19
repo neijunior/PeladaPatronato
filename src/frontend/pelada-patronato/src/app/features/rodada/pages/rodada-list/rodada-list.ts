@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RodadaService } from '../rodada.service';
 import { Rodada } from '../../../../core/models/rodada';
 import { RodadaFiltro } from '../../../../core/models/filtros/rodada-filtro';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PagedResponse } from '../../../../core/models/base/paged-response';
 import { Router } from '@angular/router';
+import { RodadaService } from '../../../../core/services/rodada.service';
 
 @Component({
   selector: 'app-rodada-list',

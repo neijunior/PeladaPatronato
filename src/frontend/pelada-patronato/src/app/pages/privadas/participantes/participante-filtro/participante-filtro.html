@@ -1,0 +1,56 @@
+<div class="bg-gray-800 p-4 rounded-lg shadow">
+  <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+
+    <!-- Nome -->
+    <div class="flex flex-col">
+      <label class="text-sm text-gray-400 mb-1">Nome</label>
+      <input
+        type="text"
+        class="px-3 py-2 rounded bg-gray-700 text-white outline-none"
+        [ngModel]="filtro.nome"
+        (ngModelChange)="atualizar('nome', $event)"
+        (keyup.enter)="buscar.emit()"
+      />
+    </div>
+
+    <!-- Posição -->
+    <div class="flex flex-col">
+      <label class="text-sm text-gray-400 mb-1">Posição</label>
+      <select
+        [ngModel]="filtro.idPosicao"
+        (ngModelChange)="atualizar('idPosicao', $event)"
+        class="px-3 py-2 bg-gray-700 border border-gray-600 rounded text-gray-100"
+      >
+        <option [ngValue]="null">Selecione...</option>
+        <option *ngFor="let pos of posicoes" [ngValue]="pos.id">
+          {{ pos.nome }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Ativo -->
+    <div class="flex items-center gap-2 mt-6">
+      <input
+        type="checkbox"
+        class="w-4 h-4"
+        [ngModel]="filtro.ativo"
+        (ngModelChange)="atualizar('ativo', $event)"
+      />
+      <label class="text-sm text-gray-300">Somente ativos</label>
+    </div>
+
+  </div>
+
+  <!-- Botões -->
+  <div class="flex gap-3 mt-4">
+    <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white"
+            (click)="buscar.emit()">
+      Buscar
+    </button>
+
+    <button class="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded text-white"
+            (click)="limpar.emit()">
+      Limpar
+    </button>
+  </div>
+</div>

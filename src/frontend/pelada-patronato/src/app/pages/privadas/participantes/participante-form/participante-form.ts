@@ -55,7 +55,10 @@ export class ParticipanteForm {
 
   save() {
     this.svc.salvar(this.p).subscribe({
-      next: () => this.router.navigate(['participantes']),
+      next: (part: any) => {        
+        this.svc.setParticipantes = [...this.svc.getParticipantes, part.dados];
+        this.router.navigate(['participantes'])
+      },
       error: (err) => {
         console.error('Erro ao salvar', err);
       }
