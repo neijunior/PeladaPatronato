@@ -17,5 +17,8 @@ namespace PeladaPatronato.Domain.Interfaces
     Task AdicionarParticipante(Guid rodadaId, Guid participanteId, bool diarista);
     Task RemoverParticipante(Guid rodadaId, Guid participanteId);
     Task AdicionarTime(Guid rodadaId, RodadaTime time);
+    Task AtualizarPagamento(RodadaParticipante participante);
+    Task AdicionarPartida(Guid rodadaId, RodadaPartida partida);
+    Task<IEnumerable<RodadaPartida>> ListarPartidas(Guid rodadaId);
   }
 }

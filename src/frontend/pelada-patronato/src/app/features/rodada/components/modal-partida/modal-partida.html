@@ -1,0 +1,159 @@
+<!-- BACKDROP -->
+<div class="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+
+  <!-- MODAL -->
+  <div class="bg-gray-800 rounded-2xl p-6 w-[950px] shadow-xl max-h-[90vh] overflow-y-auto">
+
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-white text-xl font-bold text-center w-full">
+        {{ partida?.timeA }} {{ partida?.golsA ?? 0 }}
+        x
+        {{ partida?.golsB ?? 0 }} {{ partida?.timeB }}
+      </h2>
+
+      <button (click)="fecharModal()" class="text-gray-400 hover:text-white ml-2 text-lg">
+        ✕
+      </button>
+    </div>
+
+    <!-- TIMES -->
+    <div class="grid grid-cols-2 gap-8">
+
+      <!-- TIME A -->
+      <div>
+        <h3 class="text-white font-semibold mb-4 text-center text-lg">
+          {{ partida?.timeA }}
+        </h3>
+
+        <ul class="space-y-3">
+          <li *ngFor="let j of partida?.jogadoresA || []"
+              class="bg-gray-700 p-3 rounded-lg border border-gray-600 flex items-center justify-between">
+
+            <span class="text-white font-medium text-sm truncate">
+              {{ j.nome }}
+            </span>
+
+            <div class="flex items-center gap-3">
+
+              <button
+                (click)="adicionarGol(j, 'A')"
+                class="bg-green-600 hover:bg-green-500 px-3 py-1 rounded text-white text-sm font-semibold">
+                ⚽ {{ j.gols || 0 }}
+              </button>
+
+              <button
+                (click)="adicionarAssistencia(j)"
+                class="bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded text-white text-sm font-semibold">
+                🅰️ {{ j.assistencias || 0 }}
+              </button>
+
+            </div>
+
+          </li>
+        </ul>
+      </div>
+
+      <!-- TIME B -->
+      <div>
+        <h3 class="text-white font-semibold mb-4 text-center text-lg">
+          {{ partida?.timeB }}
+        </h3>
+
+        <ul class="space-y-3">
+          <li *ngFor="let j of partida?.jogadoresB || []"
+              class="bg-gray-700 p-3 rounded-lg border border-gray-600 flex items-center justify-between">
+
+            <span class="text-white font-medium text-sm truncate">
+              {{ j.nome }}
+            </span>
+
+            <div class="flex items-center gap-3">
+
+              <button
+                (click)="adicionarGol(j, 'B')"
+                class="bg-green-600 hover:bg-green-500 px-3 py-1 rounded text-white text-sm font-semibold">
+                ⚽ {{ j.gols || 0 }}
+              </button>
+
+              <button
+                (click)="adicionarAssistencia(j)"
+                class="bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded text-white text-sm font-semibold">
+                🅰️ {{ j.assistencias || 0 }}
+              </button>
+
+            </div>
+
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- GOL CONTRA (AJUSTADO) -->
+    <div class="mt-6 text-sm text-gray-300">
+
+      <div class="flex justify-between items-center border-t border-gray-700 pt-3">
+
+        <!-- Time A -->
+        <div class="flex items-center gap-2">
+          <span>
+            Contra {{ partida?.timeA }}
+          </span>
+
+          <button
+            (click)="removerGolContra('A')"
+            class="bg-gray-600 px-2 rounded text-white">
+            -
+          </button>
+
+          <span class="text-white font-semibold">
+            {{ partida?.golsContraA || 0 }}
+          </span>
+
+          <button
+            (click)="adicionarGolContra('A')"
+            class="bg-gray-500 px-2 rounded text-white">
+            +
+          </button>
+        </div>
+
+        <!-- Time B -->
+        <div class="flex items-center gap-2">
+          <span>
+            Contra {{ partida?.timeB }}
+          </span>
+
+          <button
+            (click)="removerGolContra('B')"
+            class="bg-gray-600 px-2 rounded text-white">
+            -
+          </button>
+
+          <span class="text-white font-semibold">
+            {{ partida?.golsContraB || 0 }}
+          </span>
+
+          <button
+            (click)="adicionarGolContra('B')"
+            class="bg-gray-500 px-2 rounded text-white">
+            +
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="flex justify-end mt-6">
+      <button
+        (click)="fecharModal()"
+        class="bg-blue-600 px-5 py-2 rounded text-white hover:bg-blue-500 font-semibold">
+        Fechar
+      </button>
+    </div>
+
+  </div>
+
+</div>

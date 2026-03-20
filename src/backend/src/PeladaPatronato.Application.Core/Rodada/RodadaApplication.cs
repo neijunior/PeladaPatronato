@@ -2,12 +2,11 @@
 using PeladaPatronato.Domain.Entidades;
 using PeladaPatronato.Domain.Interfaces;
 using PeladaPatronato.Infra.CrossCutting.Data;
+using PeladaPatronato.Infra.CrossCutting.Foundation;
 using PeladaPatronato.Infra.CrossCutting.Request.Rodada;
 using PeladaPatronato.Infra.CrossCutting.Response;
-using PeladaPatronato.Infra.CrossCutting.Response.Estatistica;
 using PeladaPatronato.Infra.CrossCutting.Response.Participante;
 using PeladaPatronato.Infra.CrossCutting.Response.Rodada;
-using PeladaPatronato.Infra.CrossCutting.Foundation;
 
 namespace PeladaPatronato.Application.Core.Rodada
 {
@@ -96,7 +95,7 @@ namespace PeladaPatronato.Application.Core.Rodada
 
     public async Task<RodadaResponse> ObterPorId(Guid rodadaId)
     {
-      
+
       try
       {
         var rodada = await _rodadaRepository.ObterPorId(rodadaId)
@@ -137,7 +136,7 @@ namespace PeladaPatronato.Application.Core.Rodada
       }
       catch (Exception)
       {
-        
+
         throw;
       }
     }
@@ -228,5 +227,49 @@ namespace PeladaPatronato.Application.Core.Rodada
       }
     }
 
+    public async Task AtualizarPagamento(Guid rodadaId, Guid participanteId, bool pago)
+    {
+      var rodada = await _rodadaRepository.ObterPorId(rodadaId);
+
+      if (rodada == null)
+        throw new Exception("Rodada não encontrada.");
+
+      var participante = rodada.Participantes.FirstOrDefault(p => p.ParticipanteId == participanteId);
+
+      if (participante == null)
+        throw new Exception("Participante não encontrado na rodada.");
+
+      participante.AtualizarPagamento(pago);
+      await _rodadaRepository.AtualizarPagamento(participante);
+    }
+
+    public async Task CriarPartida(Guid rodadaId, CriarPartidaRequest request)
+    {
+      _unitOfWork.BeginTransaction();
+      try
+      {
+        await _rodadaRepository.AdicionarPartida(rodadaId, new RodadaPartida(request.rodadaTimeAId, request.rodadaTimeBId, request.ordem, request.timeComPosseInicialId));
+        await _unitOfWork.CommitAsync();
+      }
+      catch (Exception)
+      {
+        _unitOfWork.Rollback();
+        throw;
+      }
+    }
+
+    public async Task<IEnumerable<RodadaPartidaResponse>> ListarPartidas(Guid rodadaId)
+    {
+      return (await _rodadaRepository.ListarPartidas(rodadaId)).Select(s => new RodadaPartidaResponse()
+      {
+        Id = s.Id,
+        RodadaId = s.RodadaId,
+        DataHora = s.DataHora,
+        Ordem = s.Ordem,
+        RodadaTimeAId = s.RodadaTimeAId,
+        RodadaTimeBId = s.RodadaTimeBId,
+        TimeComPosseInicialId = s.TimeComPosseInicialId
+      }).OrderBy(o=> o.Ordem).ToList();
+    }
   }
 }

@@ -103,5 +103,47 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
         throw;
       }
     }
+
+    public async Task AtualizarPagamento(RodadaParticipante participante)
+    {
+      try
+      {        
+        _context.Update(participante);
+      }
+      catch (Exception)
+      {
+
+        throw;
+      }
+    }
+
+    public async Task AdicionarPartida(Guid rodadaId, RodadaPartida partida)
+    {
+      try
+      {
+        var rodada = await ObterPorId(rodadaId);
+
+        if (rodada == null)
+          throw new Exception("Rodada não encontrada.");
+
+        if (rodada.Status != StatusRodada.TimesDefinidos)
+          throw new Exception("Times ainda não foram definidos.");
+
+        RodadaPartida rp = new RodadaPartida(rodada.Id, partida.RodadaTimeAId, partida.RodadaTimeBId, partida.Ordem);
+        rp.DefinirPosseInicial(partida.TimeComPosseInicialId.GetValueOrDefault());
+
+        _context.Add(rp);
+      }
+      catch (Exception)
+      {
+
+        throw;
+      }
+    }
+
+    public async Task<IEnumerable<RodadaPartida>> ListarPartidas(Guid rodadaId)
+    {
+      return await _context.Rodada.Include(r => r.Partidas).SelectMany(sm => sm.Partidas).ToListAsync();
+    }
   }
 }

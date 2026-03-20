@@ -63,28 +63,25 @@ export class Participantes implements OnInit {
   }
 
   gerarBackground(p: any): string {
-
-    if (!p.diarista) {
-      return '#1f2937';
-    }
-
-    // 🎯 Se for diarista → divide tipo + pagamento
-
-    const corTipo = '#78350f'; // amarelo/marrom (diarista)
-
-    const corPagamento = p.pago
-      ? '#064e3b'   // verde (pago)
-      : '#7f1d1d';  // vermelho (pendente)
-
-    return `linear-gradient(to right, 
-          ${corTipo} 0%, 
-          ${corTipo} 50%, 
-          ${corPagamento} 50%, 
-          ${corPagamento} 100%)`;
+  if (p.diarista) {
+    return '#78350f'; // cor única para diarista
   }
+
+  return '#1f2937'; // padrão
+}
 
   isRodadaCriada(): boolean {
     return this.rodada?.descricaoStatus?.toLowerCase() === 'criada';
+  }
+
+  togglePagamento(p: any) {
+    const novoStatus = !p.pago;
+
+    this.svcRodada
+      .registrarPagamento(this.rodadaId, p.participante.id, novoStatus)
+      .subscribe(() => {
+        this.carregarRodada();
+      });
   }
 
 }

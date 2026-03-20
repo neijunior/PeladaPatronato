@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
 import { Times } from './features/rodada/pages/times/times';
 import { Participantes } from './features/rodada/pages/participantes/participantes';
+import { Partidas } from './features/rodada/pages/partidas/partidas';
 
 export const routes: Routes = [
   {
@@ -51,6 +52,7 @@ export const routes: Routes = [
               { path: '', redirectTo: 'participantes', pathMatch: 'full' },
                { path: 'participantes', component: Participantes },
                { path: 'times', component: Times },
+               { path: 'partidas', component: Partidas },
               // { path: 'resultados', component: ResultadosComponent }
             ]
           },

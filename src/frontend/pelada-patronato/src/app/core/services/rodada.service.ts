@@ -8,12 +8,14 @@ import { Rodada } from "../models/rodada";
 import { Time } from "../models/time";
 import { RodadaTime } from "../models/rodadaTime";
 import { CriarTimesRequest } from "../models/request/criarTimesRequest";
+import { CriarPartidaRequest, RodadaPartida } from "../models/rodadaPartida";
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class RodadaService {
+
   private http = inject(HttpClient);
   private baseUrl = `${environment.apiUrl}/rodadas`;
 
@@ -22,10 +24,10 @@ export class RodadaService {
   }
 
   consultar(id: string): Observable<Rodada> {
-    return this.http.get<Rodada>(`${this.baseUrl}/${id}`);    
+    return this.http.get<Rodada>(`${this.baseUrl}/${id}`);
   }
 
-  listarTimes(): Observable<Time[]> {   
+  listarTimes(): Observable<Time[]> {
     return this.http.post<Time[]>(`${environment.apiUrl}/lookup/time`, null);
   }
 
@@ -47,6 +49,24 @@ export class RodadaService {
     return this.http.delete(
       `${this.baseUrl}/rodadas/${rodadaId}/participantes/${participanteId}`
     );
+  }
+
+  registrarPagamento(rodadaId: string, participanteId: string, pago: boolean) {
+    return this.http.patch(
+      `${this.baseUrl}/${rodadaId}/participantes/${participanteId}/pagamento`,
+      pago
+    );
+  }
+
+  criarPartida(rodadaId: string, partida: CriarPartidaRequest) {
+    return this.http.post(
+      `${this.baseUrl}/${rodadaId}/partida`,
+      partida
+    );
+  }
+
+  listarPartidas(rodadaId: string) {
+    return this.http.get<RodadaPartida[]>(`${this.baseUrl}/${rodadaId}/partidas`);
   }
 
 }

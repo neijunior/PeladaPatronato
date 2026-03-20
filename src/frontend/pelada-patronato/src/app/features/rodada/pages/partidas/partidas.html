@@ -1,0 +1,11 @@
+<app-lista-partidas
+  [rodadaId]="rodadaId"
+  (selecionar)="abrirPartida($event)">
+</app-lista-partidas>
+
+<!-- MODAL -->
+<app-modal-partida
+  *ngIf="partidaSelecionada"
+  [partida]="partidaSelecionada"
+  (fechar)="fecharModal()">
+</app-modal-partida>

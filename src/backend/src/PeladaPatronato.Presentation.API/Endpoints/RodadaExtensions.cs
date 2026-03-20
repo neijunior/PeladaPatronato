@@ -103,6 +103,42 @@ namespace PeladaPatronato.Presentation.API.Endpoints
         }
       });
 
+      grupo.MapPost("/{rodadaId}/partida", async (IRodadaApplication rodadaApp, Guid rodadaId, [FromBody] CriarPartidaRequest request) =>
+      {
+        try
+        {
+          await rodadaApp.CriarPartida(rodadaId, request);
+
+          return Results.Ok();
+        }
+        catch (Exception ex)
+        {
+          return Results.BadRequest(new
+          {
+            sucesso = false,
+            mensagem = ex.Message
+          });
+        }
+      });
+
+      grupo.MapGet("/{rodadaId:guid}/partidas", async (IRodadaApplication rodadaApp, Guid rodadaId) =>
+      {
+        try
+        {
+          var rodada = await rodadaApp.ListarPartidas(rodadaId);
+
+          return (rodada == null) ? Results.NotFound() : Results.Ok(rodada);
+        }
+        catch (Exception ex)
+        {
+          return Results.BadRequest(new
+          {
+            sucesso = false,
+            mensagem = ex.Message
+          });
+        }
+      });
+
       grupo.MapPost("/{rodadaId:guid}/partidas/{partidaId:guid}/eventos", async (IRodadaApplication rodadaApp, Guid rodadaId, Guid partidaId, SalvarEventosRequest request) =>
       {
         try
@@ -158,6 +194,24 @@ namespace PeladaPatronato.Presentation.API.Endpoints
         }
 
       });
+
+      grupo.MapPatch("/rodadas/{rodadaId:guid}/participantes/{participanteId:guid}/pagamento", async (Guid rodadaId, Guid participanteId, [FromBody] bool pago, IRodadaApplication app) =>
+       {
+         try
+         {
+           await app.AtualizarPagamento(rodadaId, participanteId, pago);
+
+           return Results.Ok();
+         }
+         catch (Exception ex)
+         {
+           return Results.BadRequest(new
+           {
+             sucesso = false,
+             mensagem = ex.Message
+           });
+         }
+       });
 
       return app;
     }

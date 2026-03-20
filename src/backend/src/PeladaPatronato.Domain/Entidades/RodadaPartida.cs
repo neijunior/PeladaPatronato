@@ -32,6 +32,14 @@ namespace PeladaPatronato.Domain.Entidades
       Ordem = ordem;
     }
 
+    public RodadaPartida(Guid rodadaTimeAId, Guid rodadaTimeBId, int ordem, Guid timeComPosseInicialId)
+    {
+      RodadaTimeAId = rodadaTimeAId;
+      RodadaTimeBId = rodadaTimeBId;
+      Ordem = ordem;
+      TimeComPosseInicialId = timeComPosseInicialId;
+    }
+
     public void DefinirPosseInicial(Guid timeId)
     {
       TimeComPosseInicialId = timeId;

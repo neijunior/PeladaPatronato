@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Time } from '../../../../core/models/time';
 import { RodadaService } from '../../../../core/services/rodada.service';
-import { RodadaTime } from '../../../../core/models/rodadaTime';
 import { CriarTimesRequest } from '../../../../core/models/request/criarTimesRequest';
 
 @Component({

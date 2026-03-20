@@ -1,5 +1,5 @@
 <app-adicionar-participante
-    *ngIf="isRodadaCriada()"
+  *ngIf="isRodadaCriada()"
   [rodadaId]="rodada.id"
   [participantes]="todosParticipantes"
   [participantesRodada]="participantesParaTimes || []"
@@ -8,9 +8,45 @@
 
 <div class="bg-gray-800 p-6 rounded-2xl shadow-md mt-4">
 
-  <h2 class="text-lg font-semibold text-white mb-4">
+  <h2 class="text-lg font-semibold text-white mb-2">
     Participantes
   </h2>
+
+  <!-- 🔎 Legenda -->
+  <div class="flex items-center gap-4 text-xs text-gray-400 mb-4">
+
+    <!-- Diarista -->
+    <div class="flex items-center gap-1">
+      <span class="w-3 h-3 rounded-sm bg-amber-900 inline-block"></span>
+      <span>Diarista</span>
+    </div>
+
+    <!-- Pago -->
+    <div class="flex items-center gap-1">
+      <svg xmlns="http://www.w3.org/2000/svg"
+        class="w-3 h-3 text-green-400"
+        viewBox="0 0 20 20"
+        fill="currentColor">
+        <path fill-rule="evenodd"
+          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+          clip-rule="evenodd" />
+      </svg>
+      <span>Pago</span>
+    </div>
+
+    <!-- Pendente -->
+    <div class="flex items-center gap-1">
+      <svg xmlns="http://www.w3.org/2000/svg"
+        class="w-3 h-3 text-yellow-400"
+        viewBox="0 0 20 20"
+        fill="currentColor">
+        <path
+          d="M10 3a7 7 0 100 14 7 7 0 000-14zm.75 4a.75.75 0 00-1.5 0v3.25c0 .2.08.39.22.53l2.25 2.25a.75.75 0 101.06-1.06l-2.03-2.03V7z" />
+      </svg>
+      <span>Pendente</span>
+    </div>
+
+  </div>
 
   <ul class="grid grid-cols-4 gap-3 overflow-y-auto">
 
@@ -22,13 +58,49 @@
         {{ p.participante.nome }}
       </span>
 
-      <button
-        (click)="removerParticipante(p.participante.id)"
-        class="ml-2 text-white hover:text-red-400 text-sm">
-        ✕
-      </button>
+      <div class="flex items-center gap-2">
 
+        <!-- 💰 Status pagamento -->
+        <button
+          *ngIf="p.diarista"
+          (click)="togglePagamento(p)"
+          class="flex items-center justify-center w-5 h-5 opacity-70 hover:opacity-100 transition"
+          [title]="p.pago ? 'Pago' : 'Pendente'">
+
+          <!-- Pago -->
+          <svg *ngIf="p.pago"
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4 text-green-400"
+            viewBox="0 0 20 20"
+            fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clip-rule="evenodd"/>
+          </svg>
+
+          <!-- Pendente -->
+          <svg *ngIf="!p.pago"
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4 text-yellow-400"
+            viewBox="0 0 20 20"
+            fill="currentColor">
+            <path
+              d="M10 3a7 7 0 100 14 7 7 0 000-14zm.75 4a.75.75 0 00-1.5 0v3.25c0 .2.08.39.22.53l2.25 2.25a.75.75 0 101.06-1.06l-2.03-2.03V7z"/>
+          </svg>
+
+        </button>
+
+        <!-- ❌ Remover -->
+        <button
+          *ngIf="isRodadaCriada()"
+          (click)="removerParticipante(p.participante.id)"
+          class="ml-2 text-white hover:text-red-400 text-sm">
+          ✕
+        </button>
+
+      </div>
     </li>
   </ul>
 </div>
+
 <br>
