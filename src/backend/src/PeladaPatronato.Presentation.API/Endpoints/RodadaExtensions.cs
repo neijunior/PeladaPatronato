@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
 using PeladaPatronato.Application.Estatistica;
 using PeladaPatronato.Application.Rodada;
 using PeladaPatronato.Domain.Entidades;
@@ -18,7 +19,25 @@ namespace PeladaPatronato.Presentation.API.Endpoints
       {
         try
         {
-          var rodada = await rodadaApp.ObterPorId(rodadaId);
+          var rodada = await rodadaApp.Consultar(rodadaId);
+
+          return (rodada == null) ? Results.NotFound() : Results.Ok(rodada);
+        }
+        catch (Exception ex)
+        {
+          return Results.BadRequest(new
+          {
+            sucesso = false,
+            mensagem = ex.Message
+          });
+        }
+      });
+
+      grupo.MapGet("/{rodadaId:guid}/times", async (IRodadaApplication rodadaApp, Guid rodadaId) =>
+      {
+        try
+        {
+          var rodada = await rodadaApp.ConsultarTimes(rodadaId);
 
           return (rodada == null) ? Results.NotFound() : Results.Ok(rodada);
         }
@@ -192,14 +211,13 @@ namespace PeladaPatronato.Presentation.API.Endpoints
             mensagem = ex.Message
           });
         }
-
       });
 
-      grupo.MapPatch("/rodadas/{rodadaId:guid}/participantes/{participanteId:guid}/pagamento", async (Guid rodadaId, Guid participanteId, [FromBody] bool pago, IRodadaApplication app) =>
+      grupo.MapPatch("/{rodadaId:guid}/participantes/{participanteId:guid}/pagamento", async (Guid rodadaId, Guid participanteId, PagamentoRequest request, IRodadaApplication app) =>
        {
          try
          {
-           await app.AtualizarPagamento(rodadaId, participanteId, pago);
+           await app.AtualizarPagamento(rodadaId, participanteId, request.Pago);
 
            return Results.Ok();
          }
@@ -212,6 +230,24 @@ namespace PeladaPatronato.Presentation.API.Endpoints
            });
          }
        });
+
+      grupo.MapPatch("/{rodadaId:guid}/status", async (Guid rodadaId, StatusRodadaRequest request, IRodadaApplication app) =>
+      {
+        try
+        {
+          await app.AlterarStatusRodada(rodadaId, request.Status);
+
+          return Results.Ok();
+        }
+        catch (Exception ex)
+        {
+          return Results.BadRequest(new
+          {
+            sucesso = false,
+            mensagem = ex.Message
+          });
+        }
+      });
 
       return app;
     }

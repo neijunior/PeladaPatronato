@@ -27,6 +27,10 @@ export class RodadaService {
     return this.http.get<Rodada>(`${this.baseUrl}/${id}`);
   }
 
+  consultarTimes(id: string): Observable<RodadaTime[]> {
+    return this.http.get<RodadaTime[]>(`${this.baseUrl}/${id}/times`);
+  }
+
   listarTimes(): Observable<Time[]> {
     return this.http.post<Time[]>(`${environment.apiUrl}/lookup/time`, null);
   }
@@ -54,7 +58,7 @@ export class RodadaService {
   registrarPagamento(rodadaId: string, participanteId: string, pago: boolean) {
     return this.http.patch(
       `${this.baseUrl}/${rodadaId}/participantes/${participanteId}/pagamento`,
-      pago
+      { pago }
     );
   }
 
@@ -69,4 +73,10 @@ export class RodadaService {
     return this.http.get<RodadaPartida[]>(`${this.baseUrl}/${rodadaId}/partidas`);
   }
 
+  alterarStatusRodada(rodadaId: string, status: number) {
+    return this.http.patch(
+      `${this.baseUrl}/${rodadaId}/status`,
+      { status }
+    );
+  }
 }

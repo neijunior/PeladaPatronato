@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-modal-partida',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './modal-partida.html',
   styleUrl: './modal-partida.css',
 })

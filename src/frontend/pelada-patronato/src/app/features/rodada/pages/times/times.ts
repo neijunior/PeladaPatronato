@@ -31,10 +31,10 @@ export class Times implements OnInit {
   }
 
   carregarRodada(id: string) {
-    this.svcRodada.consultar(id)
+    this.svcRodada.consultarTimes(id)
       .subscribe(res => {
-        this.rodada = res;
-        this.timesRodada = res.times || [];
+        // this.rodada = res;
+        this.timesRodada = res || [];
       });
   }
 
@@ -53,9 +53,9 @@ export class Times implements OnInit {
   }
 
   obterNomeParticipante = (id: string): string | undefined => {
-    return this.rodada?.participantes
-      ?.find(p => p.participante.id === id)
-      ?.participante.nome;
+    return this.timesRodada
+      ?.flatMap(t => t.participantes || [])      ?.find(p => p.id === id)
+      ?.nome;
   }
 
   isRodadaCriada(): boolean {

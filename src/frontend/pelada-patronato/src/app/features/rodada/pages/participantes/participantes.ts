@@ -7,10 +7,11 @@ import { Participante } from '../../../../core/models/participante';
 import { ParticipanteFiltro } from '../../../../core/models/filtros/participante-filtro';
 import { RodadaService } from '../../../../core/services/rodada.service';
 import { ParticipanteService } from '../../../../core/services/participante.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-participantes',
-  imports: [CommonModule, AdicionarParticipante],
+  imports: [CommonModule, AdicionarParticipante, FormsModule],
   templateUrl: './participantes.html',
   styleUrl: './participantes.css',
 })

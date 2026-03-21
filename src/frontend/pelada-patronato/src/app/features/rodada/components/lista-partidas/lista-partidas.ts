@@ -21,6 +21,8 @@ export class ListaPartidas implements OnInit {
 
   partidas: { timeA: Time; timeB: Time; ordem: number }[] = [];
 
+  podeAdicionarPartida = false;
+
   novaPartida: {
     timeA: Time | null;
     timeB: Time | null;
@@ -35,6 +37,7 @@ export class ListaPartidas implements OnInit {
     this.carregarTimes();
   }
   ngOnInit(): void {
+    this.getPodeAdicionarPartida();
     this.carregarPartidas();
   }
 
@@ -47,6 +50,8 @@ export class ListaPartidas implements OnInit {
           ordem: p.ordem
         }));
       });
+
+
   }
 
   carregarTimes() {
@@ -59,6 +64,25 @@ export class ListaPartidas implements OnInit {
       }
     });
   }
+
+  getPodeAdicionarPartida(): void {
+    this.svcRodada.consultar(this.rodadaId).subscribe(rodada => {
+      this.podeAdicionarPartida = rodada.descricaoStatus?.toLowerCase() !== 'partidas geradas';
+    });
+  }
+
+  alterarStatusRodada(status: number) {
+    this.svcRodada.alterarStatusRodada(this.rodadaId, status)
+      .subscribe({
+        next: () => {          
+          this.podeAdicionarPartida = true;
+        },
+        error: (err) => {          
+          alert('Erro ao fechar rodada. Tente novamente.');
+        }
+      });
+  }
+
 
   adicionarPartida() {
 

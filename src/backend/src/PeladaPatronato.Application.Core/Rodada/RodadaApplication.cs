@@ -7,19 +7,22 @@ using PeladaPatronato.Infra.CrossCutting.Request.Rodada;
 using PeladaPatronato.Infra.CrossCutting.Response;
 using PeladaPatronato.Infra.CrossCutting.Response.Participante;
 using PeladaPatronato.Infra.CrossCutting.Response.Rodada;
+using System.Linq;
 
 namespace PeladaPatronato.Application.Core.Rodada
 {
   public class RodadaApplication : IRodadaApplication
   {
     private readonly IRodadaRepository _rodadaRepository;
+    private readonly IParticipanteRepository _participanteRepository;
     private readonly ITimeRepository _timeRepository;
     private readonly IUnitOfWork _unitOfWork;
-    public RodadaApplication(IRodadaRepository repository, IUnitOfWork unitOfWork, ITimeRepository timeRepository)
+    public RodadaApplication(IRodadaRepository repository, IUnitOfWork unitOfWork, ITimeRepository timeRepository, IParticipanteRepository participanteRepository)
     {
       _rodadaRepository = repository;
       _unitOfWork = unitOfWork;
       _timeRepository = timeRepository;
+      _participanteRepository = participanteRepository;
     }
     public async Task<Guid> CriarRodada(CriarRodadaRequest request)
     {
@@ -52,7 +55,7 @@ namespace PeladaPatronato.Application.Core.Rodada
 
         rodada.GerarPartidas();
 
-        _rodadaRepository.Atualizar(rodada);
+        await _rodadaRepository.Atualizar(rodada);
         _unitOfWork.Commit();
       }
       catch (Exception)
@@ -98,7 +101,10 @@ namespace PeladaPatronato.Application.Core.Rodada
 
       try
       {
-        var rodada = await _rodadaRepository.ObterPorId(rodadaId)
+
+        var rodada = await _rodadaRepository.ObterPorId(rodadaId, i => i.Times,
+          i => i.Partidas,
+          i => i.Participantes)
           ?? throw new Exception("Rodada não encontrada");
 
         var listaTimes = await _timeRepository.Listar();
@@ -153,8 +159,8 @@ namespace PeladaPatronato.Application.Core.Rodada
 
         rodada.RegistrarEventosEmLote(eventosDominio);
 
-        _rodadaRepository.Atualizar(rodada);
-        _unitOfWork.Commit();
+        await _rodadaRepository.Atualizar(rodada);
+        await _unitOfWork.CommitAsync();
       }
       catch (Exception)
       {
@@ -201,7 +207,7 @@ namespace PeladaPatronato.Application.Core.Rodada
         }
 
         rodada.AtualizarStatusRodada(StatusRodada.TimesDefinidos);
-        _rodadaRepository.Atualizar(rodada);
+        await _rodadaRepository.Atualizar(rodada);
 
         await _unitOfWork.CommitAsync();
       }
@@ -229,6 +235,7 @@ namespace PeladaPatronato.Application.Core.Rodada
 
     public async Task AtualizarPagamento(Guid rodadaId, Guid participanteId, bool pago)
     {
+      _unitOfWork.BeginTransaction();
       var rodada = await _rodadaRepository.ObterPorId(rodadaId);
 
       if (rodada == null)
@@ -241,6 +248,8 @@ namespace PeladaPatronato.Application.Core.Rodada
 
       participante.AtualizarPagamento(pago);
       await _rodadaRepository.AtualizarPagamento(participante);
+      await _unitOfWork.CommitAsync();
+
     }
 
     public async Task CriarPartida(Guid rodadaId, CriarPartidaRequest request)
@@ -269,7 +278,82 @@ namespace PeladaPatronato.Application.Core.Rodada
         RodadaTimeAId = s.RodadaTimeAId,
         RodadaTimeBId = s.RodadaTimeBId,
         TimeComPosseInicialId = s.TimeComPosseInicialId
-      }).OrderBy(o=> o.Ordem).ToList();
+      }).OrderBy(o => o.Ordem).ToList();
+    }
+
+    public async Task AlterarStatusRodada(Guid rodadaId, int status)
+    {
+      _unitOfWork.BeginTransaction();
+      try
+      {
+
+        var rodada = await _rodadaRepository.ObterPorId(rodadaId)
+          ?? throw new Exception("Rodada não encontrada.");
+
+        rodada.AtualizarStatusRodada((StatusRodada)status);
+        await _rodadaRepository.Atualizar(rodada);
+
+        await _unitOfWork.CommitAsync();
+      }
+      catch (Exception)
+      {
+        _unitOfWork.Rollback();
+        throw;
+      }
+    }
+
+    public async Task<RodadaResponse> Consultar(Guid rodadaId)
+    {
+      var rodada = await _rodadaRepository.ObterPorId(rodadaId, i => i.Participantes);
+
+      RodadaResponse resp = new RodadaResponse
+      {
+
+        Id = rodada.Id,
+        DescricaoStatus = rodada.Status.ObterDescricaoItemEnum(),
+        DataHora = rodada.DataHora,
+        Observacao = rodada.Observacao,
+        ValorDiarista = rodada.ValorDiarista
+      };
+
+      if (rodada.Participantes != null && rodada.Participantes.Count > 0)
+      {
+        var idsParticipantes = rodada.Participantes.Select(s => s.ParticipanteId).ToList();
+        var listaParticipantes = await _participanteRepository.Listar(w => idsParticipantes.Contains(w.Id));
+
+        resp.participantes = rodada.Participantes.Select(p => new RodadaParticipanteResponse
+        {          
+          Diarista = p.Diarista,
+          Pago = p.Pago,
+          Participante = new ParticipanteResponse()
+          {
+            Id = p.ParticipanteId,
+            Nome = listaParticipantes.FirstOrDefault(f => f.Id == p.ParticipanteId)?.Nome
+          }
+        }).OrderBy(o => o.Participante.Nome).ToList();
+      }
+
+      return resp;
+
+    }
+
+    public async Task<IEnumerable<RodadaTimeParticipanteResponse>> ConsultarTimes(Guid rodadaId)
+    {
+      var times = await _rodadaRepository.ConsultarTimes(rodadaId);
+
+      var listaTimes = await _timeRepository.Listar();
+
+      return times.Select(t => new RodadaTimeParticipanteResponse
+      {
+        TimeBaseId = t.TimeBaseId,
+        NomeTime = listaTimes.FirstOrDefault(w => w.Id == t.TimeBaseId)?.Nome,
+        Participantes = t.Participantes.Select(s => new ParticipanteResponse
+        {
+          Id = s.ParticipanteId,
+          Nome = s.Participante.Nome,
+          Ativo = s.Participante.Ativo
+        }).ToList()
+      }).ToList();
     }
   }
 }

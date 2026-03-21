@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PeladaPatronato.Domain.Entidades;
 using PeladaPatronato.Domain.Interfaces;
 using PeladaPatronato.Infra.Data.EntityFrameworkCore.Contexts;
+using System.Linq.Expressions;
 
 namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
 {
@@ -13,12 +14,21 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
     {
       _context = context;
     }
-    public async Task<Rodada?> ObterPorId(Guid id)
+    public async Task<Rodada?> ObterPorId(Guid id, params Expression<Func<Rodada, object>>[] includes)
     {
-      return await _context.Rodada.Include(r => r.Times).ThenInclude(t => t.Participantes).ThenInclude(t => t.Participante)
-                                  .Include(r => r.Partidas).ThenInclude(p => p.Eventos)
-                                  .Include(r => r.Participantes).ThenInclude(p => p.Participante)
-          .FirstOrDefaultAsync(r => r.Id == id);
+      IQueryable<Rodada> query = _context.Rodada;
+
+      foreach (var include in includes)
+      {
+        query = query.Include(include);
+      }
+
+      return await query.FirstOrDefaultAsync(r => r.Id == id);
+
+      //return await _context.Rodada.Include(r => r.Times).ThenInclude(t => t.Participantes).ThenInclude(t => t.Participante)
+      //                            .Include(r => r.Partidas).ThenInclude(p => p.Eventos)
+      //                            .Include(r => r.Participantes).ThenInclude(p => p.Participante)
+      //    .FirstOrDefaultAsync(r => r.Id == id);
     }
 
     public async Task CriarRodada(Rodada rodada)
@@ -26,7 +36,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
       await _context.Rodada.AddAsync(rodada);
     }
 
-    public void Atualizar(Rodada rodada)
+    public async Task Atualizar(Rodada rodada)
     {
       _context.Rodada.Update(rodada);
       //_context.SaveChanges();
@@ -143,7 +153,18 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
 
     public async Task<IEnumerable<RodadaPartida>> ListarPartidas(Guid rodadaId)
     {
-      return await _context.Rodada.Include(r => r.Partidas).SelectMany(sm => sm.Partidas).ToListAsync();
+      return await _context.Rodada.Include(r => r.Partidas).Where(w => w.Id == rodadaId).SelectMany(sm => sm.Partidas).ToListAsync();
+    }
+
+    public async Task<IEnumerable<RodadaTime>> ConsultarTimes(Guid id)
+    {
+      var times = await _context.Rodada.Include(r => r.Times)
+                                       .ThenInclude(t => t.Participantes)
+                                       .ThenInclude(t => t.Participante)
+          .Where(r => r.Id == id).SelectMany(sm => sm.Times).ToListAsync();
+
+      return times;
+      
     }
   }
 }

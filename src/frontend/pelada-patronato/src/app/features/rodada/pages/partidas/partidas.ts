@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListaPartidas } from '../../components/lista-partidas/lista-partidas';
 import { ModalPartida } from '../../components/modal-partida/modal-partida';
@@ -13,7 +13,8 @@ import { ActivatedRoute } from '@angular/router';
 export class Partidas implements OnInit {
 
   private route = inject(ActivatedRoute);
-  rodadaId: string = '1'; // depois você pega da rota
+  rodadaId: string = '1'; // depois você pega da rota  
+  idStatusRodada!: number;
 
   ngOnInit(): void {
     this.rodadaId = this.route.parent?.snapshot.paramMap.get('id')!;

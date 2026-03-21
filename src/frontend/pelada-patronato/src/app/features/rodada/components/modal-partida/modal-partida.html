@@ -7,9 +7,9 @@
     <!-- HEADER -->
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-white text-xl font-bold text-center w-full">
-        {{ partida?.timeA }} {{ partida?.golsA ?? 0 }}
+        {{ partida?.timeA?.nome }} {{ partida?.golsA ?? 0 }}
         x
-        {{ partida?.golsB ?? 0 }} {{ partida?.timeB }}
+        {{ partida?.golsB ?? 0 }} {{ partida?.timeB?.nome }}
       </h2>
 
       <button (click)="fecharModal()" class="text-gray-400 hover:text-white ml-2 text-lg">
@@ -23,7 +23,7 @@
       <!-- TIME A -->
       <div>
         <h3 class="text-white font-semibold mb-4 text-center text-lg">
-          {{ partida?.timeA }}
+          {{ partida?.timeA?.nome }}
         </h3>
 
         <ul class="space-y-3">
@@ -57,7 +57,7 @@
       <!-- TIME B -->
       <div>
         <h3 class="text-white font-semibold mb-4 text-center text-lg">
-          {{ partida?.timeB }}
+          {{ partida?.timeB?.nome }}
         </h3>
 
         <ul class="space-y-3">
@@ -98,7 +98,7 @@
         <!-- Time A -->
         <div class="flex items-center gap-2">
           <span>
-            Contra {{ partida?.timeA }}
+            Contra {{ partida?.timeA?.nome }}
           </span>
 
           <button
@@ -121,7 +121,7 @@
         <!-- Time B -->
         <div class="flex items-center gap-2">
           <span>
-            Contra {{ partida?.timeB }}
+            Contra {{ partida?.timeB?.nome }}
           </span>
 
           <button

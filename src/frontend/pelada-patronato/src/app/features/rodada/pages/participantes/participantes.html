@@ -50,7 +50,7 @@
 
   <ul class="grid grid-cols-4 gap-3 overflow-y-auto">
 
-    <li *ngFor="let p of rodada.participantes"
+    <li *ngFor="let p of rodada?.participantes"
         class="p-3 rounded-lg border border-gray-700 text-white flex items-center justify-between"
         [ngStyle]="{ background: gerarBackground(p) }">
 
@@ -102,5 +102,3 @@
     </li>
   </ul>
 </div>
-
-<br>
