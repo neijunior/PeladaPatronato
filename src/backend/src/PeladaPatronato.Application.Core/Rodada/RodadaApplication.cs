@@ -236,7 +236,7 @@ namespace PeladaPatronato.Application.Core.Rodada
     public async Task AtualizarPagamento(Guid rodadaId, Guid participanteId, bool pago)
     {
       _unitOfWork.BeginTransaction();
-      var rodada = await _rodadaRepository.ObterPorId(rodadaId);
+      var rodada = await _rodadaRepository.ObterPorId(rodadaId, i => i.Participantes);
 
       if (rodada == null)
         throw new Exception("Rodada não encontrada.");
@@ -328,7 +328,8 @@ namespace PeladaPatronato.Application.Core.Rodada
           Participante = new ParticipanteResponse()
           {
             Id = p.ParticipanteId,
-            Nome = listaParticipantes.FirstOrDefault(f => f.Id == p.ParticipanteId)?.Nome
+            Nome = listaParticipantes.FirstOrDefault(f => f.Id == p.ParticipanteId)?.Nome,
+            Apelido = listaParticipantes.FirstOrDefault(f => f.Id == p.ParticipanteId)?.Apelido,
           }
         }).OrderBy(o => o.Participante.Nome).ToList();
       }
@@ -351,6 +352,7 @@ namespace PeladaPatronato.Application.Core.Rodada
         {
           Id = s.ParticipanteId,
           Nome = s.Participante.Nome,
+          Apelido = s.Participante.Apelido,
           Ativo = s.Participante.Ativo
         }).ToList()
       }).ToList();

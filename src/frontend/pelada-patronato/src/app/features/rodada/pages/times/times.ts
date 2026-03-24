@@ -33,14 +33,13 @@ export class Times implements OnInit {
   carregarRodada(id: string) {
     this.svcRodada.consultarTimes(id)
       .subscribe(res => {
-        // this.rodada = res;
         this.timesRodada = res || [];
       });
   }
 
   onTimesCriados() {
     this.carregarRodada(this.rodada.id);
-    this.mostrarPainelTimes = false;    
+    this.mostrarPainelTimes = false;
   }
 
   get participantesParaTimes() {
@@ -48,15 +47,19 @@ export class Times implements OnInit {
       ?.map(rp => rp.participante) || [];
   }
 
-  obterNomeTime = (id: string): string | undefined => {    
+  obterNomeTime = (id: string): string | undefined => {
     return this.timesRodada.find(t => t.timeBaseId === id)?.nomeTime;
   }
 
   obterNomeParticipante = (id: string): string | undefined => {
-    return this.timesRodada
-      ?.flatMap(t => t.participantes || [])      ?.find(p => p.id === id)
-      ?.nome;
-  }
+  const participante = this.timesRodada
+    ?.flatMap(t => t.participantes || [])
+    ?.find(p => p.id === id);
+
+  if (!participante) return undefined;
+
+  return `${participante.nome}${participante.apelido ? ' - ' + participante.apelido : ''}`;
+}
 
   isRodadaCriada(): boolean {
     return this.rodada?.descricaoStatus?.toLowerCase() === 'criada';

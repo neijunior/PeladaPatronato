@@ -14,7 +14,7 @@
         class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2 text-white">
         
         <option *ngFor="let p of participantesDisponiveis" [value]="p.id">
-          {{ p.nome }}
+          {{ p.nome }}{{ p.apelido ? ' - ' + p.apelido : '' }}
         </option>
 
       </select>

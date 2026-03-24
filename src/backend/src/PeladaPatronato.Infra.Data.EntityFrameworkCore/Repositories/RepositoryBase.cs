@@ -48,8 +48,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
 
     public async Task<TEntity> Atualizar(TEntity entity)
     {
-      _dbSet.Update(entity);
-      await _context.SaveChangesAsync();
+      _dbSet.Update(entity);      
       return entity;
     }
 

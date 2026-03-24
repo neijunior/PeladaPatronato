@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ParticipanteFiltro } from '../../../../core/models/filtros/participante-filtro';
 import { ParticipanteService } from '../../../../core/services/participante.service';
 import { Router } from '@angular/router';
+import { PagedResponse } from '../../../../core/models/base/paged-response';
+import { Participante } from '../../../../core/models/participante';
 
 @Component({
   selector: 'app-participante-filtro',
@@ -11,13 +13,17 @@ import { Router } from '@angular/router';
   templateUrl: './participante-filtro.html',
   styleUrl: './participante-filtro.css',
 })
-export class ParticipanteFiltroComponent {
+export class ParticipanteFiltroComponent implements OnInit {
 
+  @Output() resultadoChange = new EventEmitter<PagedResponse<Participante>>();
   constructor(
     private readonly svc: ParticipanteService,
     private readonly router: Router
   ) {
 
+  }
+  ngOnInit(): void {
+    this.limparFiltro();
   }
 
   filtro!: ParticipanteFiltro;
@@ -27,10 +33,11 @@ export class ParticipanteFiltroComponent {
     this.router.navigate(['participantes/novo']);
   }
 
-  filtrar() {    
+  filtrar() {
     this.svc.listar(this.filtro).subscribe({
       next: (res) => {
-        this.svc.setParticipantes = res.items;
+        this.svc.setParticipantes = res;
+        this.resultadoChange.emit(res);
       },
       error: (err) => {
         console.error('Erro ao buscar participantes:', err);
@@ -44,8 +51,7 @@ export class ParticipanteFiltroComponent {
       pageNumber: 1,
       pageSize: 10,
       ativo: true,
-      exibePosicao: true     
-
+      exibePosicao: true
     };
 
     //this.carregar();

@@ -1,8 +1,5 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Mvc;
-using PeladaPatronato.Application.Estatistica;
+﻿using Microsoft.AspNetCore.Mvc;
 using PeladaPatronato.Application.Rodada;
-using PeladaPatronato.Domain.Entidades;
 using PeladaPatronato.Infra.CrossCutting.Request.Rodada;
 
 namespace PeladaPatronato.Presentation.API.Endpoints

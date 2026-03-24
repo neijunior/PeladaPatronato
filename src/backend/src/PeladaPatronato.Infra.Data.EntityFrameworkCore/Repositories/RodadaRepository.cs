@@ -72,7 +72,7 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
     {
       try
       {
-        var rodada = await ObterPorId(rodadaId);
+        var rodada = await ObterPorId(rodadaId, i => i.Participantes);
 
         if (rodada == null)
           throw new Exception("Rodada não encontrada.");

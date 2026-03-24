@@ -32,15 +32,11 @@ export class MontarTimes implements OnInit {
     this.carregarTimes();
   }
 
-  // 🔹 Buscar lista de times disponíveis
   carregarTimes() {
     this.svcRodada.listarTimes()
       .subscribe(times => {
-        console.log('Times disponíveis:', times);
         this.timesDisponiveis = times;
       });
-
-    console.log(this.timesDisponiveis);
   }
 
   // 🔹 Adiciona time na estrutura temporária
@@ -100,8 +96,9 @@ export class MontarTimes implements OnInit {
     return this.timesDisponiveis.find(t => t.id === timeId)?.nome;
   }
 
-  obterNomeParticipante(participanteId: string) {
-    return this.participantes.find(p => p.id === participanteId)?.nome;
+  obterNomeParticipante(participanteId: string) {    
+    const participante = this.participantes.find(p => p.id === participanteId);
+    return participante ? `${participante.nome}${participante.apelido ? ' - ' + participante.apelido : ''}` : '';
   }
 
   get timesDisponiveisFiltrados(): Time[] {

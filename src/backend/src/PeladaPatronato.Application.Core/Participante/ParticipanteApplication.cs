@@ -2,6 +2,7 @@
 using PeladaPatronato.Application.Participante;
 using PeladaPatronato.Domain.Entidades;
 using PeladaPatronato.Domain.Interfaces;
+using PeladaPatronato.Infra.CrossCutting.Data;
 using PeladaPatronato.Infra.CrossCutting.Foundation;
 using PeladaPatronato.Infra.CrossCutting.Request.Participante;
 using PeladaPatronato.Infra.CrossCutting.Response;
@@ -15,9 +16,11 @@ namespace PeladaPatronato.Application.Core.Participante
   public class ParticipanteApplication : IParticipanteApplication
   {
     private readonly IParticipanteRepository _participanteRepository;
-    public ParticipanteApplication(IParticipanteRepository participanteRepository)
+    private readonly IUnitOfWork _unitOfWork;
+    public ParticipanteApplication(IParticipanteRepository participanteRepository, IUnitOfWork unitOfWork)
     {
       _participanteRepository = participanteRepository;
+      _unitOfWork = unitOfWork;
     }
     public async Task<ParticipanteResponse?> Consultar(Guid Id)
     {
@@ -47,7 +50,7 @@ namespace PeladaPatronato.Application.Core.Participante
       if (paramConsulta.ExibePosicao.HasValue && paramConsulta.ExibePosicao.Value)
       {
         include = q => q.Include(p => p.Posicao);
-      }        
+      }
 
       if (paramConsulta.Ativo.HasValue)
       {
@@ -71,7 +74,7 @@ namespace PeladaPatronato.Application.Core.Participante
 
       var participantes = await _participanteRepository.Listar(filtro, include);
 
-      
+
 
       var totalCount = participantes.Count();
 
@@ -93,21 +96,34 @@ namespace PeladaPatronato.Application.Core.Participante
 
     public async Task<ParticipanteResponse> Salvar(ParticipanteRequest request)
     {
-      Domain.Entidades.Participante participante;
-      if (request.Id == Guid.Empty)
+      _unitOfWork.BeginTransaction();
+      try
       {
-        participante = request.ToEntity();
-        await _participanteRepository.Adicionar(participante);
+        Domain.Entidades.Participante participante;
+        if (request.Id == Guid.Empty)
+        {
+          participante = request.ToEntity();
+          await _participanteRepository.Adicionar(participante);
+        }
+        else
+        {
+          participante = await _participanteRepository.ObterPorId(request.Id);
+          if (participante is null)
+            throw new Exception("Participante não encontrado");
+          participante.Atualizar(request.Nome, request.Apelido, request.Telefone, (request.PosicaoPreferida.HasValue ? (Domain.Entidades.ePosicao)request.PosicaoPreferida.Value : null), request.Ativo, request.Email);
+          await _participanteRepository.Atualizar(participante);
+
+          //_unitOfWork.await _context.SaveChangesAsync();
+          await _unitOfWork.CommitAsync();
+        }
+
+        return participante.ToResponse();
       }
-      else
+      catch (Exception)
       {
-        participante = await _participanteRepository.ObterPorId(request.Id);
-        if (participante is null)
-          throw new Exception("Participante não encontrado");
-        participante.Atualizar(request.Nome, request.Apelido, request.Telefone, (request.PosicaoPreferida.HasValue ? (Domain.Entidades.ePosicao)request.PosicaoPreferida.Value : null), request.Ativo, request.Email);
+
+        throw;
       }
-      
-      return participante.ToResponse();
     }
   }
 }

@@ -6,7 +6,7 @@
       Participantes
     </h1>
   </div>
-  <app-participante-filtro [posicoes]="posicoes"></app-participante-filtro>
+  <app-participante-filtro [posicoes]="posicoes" (resultadoChange)="atualizarLista($event)"></app-participante-filtro>
 
   <!-- TABELA -->
   <div class="bg-gray-800 rounded-lg shadow overflow-hidden">
@@ -17,13 +17,13 @@
     </div>
     }
 
-    @if (!carregando && participantes.length === 0) {
+    @if (!carregando && participantes.items.length === 0) {
     <div class="p-6 text-center text-gray-400">
       Nenhum registro encontrado.
     </div>
     }
 
-    @if (!carregando && participantes.length > 0) {
+    @if (!carregando && participantes.items.length > 0) {
 
     <table class="w-full text-sm text-left text-gray-300">
 
@@ -39,7 +39,7 @@
 
       <tbody>
 
-        @for (participante of participantes; track participante.id) {
+        @for (participante of participantes.items; track participante.id) {
         <tr class="border-b border-gray-700 hover:bg-gray-750">
 
           <td class="px-6 py-4"> {{ participante.nome }} </td>
@@ -89,7 +89,6 @@
     <app-pagination [totalItems]="totalRegistros" [pageSize]="filtro.pageSize" [currentPage]="filtro.pageNumber"
       (pageChange)="mudarPagina($event)" />
     }
-
     }
 
   </div>

@@ -17,7 +17,7 @@ namespace PeladaPatronato.Presentation.API.Endpoints
                        .WithTags("Participante")
                        .RequireAuthorization(); // exige autenticação geral
 
-      grupo.MapPost($"/salvar", async (IParticipanteApplication participanteApp, Guid? Responsavel, [FromBody] ParticipanteRequest participante) =>
+      grupo.MapPost($"/salvar", async (IParticipanteApplication participanteApp, [FromBody] ParticipanteRequest participante) =>
       {
         try
         {

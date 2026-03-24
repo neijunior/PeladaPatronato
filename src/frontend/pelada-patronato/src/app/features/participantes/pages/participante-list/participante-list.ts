@@ -1,4 +1,4 @@
-import { Component, effect, OnInit } from '@angular/core';
+import { Component, effect, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -19,16 +19,19 @@ import { ParticipanteFiltroComponent } from '../../components/participante-filtr
     FormsModule,
     PaginationComponent,
     TelefonePipe,
-    ParticipanteFiltroComponent 
-],
+    ParticipanteFiltroComponent
+  ],
   templateUrl: './participante-list.html',
   styleUrls: ['./participante-list.css']
 })
 export class ParticipanteList implements OnInit {
 
   posicoes: { id: number; nome: string }[] = [];
-  participantes: Participante[] = [];
+  participantes: PagedResponse<Participante> = { items: [], pageNumber: 1, pageSize: 10, totalCount: 0 };
   totalRegistros = 0;
+
+  @ViewChild(ParticipanteFiltroComponent)
+  filtroComponent!: ParticipanteFiltroComponent;
 
   carregando = false;
   erro: string | null = null;
@@ -38,13 +41,13 @@ export class ParticipanteList implements OnInit {
     pageNumber: 1,
     pageSize: 10,
     ativo: true,
-    exibePosicao: true    
+    exibePosicao: true
   };
 
   constructor(
     private readonly svc: ParticipanteService,
     private readonly router: Router
-  ) { 
+  ) {
     effect(() => {
       this.participantes = this.svc.getParticipantes;
     });
@@ -52,7 +55,7 @@ export class ParticipanteList implements OnInit {
   }
 
   ngOnInit(): void {
-    this.carregar();
+    setTimeout(() => this.filtroComponent.filtrar());
   }
 
   loadPosicoes() {
@@ -75,34 +78,15 @@ export class ParticipanteList implements OnInit {
       : fim;
   }
 
-  private carregar(): void {
-    this.carregando = true;
-    this.erro = null;
-
-    this.svc.listar(this.filtro).subscribe({
-      next: (response: PagedResponse<Participante>) => {
-        this.participantes = response.items ?? [];
-        this.totalRegistros = response.totalCount ?? 0;
-        this.carregando = false;
-        this.svc.setParticipantes = this.participantes;
-      },
-      error: () => {
-        this.erro = 'Erro ao carregar participantes';
-        this.carregando = false;
-      }
-    });
-  }
-
-  
-
   mudarPagina(page: number): void {
     if (page === this.filtro.pageNumber) return;
 
     this.filtro.pageNumber = page;
-    this.carregar();
-  }
 
-  
+    // 👇 chama o filtro (que chama API)
+    this.filtroComponent.filtro.pageNumber = page;
+    this.filtroComponent.filtrar();
+  }
 
   editar(id: string): void {
     this.router.navigate(['participantes/novo'], {
@@ -112,8 +96,17 @@ export class ParticipanteList implements OnInit {
 
   inativar(id: string): void {
     this.svc.delete(id).subscribe({
-      next: () => this.carregar(),
+      next: () => setTimeout(() => this.filtroComponent.filtrar()),
       error: (err) => console.error('Erro ao inativar participante', err)
     });
+  }
+
+  atualizarLista(response: PagedResponse<Participante>) {
+    this.participantes = response;
+    this.totalRegistros = response.totalCount ?? 0;
+
+    // sincroniza paginação com o backend
+    this.filtro.pageNumber = response.pageNumber;
+    this.filtro.pageSize = response.pageSize;
   }
 }

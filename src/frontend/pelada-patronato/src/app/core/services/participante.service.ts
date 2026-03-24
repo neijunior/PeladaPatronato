@@ -17,18 +17,18 @@ export class ParticipanteService {
   private http = inject(HttpClient);
   private baseUrl = `${environment.apiUrl}/participante`;
 
-  private participantesSignal = signal<Participante[]>([]);
+  private participantesSignal = signal<PagedResponse<Participante>>({ items: [], pageNumber: 1, pageSize: 10, totalCount: 0 });
 
   get getParticipantes() {
     return this.participantesSignal();
   }
 
-  set setParticipantes(value: Participante[]) {
-    this.participantesSignal.set(value);
+  set setParticipantes(value: PagedResponse<Participante>) {
+    this.participantesSignal.set({ items: value.items, pageNumber: value.pageNumber, pageSize: value.pageSize, totalCount: value.totalCount });
   }
 
   listar(filtro: ParticipanteFiltro): Observable<PagedResponse<Participante>> {
-    return this.http.post<PagedResponse<Participante>>(`${this.baseUrl}/listar`, filtro);    
+    return this.http.post<PagedResponse<Participante>>(`${this.baseUrl}/listar`, filtro);
   }
 
   listarPosicoes(): Observable<Posicao[]> {
@@ -39,7 +39,7 @@ export class ParticipanteService {
     return this.http.get<Participante>(`${this.baseUrl}/consultar?Id=${id}`);
   }
 
-  salvar(p: Participante): Observable<Participante> {    
+  salvar(p: Participante): Observable<Participante> {
     const payload = {
       id: p.id,
       nome: p.nome,
@@ -49,7 +49,7 @@ export class ParticipanteService {
       posicaoPreferida: p.posicaoPreferida ? Number(p.posicaoPreferida) : null
     };
 
-    return this.http.post<Participante>(`${this.baseUrl}/salvar`, payload);    
+    return this.http.post<Participante>(`${this.baseUrl}/salvar`, payload);
   }
 
   update(id: number, p: Participante): Observable<Participante> {

@@ -55,7 +55,7 @@
         [ngStyle]="{ background: gerarBackground(p) }">
 
       <span class="truncate font-medium">
-        {{ p.participante.nome }}
+        {{ p.participante.nome }}{{ p.participante.apelido ? ' - ' + p.participante.apelido : '' }}
       </span>
 
       <div class="flex items-center gap-2">

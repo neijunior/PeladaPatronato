@@ -55,8 +55,8 @@ export class ParticipanteForm {
 
   save() {
     this.svc.salvar(this.p).subscribe({
-      next: (part: any) => {        
-        this.svc.setParticipantes = [...this.svc.getParticipantes, part.dados];
+      next: (part: any) => {
+        this.svc.setParticipantes = { ...this.svc.getParticipantes, items: [...this.svc.getParticipantes.items, part.dados] };
         this.router.navigate(['participantes'])
       },
       error: (err) => {
