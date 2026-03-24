@@ -269,16 +269,54 @@ namespace PeladaPatronato.Application.Core.Rodada
 
     public async Task<IEnumerable<RodadaPartidaResponse>> ListarPartidas(Guid rodadaId)
     {
-      return (await _rodadaRepository.ListarPartidas(rodadaId)).Select(s => new RodadaPartidaResponse()
+
+      var listaTimes = await _rodadaRepository.ConsultarTimes(rodadaId);
+      var partidas = await _rodadaRepository.ListarPartidas(rodadaId);
+
+      return partidas.Select(s =>
       {
-        Id = s.Id,
-        RodadaId = s.RodadaId,
-        DataHora = s.DataHora,
-        Ordem = s.Ordem,
-        RodadaTimeAId = s.RodadaTimeAId,
-        RodadaTimeBId = s.RodadaTimeBId,
-        TimeComPosseInicialId = s.TimeComPosseInicialId
-      }).OrderBy(o => o.Ordem).ToList();
+        var timeA = listaTimes.FirstOrDefault(t => t.TimeBaseId == s.RodadaTimeAId);
+        var timeB = listaTimes.FirstOrDefault(t => t.TimeBaseId == s.RodadaTimeBId);
+
+        return new RodadaPartidaResponse
+        {
+          Id = s.Id,
+          RodadaId = s.RodadaId,
+          Ordem = s.Ordem,
+          DataHora = s.DataHora,
+          RodadaTimeAId = s.RodadaTimeAId,
+          RodadaTimeBId = s.RodadaTimeBId,
+          TimeComPosseInicialId = s.TimeComPosseInicialId,
+
+          TimeA = timeA == null ? null : new RodadaTimeParticipanteResponse
+          {
+            TimeBaseId = timeA.TimeBaseId,
+            NomeTime = timeA.Time?.Nome,
+            Participantes = timeA.Participantes.Select(p => new ParticipanteResponse
+            {
+              Id = p.ParticipanteId,
+              Nome = p.Participante.Nome,
+              Apelido = p.Participante.Apelido,
+              Ativo = p.Participante.Ativo
+            }).ToList()
+          },
+
+          TimeB = timeB == null ? null : new RodadaTimeParticipanteResponse
+          {
+            TimeBaseId = timeB.TimeBaseId,
+            NomeTime = timeB.Time?.Nome,
+            Participantes = timeB.Participantes.Select(p => new ParticipanteResponse
+            {
+              Id = p.ParticipanteId,
+              Nome = p.Participante.Nome,
+              Apelido = p.Participante.Apelido,
+              Ativo = p.Participante.Ativo
+            }).ToList()
+          }
+        };
+      })
+      .OrderBy(o => o.Ordem)
+      .ToList();
     }
 
     public async Task AlterarStatusRodada(Guid rodadaId, int status)

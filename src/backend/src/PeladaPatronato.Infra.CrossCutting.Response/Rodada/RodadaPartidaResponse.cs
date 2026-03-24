@@ -9,5 +9,7 @@
     public int Ordem { get; set; }
     public Guid? TimeComPosseInicialId { get; set; }
     public DateTime? DataHora { get; set; }
+    public RodadaTimeParticipanteResponse? TimeA { get; set; }
+    public RodadaTimeParticipanteResponse? TimeB { get; set; }    
   }
 }

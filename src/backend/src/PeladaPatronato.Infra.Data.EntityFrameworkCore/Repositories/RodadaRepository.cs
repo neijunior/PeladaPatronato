@@ -153,14 +153,13 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Repositories
 
     public async Task<IEnumerable<RodadaPartida>> ListarPartidas(Guid rodadaId)
     {
-      return await _context.Rodada.Include(r => r.Partidas).Where(w => w.Id == rodadaId).SelectMany(sm => sm.Partidas).ToListAsync();
+      return await _context.Rodada.Include(r => r.Partidas).ThenInclude(r => r.Participantes).Where(w => w.Id == rodadaId).SelectMany(sm => sm.Partidas).ToListAsync();
     }
 
     public async Task<IEnumerable<RodadaTime>> ConsultarTimes(Guid id)
     {
-      var times = await _context.Rodada.Include(r => r.Times)
-                                       .ThenInclude(t => t.Participantes)
-                                       .ThenInclude(t => t.Participante)
+      var times = await _context.Rodada.Include(r => r.Times).ThenInclude(r => r.Time)
+                                       .Include(r => r.Times).ThenInclude(t => t.Participantes).ThenInclude(t => t.Participante)
           .Where(r => r.Id == id).SelectMany(sm => sm.Times).ToListAsync();
 
       return times;
