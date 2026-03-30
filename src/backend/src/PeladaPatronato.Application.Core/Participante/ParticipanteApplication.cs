@@ -104,6 +104,7 @@ namespace PeladaPatronato.Application.Core.Participante
         {
           participante = request.ToEntity();
           await _participanteRepository.Adicionar(participante);
+          await _unitOfWork.CommitAsync();
         }
         else
         {
