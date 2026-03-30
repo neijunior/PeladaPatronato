@@ -1,3 +1,5 @@
+import { RodadaTimeParticipante } from "./rodadaTimeParticipante";
+
 export interface RodadaPartida {
   id: string;
   rodadaTimeAId: string;
@@ -6,6 +8,8 @@ export interface RodadaPartida {
   timeComPosseInicialId: string; // 'A' ou 'B'
   dataHora?: Date;
   RodadaId: string;
+  TimeA?: RodadaTimeParticipante;
+  TimeB?: RodadaTimeParticipante;
 }
 
 export interface CriarPartidaRequest {

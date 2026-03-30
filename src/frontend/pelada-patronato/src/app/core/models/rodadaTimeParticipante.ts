@@ -1,6 +1,8 @@
 import { Participante } from "./participante";
 
 export interface RodadaTimeParticipante {
-  participante: Participante;
+  timeBaseId: string; 
+  NomeTime?: string;
+  participantes: Participante[];
   
 }

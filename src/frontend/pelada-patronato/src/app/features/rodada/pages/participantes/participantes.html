@@ -3,7 +3,7 @@
   [rodadaId]="rodada.id"
   [participantes]="todosParticipantes"
   [participantesRodada]="participantesParaTimes || []"
-  (participanteAdicionado)="carregarRodada()">
+  (participanteAdicionado)="carregarRodada(rodada.id)">
 </app-adicionar-participante>
 
 <div class="bg-gray-800 p-6 rounded-2xl shadow-md mt-4">

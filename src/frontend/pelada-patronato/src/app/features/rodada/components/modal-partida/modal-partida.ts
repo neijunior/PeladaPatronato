@@ -31,22 +31,22 @@ export class ModalPartida {
   }
 
   adicionarGolContra(time: 'A' | 'B') {
-  // Se é contra o time A → gol para o B
-  if (time === 'A') {
-    this.partida.golsB = (this.partida.golsB || 0) + 1;
-  } else {
-    this.partida.golsA = (this.partida.golsA || 0) + 1;
-  }
-}
-
-removerGolContra(time: 'A' | 'B') {
-  if (time === 'A' && this.partida.golsB > 0) {
-    this.partida.golsB--;
+    // Se é contra o time A → gol para o B
+    if (time === 'A') {
+      this.partida.golsB = (this.partida.golsB || 0) + 1;
+    } else {
+      this.partida.golsA = (this.partida.golsA || 0) + 1;
+    }
   }
 
-  if (time === 'B' && this.partida.golsA > 0) {
-    this.partida.golsA--;
+  removerGolContra(time: 'A' | 'B') {
+    if (time === 'A' && this.partida.golsB > 0) {
+      this.partida.golsB--;
+    }
+
+    if (time === 'B' && this.partida.golsA > 0) {
+      this.partida.golsA--;
+    }
   }
-}
 
 }

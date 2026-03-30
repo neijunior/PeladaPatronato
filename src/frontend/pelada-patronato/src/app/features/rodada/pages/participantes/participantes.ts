@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AdicionarParticipante } from '../../components/adicionar-participante/adicionar-participante';
@@ -8,6 +8,7 @@ import { ParticipanteFiltro } from '../../../../core/models/filtros/participante
 import { RodadaService } from '../../../../core/services/rodada.service';
 import { ParticipanteService } from '../../../../core/services/participante.service';
 import { FormsModule } from '@angular/forms';
+import { RodadaStateService } from '../../rodadaStateService';
 
 @Component({
   selector: 'app-participantes',
@@ -16,41 +17,51 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './participantes.css',
 })
 export class Participantes implements OnInit {
+  @Output() alterado = new EventEmitter<void>();
+
   participantesParaTimes: Participante[] = [];
   todosParticipantes: Participante[] = [];
   rodada!: Rodada;
-
   rodadaId!: string;
+
   constructor(
     private route: ActivatedRoute,
     private svcRodada: RodadaService,
-    private svcParticipante: ParticipanteService
-  ) { }
+    private svcParticipante: ParticipanteService,
+    private rodadaState: RodadaStateService
+  ) {
+    // 🔥 effect correto (com proteção de id)
+    effect(() => {
+      this.rodadaState.atualizado();
+
+      if (this.rodadaId) {
+        this.carregarRodada(this.rodadaId);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.rodadaId = this.route.parent?.snapshot.paramMap.get('id')!;
-    this.carregarRodada();
+    this.carregarRodada(this.rodadaId);
   }
 
   carregarParticipantes() {
-
     const filtro: ParticipanteFiltro = {
       nome: '',
       pageNumber: 1,
       pageSize: 9999
-    }
+    };
 
     this.svcParticipante.listar(filtro)
       .subscribe(res => {
-        this.todosParticipantes = res.items
-      })
+        this.todosParticipantes = res.items;
+      });
   }
 
-  carregarRodada() {
-    this.svcRodada.consultar(this.rodadaId)
+  carregarRodada(id: string) {
+    this.svcRodada.consultar(id)
       .subscribe((r: Rodada) => {
         this.rodada = r;
-
         this.participantesParaTimes =
           r.participantes?.map(p => p.participante) ?? [];
       });
@@ -60,19 +71,10 @@ export class Participantes implements OnInit {
 
   removerParticipante(participanteId: string) {
     this.svcRodada.removerParticipante(this.rodadaId, participanteId)
-      .subscribe(() => this.carregarRodada());
-  }
-
-  gerarBackground(p: any): string {
-  if (p.diarista) {
-    return '#78350f'; // cor única para diarista
-  }
-
-  return '#1f2937'; // padrão
-}
-
-  isRodadaCriada(): boolean {
-    return this.rodada?.descricaoStatus?.toLowerCase() === 'criada';
+      .subscribe(() => {
+        this.carregarRodada(this.rodadaId);
+        this.rodadaState.notificar(); // 🔥 dispara atualização global
+      });
   }
 
   togglePagamento(p: any) {
@@ -81,8 +83,16 @@ export class Participantes implements OnInit {
     this.svcRodada
       .registrarPagamento(this.rodadaId, p.participante.id, novoStatus)
       .subscribe(() => {
-        this.carregarRodada();
+        this.carregarRodada(this.rodadaId);
+        this.rodadaState.notificar(); // 🔥 dispara atualização global
       });
   }
 
+  gerarBackground(p: any): string {
+    return p.diarista ? '#78350f' : '#1f2937';
+  }
+
+  isRodadaCriada(): boolean {
+    return this.rodada?.descricaoStatus?.toLowerCase() === 'criada';
+  }
 }
