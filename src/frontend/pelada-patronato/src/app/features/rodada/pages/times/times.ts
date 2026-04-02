@@ -35,6 +35,11 @@ export class Times implements OnInit {
       .subscribe(res => {
         this.timesRodada = res || [];
       });
+
+      this.svcRodada.consultar(id)
+        .subscribe(res => {
+          this.rodada = res;
+        });
   }
 
   onTimesCriados() {
@@ -61,7 +66,7 @@ export class Times implements OnInit {
   return `${participante.nome}${participante.apelido ? ' - ' + participante.apelido : ''}`;
 }
 
-  isRodadaCriada(): boolean {
-    return this.rodada?.descricaoStatus?.toLowerCase() === 'criada';
+  podeTirarTimes(): boolean {
+    return this.rodada?.descricaoStatus?.toLowerCase() === 'participantes adicionados';
   }
 }

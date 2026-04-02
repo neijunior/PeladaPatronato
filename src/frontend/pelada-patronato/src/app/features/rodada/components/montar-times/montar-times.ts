@@ -69,27 +69,29 @@ export class MontarTimes implements OnInit {
   // 🔹 Envia para backend
   salvarTimes() {
 
-    if (this.timesTemp.length === 0)
-      return;
+  if (this.timesTemp.length === 0)
+    return;
 
-    const times: CriarTimesRequest[] = this.timesTemp.map(t => ({
+  const request = {
+    times: this.timesTemp.map(t => ({
       timeId: t.timeId,
       participantesIds: t.participantesIds
-    }));
+    }))
+  };
 
-    this.svcRodada
-      .criarTimes(this.rodadaId, times)
-      .subscribe({
-        next: () => {
-          this.timesTemp = [];
-          this.timesSalvos = true;
-          this.timesCriados.emit();
-        },
-        error: err => {
-          console.error(err);
-        }
-      });
-  }
+  this.svcRodada
+    .criarTimes(this.rodadaId, request)
+    .subscribe({
+      next: () => {
+        this.timesTemp = [];
+        this.timesSalvos = true;
+        this.timesCriados.emit();
+      },
+      error: err => {
+        console.error(err);
+      }
+    });
+}
 
   // 🔹 Helpers para exibição
   obterNomeTime(timeId: string) {

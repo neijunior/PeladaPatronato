@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PeladaPatronato.Infra.Data.EntityFrameworkCore.Contexts;
 
@@ -11,9 +12,11 @@ using PeladaPatronato.Infra.Data.EntityFrameworkCore.Contexts;
 namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(PeladaPatronatoDbContext))]
-    partial class PeladaPatronatoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260402221121_AlterTable_20260402_1911")]
+    partial class AlterTable_20260402_1911
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

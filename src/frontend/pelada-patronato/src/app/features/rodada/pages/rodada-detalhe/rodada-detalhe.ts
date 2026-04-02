@@ -98,4 +98,6 @@ export class RodadaDetalhe implements OnInit {
     return this.rodada?.participantes
       ?.map(rp => rp.participante) || [];
   }
+
+  
 }

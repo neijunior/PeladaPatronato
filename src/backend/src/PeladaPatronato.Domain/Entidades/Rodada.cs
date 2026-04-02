@@ -197,11 +197,13 @@ namespace PeladaPatronato.Domain.Entidades
   {
     [Description("Criada")]
     Criada = 1,
+    [Description("Participantes Adicionados")]
+    ParticipantesAdicionados = 2,
     [Description("Times Definidos")]
-    TimesDefinidos = 2,
+    TimesDefinidos = 3,
     [Description("Partidas Geradas")]
-    PartidasGeradas = 3,
+    PartidasGeradas = 4,
     [Description("Finalizada")]
-    Finalizada = 4
+    Finalizada = 5
   }
 }

@@ -36,6 +36,11 @@ export class AdicionarParticipante implements OnChanges{
       .filter(p => !idsRodada.includes(p.id));
   }
 
+  podeAdicionar(): boolean {  
+    return this.participantesRodada.length <= 20;
+  }
+
+
   adicionar() {
     if (!this.participanteSelecionadoId) return;
 

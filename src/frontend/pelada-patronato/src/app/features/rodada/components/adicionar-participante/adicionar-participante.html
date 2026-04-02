@@ -29,7 +29,8 @@
     <!-- Botão -->
     <button
       class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-white"
-      (click)="adicionar()">
+      (click)="adicionar()"
+      *ngIf="!podeAdicionar()">
       Adicionar
     </button>
 

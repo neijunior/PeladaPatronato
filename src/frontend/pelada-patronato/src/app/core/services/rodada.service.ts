@@ -35,7 +35,7 @@ export class RodadaService {
     return this.http.post<Time[]>(`${environment.apiUrl}/lookup/time`, null);
   }
 
-  criarTimes(rodadaId: string, request: CriarTimesRequest[]) {
+  criarTimes(rodadaId: string, request: CriarTimesRequest) {
     return this.http.post(
       `${this.baseUrl}/${rodadaId}/times`,
       request

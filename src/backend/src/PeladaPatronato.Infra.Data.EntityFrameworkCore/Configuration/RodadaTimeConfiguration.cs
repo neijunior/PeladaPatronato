@@ -17,6 +17,8 @@ namespace PeladaPatronato.Infra.Data.EntityFrameworkCore.Configuration
       builder.Property(x => x.GolsPro);
       builder.Property(x => x.GolsContra);
 
+      builder.HasOne(x => x.Time).WithMany().HasForeignKey(x => x.TimeBaseId);
+
       builder.HasMany(x => x.Participantes).WithOne().HasForeignKey(x => x.RodadaTimeId).OnDelete(DeleteBehavior.Restrict);
       builder.Metadata.FindNavigation(nameof(RodadaTime.Participantes))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }

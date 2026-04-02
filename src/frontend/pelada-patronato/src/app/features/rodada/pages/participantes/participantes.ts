@@ -1,5 +1,5 @@
 import { Component, effect, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AdicionarParticipante } from '../../components/adicionar-participante/adicionar-participante';
 import { Rodada } from '../../../../core/models/rodada';
@@ -28,7 +28,8 @@ export class Participantes implements OnInit {
     private route: ActivatedRoute,
     private svcRodada: RodadaService,
     private svcParticipante: ParticipanteService,
-    private rodadaState: RodadaStateService
+    private rodadaState: RodadaStateService,
+    private router: Router,
   ) {
     // 🔥 effect correto (com proteção de id)
     effect(() => {
@@ -94,5 +95,17 @@ export class Participantes implements OnInit {
 
   isRodadaCriada(): boolean {
     return this.rodada?.descricaoStatus?.toLowerCase() === 'criada';
+  }
+
+  alterarStatusRodada(status: number) {
+  this.svcRodada.alterarStatusRodada(this.rodadaId, status)
+    .subscribe({
+      next: () => {          
+        this.router.navigate(['../times'], { relativeTo: this.route });
+      },
+      error: (err) => {          
+        alert('Erro ao fechar rodada. Tente novamente.');
+      }
+    });
   }
 }

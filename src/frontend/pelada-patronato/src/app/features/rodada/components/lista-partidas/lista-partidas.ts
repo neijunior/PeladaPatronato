@@ -90,6 +90,7 @@ export class ListaPartidas implements OnInit {
     if (this.partidas.length === 0) return 1;
     return Math.max(...this.partidas.map(p => p.ordem)) + 1;
   }
+  
   alterarStatusRodada(status: number) {
   this.svcRodada.alterarStatusRodada(this.rodadaId, status)
     .subscribe({
